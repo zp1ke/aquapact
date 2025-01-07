@@ -2,22 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  debugPrint('notification(${notificationResponse.id}) action tapped: '
-      '${notificationResponse.actionId} with==============================================='
-      ' payload: ${notificationResponse.payload}');
-  if (notificationResponse.input?.isNotEmpty ?? false) {
-    debugPrint(
-        'notification action tapped with input===============================================: ${notificationResponse.input}');
-  }
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  tz.initializeTimeZones();
 
   final initializationSettings = InitializationSettings(
     android: AndroidInitializationSettings('@drawable/app_icon'),
@@ -28,14 +21,26 @@ Future<void> main() async {
       debugPrint(
           'Notification tapped===============================================: ${notificationResponse.notificationResponseType}');
     },
-    onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
   );
 
-  runApp(const MyApp());
+  final notificationAppLaunchDetails =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  debugPrint(
+      'app notificationAppLaunchDetails ==================== ${notificationAppLaunchDetails?.didNotificationLaunchApp}');
+
+  runApp(MyApp(
+    didNotificationLaunchApp:
+        notificationAppLaunchDetails?.didNotificationLaunchApp ?? false,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    required this.didNotificationLaunchApp,
+  });
+
+  final bool didNotificationLaunchApp;
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +50,24 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(
+        title: 'Flutter Demo Home Page',
+        didNotificationLaunchApp: didNotificationLaunchApp,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({
+    super.key,
+    required this.title,
+    required this.didNotificationLaunchApp,
+  });
 
   final String title;
+
+  final bool didNotificationLaunchApp;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -63,9 +77,24 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   bool _notificationsEnabled = false;
 
+  get androidNotificationDetails => AndroidNotificationDetails(
+        'default_notification_channel',
+        'your channel name',
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        visibility: NotificationVisibility.public,
+        enableLights: true,
+        enableVibration: true,
+        vibrationPattern: Int64List.fromList(<int>[1000, 500, 1000]),
+      );
+
   @override
   void initState() {
     super.initState();
+    if (widget.didNotificationLaunchApp) {
+      _counter = 100;
+    }
     _isAndroidPermissionGranted();
     _requestPermissions();
   }
@@ -128,6 +157,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: _showNotification,
                 child: Text('Show Notification'),
               ),
+            if (_notificationsEnabled)
+              ElevatedButton(
+                onPressed: _scheduleNotification,
+                child: Text('Schedule Notification in 1 min'),
+              ),
           ],
         ),
       ),
@@ -140,22 +174,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _showNotification() async {
-    final androidNotificationDetails = AndroidNotificationDetails(
-      'default_notification_channel',
-      'your channel name',
-      channelDescription: 'your channel description',
-      importance: Importance.max,
-      priority: Priority.high,
-      visibility: NotificationVisibility.public,
-      enableLights: true,
-      enableVibration: true,
-      vibrationPattern: Int64List.fromList(<int>[1000, 500, 1000]),
-    );
-    final notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        _counter, 'plain title', 'plain body', notificationDetails,
-        payload: 'item x');
+      _counter,
+      'plain title',
+      'plain body',
+      NotificationDetails(android: androidNotificationDetails),
+      payload: 'item x',
+    );
+    _incrementCounter();
+  }
+
+  Future<void> _scheduleNotification() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+    // await flutterLocalNotificationsPlugin.periodicallyShow
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      _counter,
+      'scheduled title',
+      'scheduled body',
+      tz.TZDateTime.now(tz.local).add(Duration(minutes: 1)),
+      NotificationDetails(android: androidNotificationDetails),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
     _incrementCounter();
   }
 }
