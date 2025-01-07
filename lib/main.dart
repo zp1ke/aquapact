@@ -1,36 +1,14 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
-final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+import 'notification.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  tz.initializeTimeZones();
-
-  final initializationSettings = InitializationSettings(
-    android: AndroidInitializationSettings('@drawable/app_icon'),
-  );
-  await flutterLocalNotificationsPlugin.initialize(
-    initializationSettings,
-    onDidReceiveNotificationResponse: (notificationResponse) {
-      debugPrint(
-          'Notification tapped===============================================: ${notificationResponse.notificationResponseType}');
-    },
-  );
-
-  final notificationAppLaunchDetails =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  debugPrint(
-      'app notificationAppLaunchDetails ==================== ${notificationAppLaunchDetails?.didNotificationLaunchApp}');
+  final didNotificationLaunchApp = await AppNotification.I.initialize();
 
   runApp(MyApp(
-    didNotificationLaunchApp:
-        notificationAppLaunchDetails?.didNotificationLaunchApp ?? false,
+    didNotificationLaunchApp: didNotificationLaunchApp,
   ));
 }
 
@@ -77,48 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   bool _notificationsEnabled = false;
 
-  get androidNotificationDetails => AndroidNotificationDetails(
-        'default_notification_channel',
-        'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high,
-        visibility: NotificationVisibility.public,
-        enableLights: true,
-        enableVibration: true,
-        vibrationPattern: Int64List.fromList(<int>[1000, 500, 1000]),
-      );
-
   @override
   void initState() {
     super.initState();
     if (widget.didNotificationLaunchApp) {
       _counter = 100;
     }
-    _isAndroidPermissionGranted();
-    _requestPermissions();
-  }
-
-  Future<void> _isAndroidPermissionGranted() async {
-    final bool granted = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
-            ?.areNotificationsEnabled() ??
-        false;
-
-    setState(() {
-      _notificationsEnabled = granted;
-    });
-  }
-
-  Future<void> _requestPermissions() async {
-    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
-    final bool? grantedNotificationPermission =
-        await androidImplementation?.requestNotificationsPermission();
-    setState(() {
-      _notificationsEnabled = grantedNotificationPermission ?? false;
+    AppNotification.I.androidHasPermissionGranted().then((enabled) {
+      setState(() {
+        _notificationsEnabled = enabled;
+      });
+      if (!enabled) {
+        AppNotification.I.requestPermissions();
+      }
     });
   }
 
@@ -149,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text('notifications enabled: $_notificationsEnabled'),
             if (!_notificationsEnabled)
               ElevatedButton(
-                onPressed: _requestPermissions,
+                onPressed: AppNotification.I.requestPermissions,
                 child: Text('Allow Notifications'),
               ),
             if (_notificationsEnabled)
@@ -174,28 +123,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _showNotification() async {
-    await flutterLocalNotificationsPlugin.show(
+    await AppNotification.I.showNotification(
       _counter,
       'plain title',
       'plain body',
-      NotificationDetails(android: androidNotificationDetails),
       payload: 'item x',
     );
     _incrementCounter();
   }
 
   Future<void> _scheduleNotification() async {
-    await flutterLocalNotificationsPlugin.cancelAll();
-    // await flutterLocalNotificationsPlugin.periodicallyShow
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+    await AppNotification.I.scheduleNotification(
       _counter,
       'scheduled title',
       'scheduled body',
-      tz.TZDateTime.now(tz.local).add(Duration(minutes: 1)),
-      NotificationDetails(android: androidNotificationDetails),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      DateTime.now().add(const Duration(minutes: 1)),
     );
     _incrementCounter();
   }
