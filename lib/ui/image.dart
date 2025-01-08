@@ -9,10 +9,11 @@ enum AppImage {
     required this.isPng,
   });
 
-  String assetName(BuildContext context) {
+  AssetImage assetImage(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final darkSuffix = brightness == Brightness.dark ? '_dark' : '';
     final extension = isPng ? 'png' : 'jpg';
-    return 'assets/$extension/$name$darkSuffix.$extension';
+    final path = 'assets/$extension/$name$darkSuffix.$extension';
+    return AssetImage(path);
   }
 }

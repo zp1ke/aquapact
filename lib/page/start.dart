@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_l10n.dart';
 import '../notification.dart';
 import '../ui/image.dart';
+import '../ui/size.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -26,44 +27,40 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    const basePadding = 24.0;
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: basePadding * 2,
-            vertical: basePadding * 5,
-          ),
-          child: content(context, basePadding),
+          padding: AppSize.padding2_4Xl,
+          child: content(context),
         ),
       ),
     );
   }
 
-  Widget content(BuildContext context, double basePadding) {
+  Widget content(BuildContext context) {
     if (hasPermission == null) {
       return CircularProgressIndicator.adaptive();
     }
     if (hasPermission == false) {
-      return requestPermissionContent(context, basePadding);
+      return requestPermissionContent(context);
     }
     return Text('Permission granted TODO');
   }
 
-  Widget requestPermissionContent(BuildContext context, double basePadding) {
+  Widget requestPermissionContent(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppL10n.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Image(
-          image: AssetImage(AppImage.notification.assetName(context)),
-          height: basePadding * 5,
+          image: AppImage.notification.assetImage(context),
+          height: AppSize.spacing4Xl,
           fit: BoxFit.fitHeight,
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          spacing: basePadding / 2,
+          spacing: AppSize.spacingMedium,
           children: [
             Text(
               l10n.allowAppNotifications,
