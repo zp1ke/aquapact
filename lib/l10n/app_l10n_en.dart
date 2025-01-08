@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_l10n.dart';
 
 // ignore_for_file: type=lint
@@ -23,6 +25,20 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get letsStart => 'let\'s Start!';
+
+  @override
+  String notifyEveryHours(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Notify every $count hours',
+      one: 'Notify hourly',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get save => 'Save';
 
   @override
   String get sleep => 'Sleep';

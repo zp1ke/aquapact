@@ -129,6 +129,18 @@ abstract class AppL10n {
   /// **'let\'s Start!'**
   String get letsStart;
 
+  /// No description provided for @notifyEveryHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Notify hourly} other{Notify every {count} hours}}'**
+  String notifyEveryHours(num count);
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
   /// No description provided for @sleep.
   ///
   /// In en, this message translates to:

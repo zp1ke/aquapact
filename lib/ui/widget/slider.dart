@@ -39,7 +39,6 @@ class SliderWidget extends StatelessWidget {
             showLabels: true,
             shouldAlwaysShowTooltip: true,
             enableTooltip: true,
-            minorTicksPerInterval: 1,
             onChanged: (value) {
               onChanged(value);
             },

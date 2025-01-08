@@ -26,7 +26,7 @@ class _StartPageState extends State<StartPage> {
   }
 
   void checkPermissionsAndSettings() async {
-    settings = null; // TODO: read from storage
+    settings = await TargetSettings.read();
     final granted = await AppNotification.I.hasPermissionGranted();
     if (mounted && granted && settings != null) {
       await navigateToHome(context);
@@ -66,8 +66,8 @@ class _StartPageState extends State<StartPage> {
       );
     }
     if (settings == null) {
-      return TargetSettingsForm(onSave: (newSettings) {
-        // TODO: save to storage
+      return TargetSettingsForm(onSave: (newSettings) async {
+        await newSettings.save();
         setState(() {
           settings = newSettings;
         });

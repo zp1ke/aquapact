@@ -39,8 +39,14 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
         children: [
           card(dailyTargetCard(context)),
           card(wakeUpSleepTimesCard(context)),
+          card(notificationIntervalCard(context)),
           Expanded(child: Spacer()),
-          OutlinedButton(onPressed: () {}, child: Text('TODO')),
+          OutlinedButton(
+            onPressed: () {
+              widget.onSave(targetSettings);
+            },
+            child: Text(AppL10n.of(context).save),
+          ),
         ],
       ),
     );
@@ -73,7 +79,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           value: targetSettings.dailyTarget,
           min: 500.0,
           max: 5000.0,
-          interval: 1000,
+          interval: 1000.0,
           onChanged: (value) {
             setState(() {
               targetSettings.dailyTarget = value.roundToNearestHundred();
@@ -139,5 +145,31 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
         targetSettings.sleepTime = result.endTime;
       });
     }
+  }
+
+  Widget notificationIntervalCard(BuildContext context) {
+    return Column(
+      spacing: AppSize.spacingLarge,
+      children: [
+        Text(
+          AppL10n.of(context)
+              .notifyEveryHours(targetSettings.notificationInterval.inHours),
+          style: TextTheme.of(context).bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        SliderWidget(
+          value: targetSettings.notificationInterval.inHours.toDouble(),
+          min: 1.0,
+          max: 4.0,
+          interval: 1.0,
+          onChanged: (value) {
+            setState(() {
+              targetSettings.notificationIntervalInMinutes = value.toInt() * 60;
+            });
+          },
+        ),
+      ],
+    );
   }
 }
