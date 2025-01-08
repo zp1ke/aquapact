@@ -40,13 +40,14 @@ class AppNotification {
     return launchDetails?.didNotificationLaunchApp ?? false;
   }
 
-  Future<bool> androidHasPermissionGranted() async {
+  Future<bool> hasPermissionGranted() async {
     final enabled = await androidPlugin?.areNotificationsEnabled();
     return enabled ?? false;
   }
 
-  Future<void> requestPermissions() async {
-    await androidPlugin?.requestNotificationsPermission();
+  Future<bool> requestPermissions() async {
+    final enabled = await androidPlugin?.requestNotificationsPermission();
+    return enabled ?? false;
   }
 
   AndroidNotificationDetails _androidDetails() {

@@ -1,3 +1,4 @@
+import 'package:aquapact/page/start.dart';
 import 'package:flutter/material.dart';
 
 import 'notification.dart';
@@ -23,15 +24,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'TODO',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(
-        title: 'Flutter Demo Home Page',
-        didNotificationLaunchApp: didNotificationLaunchApp,
-      ),
+      home: StartPage(),
+      // home: MyHomePage(
+      //   title: 'Flutter Demo Home Page',
+      //   didNotificationLaunchApp: didNotificationLaunchApp,
+      // ),
     );
   }
 }
@@ -61,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (widget.didNotificationLaunchApp) {
       _counter = 100;
     }
-    AppNotification.I.androidHasPermissionGranted().then((enabled) {
+    AppNotification.I.hasPermissionGranted().then((enabled) {
       setState(() {
         _notificationsEnabled = enabled;
       });
