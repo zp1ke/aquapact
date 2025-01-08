@@ -14,9 +14,10 @@ enum AppPage {
 }
 
 extension AppNavigationContext on BuildContext {
-  Future<T?> navigateTo<T extends Object?>(AppPage page) {
-    return Navigator.of(this).push(
+  Future<T?> navigateTo<T extends Object?>(AppPage page, {bool clear = false}) {
+    return Navigator.of(this).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => page.build()),
+      (_) => !clear,
     );
   }
 }

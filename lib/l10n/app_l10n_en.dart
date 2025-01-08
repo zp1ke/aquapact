@@ -16,6 +16,9 @@ class AppL10nEn extends AppL10n {
   String get allowAppNotificationsDescription => 'We will need permission so the app can send you notifications.';
 
   @override
+  String get dailyWaterIntake => 'Daily Water Intake';
+
+  @override
   String get letsStart => 'let\'s Start!';
 
   @override

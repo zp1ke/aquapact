@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app/navigation.dart';
 import '../app/notification.dart';
+import '../model/target_settings.dart';
 import '../ui/form/target_settings.dart';
 import '../ui/size.dart';
 import '../ui/widget/ready_start.dart';
@@ -16,7 +17,7 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   bool? hasPermission;
-  bool hasSettings = false;
+  TargetSettings? settings;
 
   @override
   void initState() {
@@ -25,9 +26,9 @@ class _StartPageState extends State<StartPage> {
   }
 
   void checkPermissionsAndSettings() async {
-    hasSettings = false; // TODO: check from settings
+    settings = null; // TODO: read from storage
     final granted = await AppNotification.I.hasPermissionGranted();
-    if (mounted && granted && hasSettings) {
+    if (mounted && granted && settings != null) {
       await navigateToHome(context);
     }
     setState(() {
@@ -40,7 +41,10 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: AppSize.padding2_4Xl,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSize.spacingSmall,
+            vertical: AppSize.spacing4Xl,
+          ),
           child: content(context),
         ),
       ),
@@ -52,14 +56,22 @@ class _StartPageState extends State<StartPage> {
       return CircularProgressIndicator.adaptive();
     }
     if (hasPermission == false) {
-      return RequestPermissionWidget(onGranted: () {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSize.spacingMedium),
+        child: RequestPermissionWidget(onGranted: () {
+          setState(() {
+            hasPermission = true;
+          });
+        }),
+      );
+    }
+    if (settings == null) {
+      return TargetSettingsForm(onSave: (newSettings) {
+        // TODO: save to storage
         setState(() {
-          hasPermission = true;
+          settings = newSettings;
         });
       });
-    }
-    if (!hasSettings) {
-      return TargetSettingsForm();
     }
     return ReadyStartWidget(onAction: () {
       navigateToHome(context);
@@ -67,6 +79,6 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future<void> navigateToHome(BuildContext context) async {
-    await context.navigateTo(AppPage.home);
+    await context.navigateTo(AppPage.home, clear: true);
   }
 }
