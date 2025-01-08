@@ -117,17 +117,41 @@ abstract class AppL10n {
   /// **'Daily Water Intake'**
   String get dailyWaterIntake;
 
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
   /// No description provided for @letsStart.
   ///
   /// In en, this message translates to:
   /// **'let\'s Start!'**
   String get letsStart;
 
+  /// No description provided for @sleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get sleep;
+
   /// No description provided for @sureLetsDoIt.
   ///
   /// In en, this message translates to:
   /// **'Sure, let\'s do it'**
   String get sureLetsDoIt;
+
+  /// No description provided for @wakeUpSleepTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Wake Up at {wakeUpTime}, Sleep at {sleepTime}'**
+  String wakeUpSleepTimes(String wakeUpTime, String sleepTime);
+
+  /// No description provided for @wakeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Wake Up'**
+  String get wakeUp;
 
   /// No description provided for @weAreGoodToGo.
   ///

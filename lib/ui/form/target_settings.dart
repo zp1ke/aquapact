@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
@@ -36,7 +37,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
       child: Column(
         spacing: AppSize.spacingMedium,
         children: [
-          dailyTargetCard(context),
+          card(dailyTargetCard(context)),
+          card(wakeUpSleepTimesCard(context)),
           Expanded(child: Spacer()),
           OutlinedButton(onPressed: () {}, child: Text('TODO')),
         ],
@@ -44,35 +46,98 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
   }
 
-  Widget dailyTargetCard(BuildContext context) {
+  Widget card(Widget child) {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: EdgeInsets.all(AppSize.spacingMedium),
-        child: Column(
-          spacing: AppSize.spacingLarge,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${AppL10n.of(context).dailyWaterIntake} (${targetSettings.volumeMeasureUnit.symbol})',
-              style: TextTheme.of(context).bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            SliderWidget(
-              value: targetSettings.dailyTarget,
-              min: 500.0,
-              max: 5000.0,
-              interval: 1000,
-              onChanged: (value) {
-                setState(() {
-                  targetSettings.dailyTarget = value.roundToNearestHundred();
-                });
-              },
-            ),
-          ],
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSize.spacingMedium,
+          vertical: AppSize.spacingLarge,
         ),
+        child: Center(child: child),
       ),
     );
+  }
+
+  Widget dailyTargetCard(BuildContext context) {
+    return Column(
+      spacing: AppSize.spacingLarge,
+      children: [
+        Text(
+          '${AppL10n.of(context).dailyWaterIntake} (${targetSettings.volumeMeasureUnit.symbol})',
+          style: TextTheme.of(context).bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        SliderWidget(
+          value: targetSettings.dailyTarget,
+          min: 500.0,
+          max: 5000.0,
+          interval: 1000,
+          onChanged: (value) {
+            setState(() {
+              targetSettings.dailyTarget = value.roundToNearestHundred();
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget wakeUpSleepTimesCard(BuildContext context) {
+    final l10n = AppL10n.of(context);
+    return Column(
+      spacing: AppSize.spacingMedium,
+      children: [
+        Text(
+          l10n.wakeUpSleepTimes(
+            targetSettings.wakeUpTime.format(context),
+            targetSettings.sleepTime.format(context),
+          ),
+          style: TextTheme.of(context).bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            editWakeUpSleepTimes(context);
+          },
+          child: Text(l10n.edit),
+        ),
+      ],
+    );
+  }
+
+  void editWakeUpSleepTimes(BuildContext context) async {
+    final l10n = AppL10n.of(context);
+    final theme = Theme.of(context);
+    final result = await showTimeRangePicker(
+      context: context,
+      start: targetSettings.wakeUpTime,
+      end: targetSettings.sleepTime,
+      interval: Duration(minutes: 30),
+      fromText: l10n.wakeUp,
+      toText: l10n.sleep,
+      disabledTime: TimeRange(
+        startTime: const TimeOfDay(hour: 23, minute: 30),
+        endTime: const TimeOfDay(hour: 4, minute: 0),
+      ),
+      disabledColor: theme.disabledColor,
+      strokeWidth: AppSize.spacingSmall,
+      use24HourFormat: MediaQuery.of(context).alwaysUse24HourFormat,
+      ticks: 24,
+      ticksOffset: -7,
+      ticksLength: 5,
+      ticksColor: theme.colorScheme.secondary,
+      labelOffset: AppSize.spacingLarge * 1.5,
+      rotateLabels: false,
+      padding: AppSize.spacingLarge,
+    );
+    if (result != null) {
+      setState(() {
+        targetSettings.wakeUpTime = result.startTime;
+        targetSettings.sleepTime = result.endTime;
+      });
+    }
   }
 }

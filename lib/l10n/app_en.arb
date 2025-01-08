@@ -4,7 +4,21 @@
   "allowAppNotifications": "Allow App Notifications",
   "allowAppNotificationsDescription": "We will need permission so the app can send you notifications.",
   "dailyWaterIntake": "Daily Water Intake",
+  "edit": "Edit",
   "letsStart": "let's Start!",
+  "sleep": "Sleep",
   "sureLetsDoIt": "Sure, let's do it",
+  "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",
+  "@wakeUpSleepTimes": {
+    "placeholders": {
+      "wakeUpTime": {
+        "type": "String"
+      },
+      "sleepTime": {
+        "type": "String"
+      }
+    }
+  },
+  "wakeUp": "Wake Up",
   "weAreGoodToGo": "We are good to go"
 }

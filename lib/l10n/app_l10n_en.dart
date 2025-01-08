@@ -19,10 +19,24 @@ class AppL10nEn extends AppL10n {
   String get dailyWaterIntake => 'Daily Water Intake';
 
   @override
+  String get edit => 'Edit';
+
+  @override
   String get letsStart => 'let\'s Start!';
 
   @override
+  String get sleep => 'Sleep';
+
+  @override
   String get sureLetsDoIt => 'Sure, let\'s do it';
+
+  @override
+  String wakeUpSleepTimes(String wakeUpTime, String sleepTime) {
+    return 'Wake Up at $wakeUpTime, Sleep at $sleepTime';
+  }
+
+  @override
+  String get wakeUp => 'Wake Up';
 
   @override
   String get weAreGoodToGo => 'We are good to go';
