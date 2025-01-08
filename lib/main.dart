@@ -1,10 +1,20 @@
-import 'package:aquapact/page/start.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import 'l10n/app_l10n.dart';
 import 'notification.dart';
+import 'page/start.dart';
+import 'ui/color.dart';
+import 'ui/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('assets/fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
 
   final didNotificationLaunchApp = await AppNotification.I.initialize();
 
@@ -23,17 +33,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme(context);
     return MaterialApp(
-      title: 'TODO',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      onGenerateTitle: (context) => AppL10n.of(context).appTitle,
+      localizationsDelegates: AppL10n.localizationsDelegates,
+      supportedLocales: AppL10n.supportedLocales,
+      themeMode: ThemeMode.system,
+      theme: theme.lightMediumContrast(),
+      darkTheme: theme.darkMediumContrast(),
       home: StartPage(),
-      // home: MyHomePage(
-      //   title: 'Flutter Demo Home Page',
-      //   didNotificationLaunchApp: didNotificationLaunchApp,
-      // ),
     );
   }
 }
@@ -90,8 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
+            Text(
               'You have pushed the button this many times:',
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.success.color),
             ),
             Text(
               '$_counter',

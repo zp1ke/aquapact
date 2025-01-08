@@ -11,6 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_local_notifications: ^18.0.1
+  flutter_localizations:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  intl: any
   timezone: ^0.10.0
 
 dev_dependencies:
@@ -21,4 +25,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/png/
+    - assets/fonts/
+  generate: true
   uses-material-design: true

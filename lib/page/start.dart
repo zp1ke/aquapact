@@ -1,5 +1,8 @@
-import 'package:aquapact/notification.dart';
 import 'package:flutter/material.dart';
+
+import '../l10n/app_l10n.dart';
+import '../notification.dart';
+import '../ui/image.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -48,13 +51,13 @@ class _StartPageState extends State<StartPage> {
   }
 
   Widget requestPermissionContent(BuildContext context, double basePadding) {
-    const assetName = 'assets/png/notification.png';
     final theme = Theme.of(context);
+    final l10n = AppL10n.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Image(
-          image: AssetImage(assetName),
+          image: AssetImage(AppImage.notification.assetName(context)),
           height: basePadding * 5,
           fit: BoxFit.fitHeight,
         ),
@@ -63,13 +66,11 @@ class _StartPageState extends State<StartPage> {
           spacing: basePadding / 2,
           children: [
             Text(
-              'Allow App Notifications',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              l10n.allowAppNotifications,
+              style: theme.textTheme.titleLarge,
             ),
             Text(
-              'We will need permission so the app can send you notifications.',
+              l10n.allowAppNotificationsDescription,
               textAlign: TextAlign.center,
             ),
           ],
@@ -82,10 +83,7 @@ class _StartPageState extends State<StartPage> {
               });
             });
           },
-          style: theme.elevatedButtonTheme.style?.copyWith(
-            backgroundColor: WidgetStateProperty.all(theme.primaryColor),
-          ),
-          child: Text('Sure, let\'s do it!'),
+          child: Text(l10n.sureLetsDoIt),
         ),
       ],
     );
