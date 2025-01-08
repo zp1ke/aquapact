@@ -3,5 +3,7 @@
   "appTitle": "AquaPact",
   "allowAppNotifications": "Allow App Notifications",
   "allowAppNotificationsDescription": "We will need permission so the app can send you notifications.",
-  "sureLetsDoIt": "Sure, let's do it"
+  "letsStart": "let's Start!",
+  "sureLetsDoIt": "Sure, let's do it",
+  "weAreGoodToGo": "We are good to go"
 }

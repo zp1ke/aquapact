@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'size.dart';
+
 class AppTheme {
   final TextTheme textTheme;
 
@@ -345,9 +347,25 @@ class AppTheme {
         textTheme: textTheme.apply(
           bodyColor: colorScheme.onSurface,
           displayColor: colorScheme.onSurface,
+          fontSizeFactor: 1.05,
         ),
         scaffoldBackgroundColor: colorScheme.surface,
         canvasColor: colorScheme.surface,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: AppSize.spacingXS,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppSize.spacingMedium),
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppSize.spacingMedium),
+            ),
+          ),
+        ),
       );
 }
 

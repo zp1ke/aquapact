@@ -111,11 +111,23 @@ abstract class AppL10n {
   /// **'We will need permission so the app can send you notifications.'**
   String get allowAppNotificationsDescription;
 
+  /// No description provided for @letsStart.
+  ///
+  /// In en, this message translates to:
+  /// **'let\'s Start!'**
+  String get letsStart;
+
   /// No description provided for @sureLetsDoIt.
   ///
   /// In en, this message translates to:
   /// **'Sure, let\'s do it'**
   String get sureLetsDoIt;
+
+  /// No description provided for @weAreGoodToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'We are good to go'**
+  String get weAreGoodToGo;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

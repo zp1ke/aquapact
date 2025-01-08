@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'l10n/app_l10n.dart';
-import 'notification.dart';
+import 'app/notification.dart';
 import 'page/start.dart';
 import 'ui/color.dart';
 import 'ui/theme.dart';

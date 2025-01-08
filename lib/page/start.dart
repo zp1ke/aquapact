@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/app_l10n.dart';
-import '../notification.dart';
-import '../ui/image.dart';
+import '../app/navigation.dart';
+import '../app/notification.dart';
+import '../ui/form/target_settings.dart';
 import '../ui/size.dart';
+import '../ui/widget/ready_start.dart';
+import '../ui/widget/request_permission.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -14,14 +16,22 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   bool? hasPermission;
+  bool hasSettings = false;
 
   @override
   void initState() {
     super.initState();
-    AppNotification.I.hasPermissionGranted().then((value) {
-      setState(() {
-        hasPermission = value;
-      });
+    checkPermissionsAndSettings();
+  }
+
+  void checkPermissionsAndSettings() async {
+    hasSettings = false; // TODO: check from settings
+    final granted = await AppNotification.I.hasPermissionGranted();
+    if (mounted && granted && hasSettings) {
+      await navigateToHome(context);
+    }
+    setState(() {
+      hasPermission = granted;
     });
   }
 
@@ -42,47 +52,21 @@ class _StartPageState extends State<StartPage> {
       return CircularProgressIndicator.adaptive();
     }
     if (hasPermission == false) {
-      return requestPermissionContent(context);
+      return RequestPermissionWidget(onGranted: () {
+        setState(() {
+          hasPermission = true;
+        });
+      });
     }
-    return Text('Permission granted TODO');
+    if (!hasSettings) {
+      return TargetSettingsForm();
+    }
+    return ReadyStartWidget(onAction: () {
+      navigateToHome(context);
+    });
   }
 
-  Widget requestPermissionContent(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = AppL10n.of(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Image(
-          image: AppImage.notification.assetImage(context),
-          height: AppSize.spacing4Xl,
-          fit: BoxFit.fitHeight,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: AppSize.spacingMedium,
-          children: [
-            Text(
-              l10n.allowAppNotifications,
-              style: theme.textTheme.titleLarge,
-            ),
-            Text(
-              l10n.allowAppNotificationsDescription,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () {
-            AppNotification.I.requestPermissions().then((value) {
-              setState(() {
-                hasPermission = value;
-              });
-            });
-          },
-          child: Text(l10n.sureLetsDoIt),
-        ),
-      ],
-    );
+  Future<void> navigateToHome(BuildContext context) async {
+    await context.navigateTo(AppPage.home);
   }
 }
