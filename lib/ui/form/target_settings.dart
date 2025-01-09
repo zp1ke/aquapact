@@ -22,12 +22,14 @@ class TargetSettingsForm extends StatefulWidget {
 }
 
 class _TargetSettingsFormState extends State<TargetSettingsForm> {
-  late TargetSettings targetSettings;
+  TargetSettings targetSettings = TargetSettings();
 
   @override
   void initState() {
     super.initState();
-    targetSettings = widget.targetSettings ?? TargetSettings();
+    if (widget.targetSettings != null) {
+      targetSettings = widget.targetSettings!;
+    }
   }
 
   @override
@@ -82,7 +84,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           interval: 1000.0,
           onChanged: (value) {
             setState(() {
-              targetSettings.dailyTarget = value.roundToNearestHundred();
+              targetSettings = targetSettings.copyWith(
+                dailyTarget: value.roundToNearestHundred(),
+              );
             });
           },
         ),
@@ -117,7 +121,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   void editWakeUpSleepTimes(BuildContext context) async {
     final l10n = AppL10n.of(context);
     final theme = Theme.of(context);
-    final result = await showTimeRangePicker(
+    final TimeRange? result = await showTimeRangePicker(
       context: context,
       start: targetSettings.wakeUpTime,
       end: targetSettings.sleepTime,
@@ -141,8 +145,10 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
     if (result != null) {
       setState(() {
-        targetSettings.wakeUpTime = result.startTime;
-        targetSettings.sleepTime = result.endTime;
+        targetSettings = targetSettings.copyWith(
+          wakeUpTime: result.startTime,
+          sleepTime: result.endTime,
+        );
       });
     }
   }
@@ -165,7 +171,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           interval: 1.0,
           onChanged: (value) {
             setState(() {
-              targetSettings.notificationIntervalInMinutes = value.toInt() * 60;
+              targetSettings = targetSettings.copyWith(
+                notificationIntervalInMinutes: (value * 60).toInt(),
+              );
             });
           },
         ),
