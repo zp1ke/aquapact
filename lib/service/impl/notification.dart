@@ -65,7 +65,7 @@ class LocalNotificationService implements NotificationService {
   }) async {
     await _plugin.cancelAll();
     var time = targetSettings.wakeUpTime;
-    while (time.isBefore(targetSettings.sleepTime)) {
+    while (!time.isAfter(targetSettings.sleepTime)) {
       await _scheduleDailyNotification(
         time.hour * 60 + time.minute,
         title,
@@ -82,11 +82,13 @@ class LocalNotificationService implements NotificationService {
     String message,
     TimeOfDay time,
   ) async {
+    final dateTime = _convertTime(time);
+    debugPrint('Scheduling notification for $time at $dateTime');
     await _plugin.zonedSchedule(
       id,
       title,
       message,
-      _convertTime(time),
+      dateTime,
       NotificationDetails(android: _androidDetails()),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -110,7 +112,7 @@ class LocalNotificationService implements NotificationService {
 
   tz.TZDateTime _convertTime(TimeOfDay time) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduleDate = tz.TZDateTime(
+    return tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
@@ -118,9 +120,5 @@ class LocalNotificationService implements NotificationService {
       time.hour,
       time.minute,
     );
-    if (scheduleDate.isBefore(now)) {
-      scheduleDate = scheduleDate.add(const Duration(days: 1));
-    }
-    return scheduleDate;
   }
 }

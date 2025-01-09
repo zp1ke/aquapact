@@ -48,7 +48,7 @@ class _StartPageState extends State<StartPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: AppSize.spacingSmall,
-              vertical: AppSize.spacing4Xl,
+              vertical: AppSize.spacingXL,
             ),
             child: content(context),
           ),
