@@ -41,6 +41,9 @@ class AppL10nEn extends AppL10n {
   String get save => 'Save';
 
   @override
+  String get saving => 'Saving...';
+
+  @override
   String get sleep => 'Sleep';
 
   @override

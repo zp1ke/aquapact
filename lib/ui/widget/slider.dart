@@ -9,6 +9,7 @@ class SliderWidget extends StatelessWidget {
   final double min;
   final double max;
   final double value;
+  final bool enabled;
   final double? interval;
   final Function(double) onChanged;
 
@@ -17,6 +18,7 @@ class SliderWidget extends StatelessWidget {
     required this.min,
     required this.max,
     required this.value,
+    this.enabled = true,
     required this.interval,
     required this.onChanged,
   });
@@ -39,9 +41,11 @@ class SliderWidget extends StatelessWidget {
             showLabels: true,
             shouldAlwaysShowTooltip: true,
             enableTooltip: true,
-            onChanged: (value) {
-              onChanged(value);
-            },
+            onChanged: enabled
+                ? (value) {
+                    onChanged(value);
+                  }
+                : null,
             onChangeEnd: (value) {
               onChanged(value);
             },

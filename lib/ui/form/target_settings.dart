@@ -9,11 +9,13 @@ import '../widget/slider.dart';
 
 class TargetSettingsForm extends StatefulWidget {
   final TargetSettings? targetSettings;
+  final bool saving;
   final Function(TargetSettings) onSave;
 
   const TargetSettingsForm({
     super.key,
     this.targetSettings,
+    this.saving = false,
     required this.onSave,
   });
 
@@ -44,10 +46,26 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(notificationIntervalCard(context)),
           SizedBox(height: AppSize.spacingLarge),
           OutlinedButton(
-            onPressed: () {
-              widget.onSave(targetSettings);
-            },
-            child: Text(AppL10n.of(context).save),
+            onPressed: !widget.saving
+                ? () {
+                    widget.onSave(targetSettings);
+                  }
+                : null,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              spacing: AppSize.spacingMedium,
+              children: [
+                if (widget.saving)
+                  SizedBox(
+                    width: AppSize.spacingXM,
+                    height: AppSize.spacingXM,
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                Text(widget.saving
+                    ? AppL10n.of(context).saving
+                    : AppL10n.of(context).save),
+              ],
+            ),
           ),
         ],
       ),
@@ -78,6 +96,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           value: targetSettings.dailyTarget,
           min: 500.0,
           max: 5000.0,
+          enabled: !widget.saving,
           interval: 1000.0,
           onChanged: (value) {
             setState(() {
@@ -106,9 +125,11 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
               ),
         ),
         OutlinedButton(
-          onPressed: () {
-            editWakeUpSleepTimes(context);
-          },
+          onPressed: !widget.saving
+              ? () {
+                  editWakeUpSleepTimes(context);
+                }
+              : null,
           child: Text(l10n.edit),
         ),
       ],
@@ -165,6 +186,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           value: targetSettings.notificationInterval.inHours.toDouble(),
           min: 1.0,
           max: 4.0,
+          enabled: !widget.saving,
           interval: 1.0,
           onChanged: (value) {
             setState(() {

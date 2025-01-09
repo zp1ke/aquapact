@@ -18,6 +18,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   bool? hasPermission;
   TargetSettings? settings;
+  bool saving = false;
 
   @override
   void initState() {
@@ -66,15 +67,28 @@ class _StartPageState extends State<StartPage> {
       );
     }
     if (settings == null) {
-      return TargetSettingsForm(onSave: (newSettings) async {
-        await newSettings.save();
-        setState(() {
-          settings = newSettings;
-        });
-      });
+      return TargetSettingsForm(
+        saving: saving,
+        onSave: saveTargetSettings,
+      );
     }
     return ReadyStartWidget(onAction: () {
       navigateToHome(context);
+    });
+  }
+
+  void saveTargetSettings(TargetSettings newSettings) async {
+    setState(() {
+      saving = true;
+    });
+    await newSettings.save();
+    await AppNotification.I.scheduleNotificationsOf(
+      newSettings,
+      title: 'Drink Water',
+      message: 'Time to drink water TODO',
+    );
+    setState(() {
+      settings = newSettings;
     });
   }
 

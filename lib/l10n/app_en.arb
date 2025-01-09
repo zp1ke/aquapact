@@ -8,6 +8,7 @@
   "letsStart": "let's Start!",
   "notifyEveryHours": "{count, plural, =1{Notify hourly} other{Notify every {count} hours}}",
   "save": "Save",
+  "saving": "Saving...",
   "sleep": "Sleep",
   "sureLetsDoIt": "Sure, let's do it",
   "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",

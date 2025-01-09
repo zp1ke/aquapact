@@ -1,8 +1,12 @@
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+import '../model/target_settings.dart';
+import '../util/date_time.dart';
 
 class AppNotification {
   static final AppNotification _instance = AppNotification._();
@@ -50,11 +54,47 @@ class AppNotification {
     return enabled ?? false;
   }
 
+  Future<void> scheduleNotificationsOf(
+    TargetSettings targetSettings, {
+    required String title,
+    required String message,
+  }) async {
+    await plugin.cancelAll();
+    var time = targetSettings.wakeUpTime;
+    while (time.isBefore(targetSettings.sleepTime)) {
+      await _scheduleDailyNotification(
+        time.hour * 60 + time.minute,
+        title,
+        message,
+        time,
+      );
+      time = time.add(targetSettings.notificationInterval);
+    }
+  }
+
+  Future<void> _scheduleDailyNotification(
+    int id,
+    String title,
+    String message,
+    TimeOfDay time,
+  ) async {
+    await plugin.zonedSchedule(
+      id,
+      title,
+      message,
+      _convertTime(time),
+      NotificationDetails(android: _androidDetails()),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
   AndroidNotificationDetails _androidDetails() {
     return AndroidNotificationDetails(
-      'default_notification_channel',
-      'your channel name',
-      channelDescription: 'your channel description',
+      'aquapact_channel',
+      'AquaPact Notifications',
       importance: Importance.max,
       priority: Priority.high,
       visibility: NotificationVisibility.public,
@@ -64,50 +104,15 @@ class AppNotification {
     );
   }
 
-  Future<void> showNotification(
-    int id,
-    String title,
-    String message, {
-    String? payload,
-  }) async {
-    await plugin.show(
-      id,
-      title,
-      message,
-      NotificationDetails(android: _androidDetails()),
-      payload: payload,
-    );
-  }
-
-  Future<void> scheduleNotification(
-    int id,
-    String title,
-    String message,
-    DateTime dateTime,
-  ) async {
-    await plugin.cancelAll();
-    await plugin.zonedSchedule(
-      id,
-      title,
-      message,
-      tz.TZDateTime.from(dateTime, tz.local),
-      NotificationDetails(android: _androidDetails()),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-    );
-  }
-
-  tz.TZDateTime _convertTime(int hour, int minutes) {
+  tz.TZDateTime _convertTime(TimeOfDay time) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-      hour,
-      minutes,
+      time.hour,
+      time.minute,
     );
     if (scheduleDate.isBefore(now)) {
       scheduleDate = scheduleDate.add(const Duration(days: 1));
