@@ -42,7 +42,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(dailyTargetCard(context)),
           card(wakeUpSleepTimesCard(context)),
           card(notificationIntervalCard(context)),
-          Expanded(child: Spacer()),
+          SizedBox(height: AppSize.spacingLarge),
           OutlinedButton(
             onPressed: () {
               widget.onSave(targetSettings);
@@ -58,10 +58,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppSize.spacingMedium,
-          vertical: AppSize.spacingLarge,
-        ),
+        padding: EdgeInsets.all(AppSize.spacingLarge),
         child: Center(child: child),
       ),
     );
