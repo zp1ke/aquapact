@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../model/target_settings.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final bool didNotificationLaunchApp;
+
+  const HomePage({
+    super.key,
+    required this.didNotificationLaunchApp,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -28,9 +33,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(
-            'Home Page TODO, notify every ${targetSettings.notificationInterval.inHours} hours'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Text('From notification: ${widget.didNotificationLaunchApp}'),
+            Text(
+                'Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
+          ],
+        ),
       ),
     );
   }

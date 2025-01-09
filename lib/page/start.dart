@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app/navigation.dart';
 import '../app/notification.dart';
+import '../constant.dart';
 import '../model/target_settings.dart';
 import '../ui/form/target_settings.dart';
 import '../ui/size.dart';
@@ -9,7 +10,12 @@ import '../ui/widget/ready_start.dart';
 import '../ui/widget/request_permission.dart';
 
 class StartPage extends StatefulWidget {
-  const StartPage({super.key});
+  final bool didNotificationLaunchApp;
+
+  const StartPage({
+    super.key,
+    required this.didNotificationLaunchApp,
+  });
 
   @override
   State<StartPage> createState() => _StartPageState();
@@ -40,13 +46,15 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSize.spacingSmall,
-            vertical: AppSize.spacing4Xl,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSize.spacingSmall,
+              vertical: AppSize.spacing4Xl,
+            ),
+            child: content(context),
           ),
-          child: content(context),
         ),
       ),
     );
@@ -93,6 +101,12 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future<void> navigateToHome(BuildContext context) async {
-    await context.navigateTo(AppPage.home, clear: true);
+    await context.navigateTo(
+      AppPage.home,
+      clear: true,
+      args: {
+        keyDidNotificationLaunchApp: widget.didNotificationLaunchApp,
+      },
+    );
   }
 }

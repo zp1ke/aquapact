@@ -40,7 +40,9 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: theme.lightMediumContrast(),
       darkTheme: theme.darkMediumContrast(),
-      home: StartPage(),
+      home: StartPage(
+        didNotificationLaunchApp: didNotificationLaunchApp,
+      ),
     );
   }
 }
