@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../app/di.dart';
 import '../model/target_settings.dart';
+import '../service/notification.dart';
+import '../service/settings.dart';
 
 class HomePage extends StatefulWidget {
-  final bool didNotificationLaunchApp;
-
-  const HomePage({
-    super.key,
-    required this.didNotificationLaunchApp,
-  });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,8 +21,8 @@ class _HomePageState extends State<HomePage> {
     readTargetSettings();
   }
 
-  void readTargetSettings() async {
-    final settings = await TargetSettings.read();
+  void readTargetSettings() {
+    final settings = service<SettingsService>().readTargetSettings();
     setState(() {
       targetSettings = settings ?? TargetSettings();
     });
@@ -36,7 +34,8 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            Text('From notification: ${widget.didNotificationLaunchApp}'),
+            Text(
+                'From notification: ${service<NotificationService>().appLaunchedByNotification}'),
             Text(
                 'Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
           ],

@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app/notification.dart';
-import 'l10n/app_l10n.dart';
-import 'page/start.dart';
-import 'ui/theme.dart';
+import 'app/app.dart';
+import 'app/di.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,34 +13,7 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  final didNotificationLaunchApp = await AppNotification.I.initialize();
+  await setupServices();
 
-  runApp(MyApp(
-    didNotificationLaunchApp: didNotificationLaunchApp,
-  ));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-    required this.didNotificationLaunchApp,
-  });
-
-  final bool didNotificationLaunchApp;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = AppTheme(context);
-    return MaterialApp(
-      onGenerateTitle: (context) => AppL10n.of(context).appTitle,
-      localizationsDelegates: AppL10n.localizationsDelegates,
-      supportedLocales: AppL10n.supportedLocales,
-      themeMode: ThemeMode.system,
-      theme: theme.lightMediumContrast(),
-      darkTheme: theme.darkMediumContrast(),
-      home: StartPage(
-        didNotificationLaunchApp: didNotificationLaunchApp,
-      ),
-    );
-  }
+  runApp(App());
 }

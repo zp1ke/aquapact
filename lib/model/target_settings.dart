@@ -2,12 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../app/settings.dart';
 import 'measure_unit.dart';
 
 part 'target_settings.g.dart';
-
-const _settingsKey = 'target_settings';
 
 @JsonSerializable()
 class TargetSettings extends Equatable {
@@ -33,20 +30,6 @@ class TargetSettings extends Equatable {
 
   Duration get notificationInterval =>
       Duration(minutes: notificationIntervalInMinutes);
-
-  Future<bool> save() async {
-    final appSettings = await AppSettings.I;
-    return appSettings.write(_settingsKey, toMap());
-  }
-
-  static Future<TargetSettings?> read() async {
-    final appSettings = await AppSettings.I;
-    final Map<String, dynamic>? map = appSettings.read(_settingsKey);
-    if (map != null) {
-      return TargetSettings.fromMap(map);
-    }
-    return null;
-  }
 
   factory TargetSettings.fromMap(Map<String, dynamic> map) =>
       _$TargetSettingsFromJson(map);

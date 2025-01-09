@@ -5,61 +5,65 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../model/target_settings.dart';
-import '../util/date_time.dart';
+import '../../model/target_settings.dart';
+import '../../util/date_time.dart';
+import '../notification.dart';
 
-class AppNotification {
-  static final AppNotification _instance = AppNotification._();
+class LocalNotificationService implements NotificationService {
+  final FlutterLocalNotificationsPlugin _plugin;
+  bool? _appLaunchedByNotification;
 
-  static AppNotification get I => _instance;
+  LocalNotificationService._(this._plugin);
 
-  final plugin = FlutterLocalNotificationsPlugin();
-
-  bool initialized = false;
-
-  AppNotification._();
+  static Future<NotificationService> create() async {
+    final plugin = FlutterLocalNotificationsPlugin();
+    final service = LocalNotificationService._(plugin);
+    await service._initialize();
+    return service;
+  }
 
   AndroidFlutterLocalNotificationsPlugin? get androidPlugin =>
-      plugin.resolvePlatformSpecificImplementation<
+      _plugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
 
-  Future<bool> initialize() async {
-    if (initialized) {
-      return false;
-    }
-
-    initialized = true;
-
+  Future<void> _initialize() async {
     tz.initializeTimeZones();
 
     final settings = InitializationSettings(
       android: AndroidInitializationSettings('@drawable/app_icon'),
     );
-    await plugin.initialize(
+    await _plugin.initialize(
       settings,
       onDidReceiveNotificationResponse: (notificationResponse) {},
     );
 
-    final launchDetails = await plugin.getNotificationAppLaunchDetails();
-    return launchDetails?.didNotificationLaunchApp ?? false;
+    final launchDetails = await _plugin.getNotificationAppLaunchDetails();
+    _appLaunchedByNotification =
+        launchDetails?.didNotificationLaunchApp ?? false;
   }
 
+  @override
+  bool get appLaunchedByNotification => _appLaunchedByNotification ?? false;
+
+  @override
   Future<bool> hasPermissionGranted() async {
     final enabled = await androidPlugin?.areNotificationsEnabled();
     return enabled ?? false;
   }
 
+  @override
   Future<bool> requestPermissions() async {
     final enabled = await androidPlugin?.requestNotificationsPermission();
     return enabled ?? false;
   }
 
+  @override
   Future<void> scheduleNotificationsOf(
     TargetSettings targetSettings, {
     required String title,
     required String message,
   }) async {
-    await plugin.cancelAll();
+    await _plugin.cancelAll();
     var time = targetSettings.wakeUpTime;
     while (time.isBefore(targetSettings.sleepTime)) {
       await _scheduleDailyNotification(
@@ -78,7 +82,7 @@ class AppNotification {
     String message,
     TimeOfDay time,
   ) async {
-    await plugin.zonedSchedule(
+    await _plugin.zonedSchedule(
       id,
       title,
       message,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constant.dart';
 import '../page/home.dart';
 
 enum AppPage {
@@ -9,10 +8,7 @@ enum AppPage {
   Widget build(Map<String, Object> args) {
     switch (this) {
       case AppPage.home:
-        return HomePage(
-          didNotificationLaunchApp:
-              (args[keyDidNotificationLaunchApp] as bool?) ?? false,
-        );
+        return HomePage();
     }
   }
 }

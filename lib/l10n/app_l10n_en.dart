@@ -27,6 +27,12 @@ class AppL10nEn extends AppL10n {
   String get letsStart => 'let\'s Start!';
 
   @override
+  String get notificationTitle => 'Drink Water Reminder';
+
+  @override
+  String get notificationMessage => 'It\'s time to drink water!';
+
+  @override
   String notifyEveryHours(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

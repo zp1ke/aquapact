@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
-import '../../app/notification.dart';
+import '../../service/notification.dart';
 import '../image.dart';
 import '../size.dart';
 
@@ -41,16 +42,17 @@ class RequestPermissionWidget extends StatelessWidget {
           ],
         ),
         OutlinedButton(
-          onPressed: () {
-            AppNotification.I.requestPermissions().then((value) {
-              if (value) {
-                onGranted();
-              }
-            });
-          },
+          onPressed: requestPermissions,
           child: Text(l10n.sureLetsDoIt),
         ),
       ],
     );
+  }
+
+  void requestPermissions() async {
+    final granted = await service<NotificationService>().requestPermissions();
+    if (granted) {
+      onGranted();
+    }
   }
 }

@@ -6,6 +6,8 @@
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
   "letsStart": "let's Start!",
+  "notificationTitle": "Drink Water Reminder",
+  "notificationMessage": "It's time to drink water!",
   "notifyEveryHours": "{count, plural, =1{Notify hourly} other{Notify every {count} hours}}",
   "save": "Save",
   "saving": "Saving...",

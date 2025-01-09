@@ -129,6 +129,18 @@ abstract class AppL10n {
   /// **'let\'s Start!'**
   String get letsStart;
 
+  /// No description provided for @notificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drink Water Reminder'**
+  String get notificationTitle;
+
+  /// No description provided for @notificationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s time to drink water!'**
+  String get notificationMessage;
+
   /// No description provided for @notifyEveryHours.
   ///
   /// In en, this message translates to:

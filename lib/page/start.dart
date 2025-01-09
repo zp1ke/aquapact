@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../app/di.dart';
 import '../app/navigation.dart';
-import '../app/notification.dart';
-import '../constant.dart';
+import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
+import '../service/notification.dart';
+import '../service/settings.dart';
 import '../ui/form/target_settings.dart';
 import '../ui/size.dart';
 import '../ui/widget/ready_start.dart';
 import '../ui/widget/request_permission.dart';
 
 class StartPage extends StatefulWidget {
-  final bool didNotificationLaunchApp;
-
-  const StartPage({
-    super.key,
-    required this.didNotificationLaunchApp,
-  });
+  const StartPage({super.key});
 
   @override
   State<StartPage> createState() => _StartPageState();
@@ -33,8 +30,8 @@ class _StartPageState extends State<StartPage> {
   }
 
   void checkPermissionsAndSettings() async {
-    settings = await TargetSettings.read();
-    final granted = await AppNotification.I.hasPermissionGranted();
+    settings = service<SettingsService>().readTargetSettings();
+    final granted = await service<NotificationService>().hasPermissionGranted();
     if (mounted && granted && settings != null) {
       await navigateToHome(context);
     }
@@ -77,7 +74,9 @@ class _StartPageState extends State<StartPage> {
     if (settings == null) {
       return TargetSettingsForm(
         saving: saving,
-        onSave: saveTargetSettings,
+        onSave: (newSettings) {
+          saveTargetSettings(context, newSettings);
+        },
       );
     }
     return ReadyStartWidget(onAction: () {
@@ -85,15 +84,18 @@ class _StartPageState extends State<StartPage> {
     });
   }
 
-  void saveTargetSettings(TargetSettings newSettings) async {
+  void saveTargetSettings(
+    BuildContext context,
+    TargetSettings newSettings,
+  ) async {
     setState(() {
       saving = true;
     });
-    await newSettings.save();
-    await AppNotification.I.scheduleNotificationsOf(
+    final l10n = AppL10n.of(context);
+    await service<SettingsService>().saveTargetSettings(
       newSettings,
-      title: 'Drink Water',
-      message: 'Time to drink water TODO',
+      notificationTitle: l10n.notificationTitle,
+      notificationMessage: l10n.notificationMessage,
     );
     setState(() {
       settings = newSettings;
@@ -104,9 +106,6 @@ class _StartPageState extends State<StartPage> {
     await context.navigateTo(
       AppPage.home,
       clear: true,
-      args: {
-        keyDidNotificationLaunchApp: widget.didNotificationLaunchApp,
-      },
     );
   }
 }
