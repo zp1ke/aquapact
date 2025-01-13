@@ -30,7 +30,7 @@ class LocalNotificationService implements NotificationService {
     tz.initializeTimeZones();
 
     final settings = InitializationSettings(
-      android: AndroidInitializationSettings('@drawable/app_icon'),
+      android: AndroidInitializationSettings('@drawable/notification_icon'),
     );
     await _plugin.initialize(
       settings,

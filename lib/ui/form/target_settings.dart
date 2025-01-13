@@ -11,12 +11,14 @@ class TargetSettingsForm extends StatefulWidget {
   final TargetSettings? targetSettings;
   final bool saving;
   final Function(TargetSettings) onSave;
+  final VoidCallback? onCancel;
 
   const TargetSettingsForm({
     super.key,
     this.targetSettings,
     this.saving = false,
     required this.onSave,
+    this.onCancel,
   });
 
   @override
@@ -41,32 +43,11 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
       child: Column(
         spacing: AppSize.spacingMedium,
         children: [
-          card(dailyTargetCard(context)),
-          card(wakeUpSleepTimesCard(context)),
-          card(notificationIntervalCard(context)),
+          card(dailyTargetCard()),
+          card(wakeUpSleepTimesCard()),
+          card(notificationIntervalCard()),
           SizedBox(height: AppSize.spacingLarge),
-          OutlinedButton(
-            onPressed: !widget.saving
-                ? () {
-                    widget.onSave(targetSettings);
-                  }
-                : null,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: AppSize.spacingMedium,
-              children: [
-                if (widget.saving)
-                  SizedBox(
-                    width: AppSize.spacingXM,
-                    height: AppSize.spacingXM,
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                Text(widget.saving
-                    ? AppL10n.of(context).saving
-                    : AppL10n.of(context).save),
-              ],
-            ),
-          ),
+          toolbar(),
         ],
       ),
     );
@@ -82,7 +63,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
   }
 
-  Widget dailyTargetCard(BuildContext context) {
+  Widget dailyTargetCard() {
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
@@ -110,7 +91,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
   }
 
-  Widget wakeUpSleepTimesCard(BuildContext context) {
+  Widget wakeUpSleepTimesCard() {
     final l10n = AppL10n.of(context);
     return Column(
       spacing: AppSize.spacingMedium,
@@ -125,18 +106,14 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
               ),
         ),
         OutlinedButton(
-          onPressed: !widget.saving
-              ? () {
-                  editWakeUpSleepTimes(context);
-                }
-              : null,
+          onPressed: !widget.saving ? editWakeUpSleepTimes : null,
           child: Text(l10n.edit),
         ),
       ],
     );
   }
 
-  void editWakeUpSleepTimes(BuildContext context) async {
+  void editWakeUpSleepTimes() async {
     final l10n = AppL10n.of(context);
     final theme = Theme.of(context);
     final TimeRange? result = await showTimeRangePicker(
@@ -171,7 +148,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     }
   }
 
-  Widget notificationIntervalCard(BuildContext context) {
+  Widget notificationIntervalCard() {
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
@@ -197,6 +174,48 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           },
         ),
       ],
+    );
+  }
+
+  Widget toolbar() {
+    final saveBtn = saveButton();
+    if (widget.onCancel == null) {
+      return saveBtn;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextButton(
+          onPressed: !widget.saving ? widget.onCancel : null,
+          child: Text(AppL10n.of(context).cancel),
+        ),
+        saveBtn,
+      ],
+    );
+  }
+
+  Widget saveButton() {
+    return OutlinedButton(
+      onPressed: !widget.saving
+          ? () {
+        widget.onSave(targetSettings);
+      }
+          : null,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: AppSize.spacingMedium,
+        children: [
+          if (widget.saving)
+            SizedBox(
+              width: AppSize.spacingXM,
+              height: AppSize.spacingXM,
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          Text(widget.saving
+              ? AppL10n.of(context).saving
+              : AppL10n.of(context).save),
+        ],
+      ),
     );
   }
 }

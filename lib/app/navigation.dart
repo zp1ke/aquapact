@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../page/home.dart';
+import '../page/target_settings.dart';
 
 enum AppPage {
-  home;
+  home,
+  targetSettings;
 
   Widget build(Map<String, Object> args) {
     switch (this) {
       case AppPage.home:
         return HomePage();
+      case AppPage.targetSettings:
+        return TargetSettingsPage();
     }
   }
 }
@@ -23,5 +27,12 @@ extension AppNavigationContext on BuildContext {
       MaterialPageRoute(builder: (context) => page.build(args ?? {})),
       (_) => !clear,
     );
+  }
+
+  void navigateBack<T extends Object?>([T? result]) {
+    final navigator = Navigator.of(this);
+    if (navigator.canPop()) {
+      navigator.pop(result);
+    }
   }
 }

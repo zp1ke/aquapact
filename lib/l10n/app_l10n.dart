@@ -111,6 +111,12 @@ abstract class AppL10n {
   /// **'We will need permission so the app can send you notifications.'**
   String get allowAppNotificationsDescription;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @dailyWaterIntake.
   ///
   /// In en, this message translates to:

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../app/di.dart';
 import '../app/navigation.dart';
-import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
+import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/form/target_settings.dart';
@@ -18,7 +18,7 @@ class StartPage extends StatefulWidget {
   State<StartPage> createState() => _StartPageState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _StartPageState extends State<StartPage> with TargetSettingsSaver {
   bool? hasPermission;
   TargetSettings? settings;
   bool saving = false;
@@ -74,9 +74,7 @@ class _StartPageState extends State<StartPage> {
     if (settings == null) {
       return TargetSettingsForm(
         saving: saving,
-        onSave: (newSettings) {
-          saveTargetSettings(context, newSettings);
-        },
+        onSave: saveTargetSettings,
       );
     }
     return ReadyStartWidget(onAction: () {
@@ -84,19 +82,11 @@ class _StartPageState extends State<StartPage> {
     });
   }
 
-  void saveTargetSettings(
-    BuildContext context,
-    TargetSettings newSettings,
-  ) async {
+  void saveTargetSettings(TargetSettings newSettings) async {
     setState(() {
       saving = true;
     });
-    final l10n = AppL10n.of(context);
-    await service<SettingsService>().saveTargetSettings(
-      newSettings,
-      notificationTitle: l10n.notificationTitle,
-      notificationMessage: l10n.notificationMessage,
-    );
+    await saveSettings(context, newSettings);
     setState(() {
       settings = newSettings;
     });
