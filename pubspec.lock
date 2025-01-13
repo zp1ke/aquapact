@@ -382,10 +382,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: "8f52361c07497a7f2c16c13aac159f9be6fb12b1d67719eac98a21d9a205d571"
+      sha256: b0a98230538fe5d0b60a22fb6bf1b6cb03471b53e3324ff6069c591679dd59c9
       url: "https://pub.dev"
     source: hosted
-    version: "6.9.2"
+    version: "6.9.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -598,10 +598,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "02a7d8a9ef346c9af715811b01fbd8e27845ad2c41148eefd31321471b41863d"
+      sha256: bf808be89fe9dc467475e982c1db6c2faf3d2acf54d526cd5ec37d86c99dbd84
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.1"
   shared_preferences_foundation:
     dependency: transitive
     description:

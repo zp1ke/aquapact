@@ -59,6 +59,9 @@ class AppL10nEn extends AppL10n {
   String get sureLetsDoIt => 'Sure, let\'s do it';
 
   @override
+  String get targetSettings => 'Target Settings';
+
+  @override
   String wakeUpSleepTimes(String wakeUpTime, String sleepTime) {
     return 'Wake Up at $wakeUpTime, Sleep at $sleepTime';
   }

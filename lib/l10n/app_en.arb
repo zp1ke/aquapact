@@ -14,6 +14,7 @@
   "saving": "Saving...",
   "sleep": "Sleep",
   "sureLetsDoIt": "Sure, let's do it",
+  "targetSettings": "Target Settings",
   "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",
   "@wakeUpSleepTimes": {
     "placeholders": {

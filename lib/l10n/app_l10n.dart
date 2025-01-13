@@ -177,6 +177,12 @@ abstract class AppL10n {
   /// **'Sure, let\'s do it'**
   String get sureLetsDoIt;
 
+  /// No description provided for @targetSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Settings'**
+  String get targetSettings;
+
   /// No description provided for @wakeUpSleepTimes.
   ///
   /// In en, this message translates to:
