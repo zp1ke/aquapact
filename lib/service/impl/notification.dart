@@ -5,11 +5,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../model/target_settings.dart';
-import '../../util/date_time.dart';
 import '../notification.dart';
 
-class LocalNotificationService implements NotificationService {
+class LocalNotificationService extends NotificationService {
   final FlutterLocalNotificationsPlugin _plugin;
   bool? _appLaunchedByNotification;
 
@@ -47,42 +45,17 @@ class LocalNotificationService implements NotificationService {
 
   @override
   Future<bool> hasPermissionGranted() async {
-    final canScheduleExact =
-        await androidPlugin?.canScheduleExactNotifications();
-    bool? enabled;
-    if (canScheduleExact == true) {
-      enabled = await androidPlugin?.requestExactAlarmsPermission();
-    } else {
-      enabled = await androidPlugin?.requestNotificationsPermission();
-    }
+    final enabled = await androidPlugin?.requestExactAlarmsPermission();
     return enabled ?? false;
   }
 
   @override
-  Future<void> scheduleNotificationsOf(
-    TargetSettings targetSettings, {
+  Future<void> scheduleDailyNotification(
+    int id, {
     required String title,
     required String message,
+    required TimeOfDay time,
   }) async {
-    await _plugin.cancelAll();
-    var time = targetSettings.wakeUpTime;
-    while (!time.isAfter(targetSettings.sleepTime)) {
-      await _scheduleDailyNotification(
-        time.hour * 60 + time.minute,
-        title,
-        message,
-        time,
-      );
-      time = time.add(targetSettings.notificationInterval);
-    }
-  }
-
-  Future<void> _scheduleDailyNotification(
-    int id,
-    String title,
-    String message,
-    TimeOfDay time,
-  ) async {
     final dateTime = _convertTime(time);
     debugPrint('Scheduling notification for $time at $dateTime');
     await _plugin.zonedSchedule(
@@ -93,7 +66,7 @@ class LocalNotificationService implements NotificationService {
       NotificationDetails(android: _androidDetails()),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
@@ -121,5 +94,10 @@ class LocalNotificationService implements NotificationService {
       time.hour,
       time.minute,
     );
+  }
+
+  @override
+  Future<void> cancelAll() {
+    return _plugin.cancelAll();
   }
 }

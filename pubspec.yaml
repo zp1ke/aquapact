@@ -19,8 +19,8 @@ dependencies:
   intl: any
   json_annotation: ^4.9.0
   shared_preferences: ^2.3.5
-  syncfusion_flutter_core: ^28.1.38
-  syncfusion_flutter_sliders: ^28.1.38
+  syncfusion_flutter_core: ^28.1.39
+  syncfusion_flutter_sliders: ^28.1.39
   time_range_picker: ^2.3.0
   timezone: ^0.10.0
 
