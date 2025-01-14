@@ -6,8 +6,6 @@ abstract class NotificationService {
 
   Future<bool> hasPermissionGranted();
 
-  Future<bool> requestPermissions();
-
   Future<void> scheduleNotificationsOf(
     TargetSettings targetSettings, {
     required String title,

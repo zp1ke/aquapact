@@ -47,13 +47,14 @@ class LocalNotificationService implements NotificationService {
 
   @override
   Future<bool> hasPermissionGranted() async {
-    final enabled = await androidPlugin?.areNotificationsEnabled();
-    return enabled ?? false;
-  }
-
-  @override
-  Future<bool> requestPermissions() async {
-    final enabled = await androidPlugin?.requestNotificationsPermission();
+    final canScheduleExact =
+        await androidPlugin?.canScheduleExactNotifications();
+    bool? enabled;
+    if (canScheduleExact == true) {
+      enabled = await androidPlugin?.requestExactAlarmsPermission();
+    } else {
+      enabled = await androidPlugin?.requestNotificationsPermission();
+    }
     return enabled ?? false;
   }
 

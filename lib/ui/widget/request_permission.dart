@@ -50,7 +50,7 @@ class RequestPermissionWidget extends StatelessWidget {
   }
 
   void requestPermissions() async {
-    final granted = await service<NotificationService>().requestPermissions();
+    final granted = await service<NotificationService>().hasPermissionGranted();
     if (granted) {
       onGranted();
     }
