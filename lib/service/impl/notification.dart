@@ -105,10 +105,19 @@ class LocalNotificationService extends NotificationService {
   @override
   Future<List<AppNotification>> nextNotifications() async {
     final notifications = await _plugin.pendingNotificationRequests();
-    return notifications
+    final list = notifications
         .where((notification) => notification.payload != null)
         .map((notification) =>
             AppNotification.fromMap(jsonDecode(notification.payload!)))
         .toList(growable: false);
+    list.sort((n1, n2) {
+      final n1IsFuture = n1.todayTime.isAfter(DateTime.now());
+      final n2IsFuture = n2.todayTime.isAfter(DateTime.now());
+      if (n1IsFuture != n2IsFuture) {
+        return n1IsFuture ? -1 : 1;
+      }
+      return n1.time.compareTo(n2.time);
+    });
+    return list;
   }
 }
