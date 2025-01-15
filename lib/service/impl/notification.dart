@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../model/notification.dart';
 import '../notification.dart';
 
 class LocalNotificationService extends NotificationService {
@@ -20,7 +22,7 @@ class LocalNotificationService extends NotificationService {
     return service;
   }
 
-  AndroidFlutterLocalNotificationsPlugin? get androidPlugin =>
+  AndroidFlutterLocalNotificationsPlugin? get _androidPlugin =>
       _plugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
 
@@ -45,24 +47,23 @@ class LocalNotificationService extends NotificationService {
 
   @override
   Future<bool> hasPermissionGranted() async {
-    final enabled = await androidPlugin?.requestExactAlarmsPermission();
+    var enabled = await _androidPlugin?.requestNotificationsPermission();
+    if (enabled == true) {
+      enabled = await _androidPlugin?.requestExactAlarmsPermission();
+    }
     return enabled ?? false;
   }
 
   @override
-  Future<void> scheduleDailyNotification(
-    int id, {
-    required String title,
-    required String message,
-    required TimeOfDay time,
-  }) async {
-    final dateTime = _convertTime(time);
-    debugPrint('Scheduling notification for $time at $dateTime');
+  Future<void> scheduleDailyNotification(AppNotification notification) async {
+    final dateTime = _convertTime(notification.time);
+    debugPrint('Scheduling notification for ${notification.time} at $dateTime');
     await _plugin.zonedSchedule(
-      id,
-      title,
-      message,
+      notification.id,
+      notification.title,
+      notification.body,
       dateTime,
+      payload: jsonEncode(notification.toMap()),
       NotificationDetails(android: _androidDetails()),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -99,5 +100,15 @@ class LocalNotificationService extends NotificationService {
   @override
   Future<void> cancelAll() {
     return _plugin.cancelAll();
+  }
+
+  @override
+  Future<List<AppNotification>> nextNotifications() async {
+    final notifications = await _plugin.pendingNotificationRequests();
+    return notifications
+        .where((notification) => notification.payload != null)
+        .map((notification) =>
+            AppNotification.fromMap(jsonDecode(notification.payload!)))
+        .toList(growable: false);
   }
 }

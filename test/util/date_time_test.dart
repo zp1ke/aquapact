@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:aquapact/util/date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('TimeOfDay.add() returns time plus duration', () {
+  test('TimeOfDay.add() returns time plus duration', () async {
     final time = TimeOfDay(hour: 10, minute: 0);
     final steps = <Duration, TimeOfDay>{
       Duration(minutes: 30): TimeOfDay(hour: 10, minute: 30),
@@ -18,6 +20,7 @@ void main() {
     steps.forEach((duration, expected) {
       final result = time.add(duration);
       expect(result, equals(expected));
+      sleep(Duration(milliseconds: 200));
     });
   });
 }

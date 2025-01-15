@@ -1,3 +1,4 @@
+import 'package:aquapact/model/notification.dart';
 import 'package:aquapact/model/target_settings.dart';
 import 'package:aquapact/service/notification.dart';
 import 'package:flutter/material.dart';
@@ -53,13 +54,13 @@ class FakeNotificationService extends NotificationService {
   }
 
   @override
-  Future<void> scheduleDailyNotification(
-    int id, {
-    required String title,
-    required String message,
-    required TimeOfDay time,
-  }) {
-    idsTimes.add(time);
+  Future<void> scheduleDailyNotification(AppNotification notification) {
+    idsTimes.add(notification.time);
     return Future.value(null);
+  }
+
+  @override
+  Future<List<AppNotification>> nextNotifications() {
+    return Future.value([]);
   }
 }

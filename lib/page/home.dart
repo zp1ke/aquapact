@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
+import '../model/notification.dart';
 import '../model/target_settings.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
@@ -15,18 +16,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TargetSettings targetSettings = TargetSettings();
+  var targetSettings = TargetSettings();
+  var notifications = <AppNotification>[];
 
   @override
   void initState() {
     super.initState();
     readTargetSettings();
+    fetchNotifications();
   }
 
   void readTargetSettings() {
     final settings = service<SettingsService>().readTargetSettings();
     setState(() {
       targetSettings = settings ?? TargetSettings();
+    });
+  }
+
+  void fetchNotifications() async {
+    final notifications =
+        await service<NotificationService>().nextNotifications();
+    setState(() {
+      this.notifications = notifications;
     });
   }
 
@@ -51,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             Text(
                 'From notification: ${service<NotificationService>().appLaunchedByNotification}'),
@@ -59,6 +70,10 @@ class _HomePageState extends State<HomePage> {
                 'Notif from ${targetSettings.wakeUpTime} to ${targetSettings.sleepTime}'),
             Text(
                 'Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
+            Divider(),
+            if (notifications.isNotEmpty) Text('Next notifications:'),
+            ...notifications.map((notification) =>
+                Text('${notification.id} - ${notification.time}')),
           ],
         ),
       ),
