@@ -7,15 +7,19 @@ import 'package:test/test.dart';
 void main() {
   test('NotificationService.scheduleNotificationsOf()', () async {
     final times = <TimeOfDay>[
-      TimeOfDay(hour: 7, minute: 0),
       TimeOfDay(hour: 8, minute: 0),
-      TimeOfDay(hour: 9, minute: 0),
       TimeOfDay(hour: 10, minute: 0),
+      TimeOfDay(hour: 12, minute: 0),
+      TimeOfDay(hour: 14, minute: 0),
+      TimeOfDay(hour: 16, minute: 0),
+      TimeOfDay(hour: 18, minute: 0),
+      TimeOfDay(hour: 20, minute: 0),
+      TimeOfDay(hour: 22, minute: 0),
     ];
     final settings = TargetSettings(
       wakeUpTime: times.first,
       sleepTime: times.last,
-      notificationIntervalInMinutes: 60,
+      notificationIntervalInMinutes: 120,
     );
     final title = 'title';
     final message = 'message';

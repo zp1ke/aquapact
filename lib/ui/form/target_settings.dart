@@ -168,7 +168,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           onChanged: (value) {
             setState(() {
               targetSettings = targetSettings.copyWith(
-                notificationIntervalInMinutes: (value * 60).toInt(),
+                notificationIntervalInMinutes: value.toInt() * 60,
               );
             });
           },
@@ -198,8 +198,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return OutlinedButton(
       onPressed: !widget.saving
           ? () {
-        widget.onSave(targetSettings);
-      }
+              widget.onSave(targetSettings);
+            }
           : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,

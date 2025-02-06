@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 extension AppTime on TimeOfDay {
-  TimeOfDay add(Duration duration) {
-    final dateTime = DateTime(2025, 1, 1, hour, minute).add(duration);
-    return TimeOfDay.fromDateTime(dateTime);
+  DateTime toDateTime() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day, hour, minute);
   }
 }
 

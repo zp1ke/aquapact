@@ -18,9 +18,10 @@ dependencies:
   google_fonts: ^6.2.1
   intl: any
   json_annotation: ^4.9.0
-  shared_preferences: ^2.3.5
-  syncfusion_flutter_core: ^28.1.39
-  syncfusion_flutter_sliders: ^28.1.39
+  logger: ^2.5.0
+  shared_preferences: ^2.5.1
+  syncfusion_flutter_core: ^28.2.4
+  syncfusion_flutter_sliders: ^28.2.4
   time_range_picker: ^2.3.0
   timezone: ^0.10.0
 

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../model/notification.dart';
 import '../model/target_settings.dart';
 import '../util/date_time.dart';
@@ -14,8 +16,13 @@ abstract class NotificationService {
     required String message,
   }) async {
     await cancelAll();
-    var time = targetSettings.wakeUpTime;
-    while (!time.isAfter(targetSettings.sleepTime)) {
+    var dateTime = targetSettings.wakeUpTime.toDateTime();
+    final sleepDateTime = targetSettings.sleepTime.toDateTime();
+    while (!dateTime.isAfter(sleepDateTime)) {
+      final time = TimeOfDay(
+        hour: dateTime.hour,
+        minute: dateTime.minute,
+      );
       final notification = AppNotification(
         id: time.hour * 60 + time.minute,
         title: title,
@@ -23,7 +30,7 @@ abstract class NotificationService {
         time: time,
       );
       await scheduleDailyNotification(notification);
-      time = time.add(targetSettings.notificationInterval);
+      dateTime = dateTime.add(targetSettings.notificationInterval);
     }
   }
 

@@ -7,6 +7,8 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../model/notification.dart';
+import '../../util/date_time.dart';
+import '../../util/logger.dart';
 import '../notification.dart';
 
 class LocalNotificationService extends NotificationService {
@@ -57,7 +59,7 @@ class LocalNotificationService extends NotificationService {
   @override
   Future<void> scheduleDailyNotification(AppNotification notification) async {
     final dateTime = _convertTime(notification.time);
-    debugPrint('Scheduling notification for ${notification.time} at $dateTime');
+    'Notification ${notification.time} at $dateTime ${dateTime.location}'.log();
     await _plugin.zonedSchedule(
       notification.id,
       notification.title,
@@ -87,13 +89,15 @@ class LocalNotificationService extends NotificationService {
 
   tz.TZDateTime _convertTime(TimeOfDay time) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    var dateTime = time.toDateTime();
+    dateTime = dateTime.add(dateTime.timeZoneOffset);
     return tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-      time.hour,
-      time.minute,
+      dateTime.hour,
+      dateTime.minute,
     );
   }
 
