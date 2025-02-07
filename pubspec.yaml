@@ -14,6 +14,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   flutter_localizations:
     sdk: flutter
+  flutter_timezone: ^4.1.0
   get_it: ^8.0.3
   google_fonts: ^6.2.1
   intl: any

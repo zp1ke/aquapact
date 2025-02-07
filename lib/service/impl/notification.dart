@@ -3,11 +3,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../model/notification.dart';
-import '../../util/date_time.dart';
 import '../../util/logger.dart';
 import '../notification.dart';
 
@@ -30,6 +30,9 @@ class LocalNotificationService extends NotificationService {
 
   Future<void> _initialize() async {
     tz.initializeTimeZones();
+    final currentTimeZone = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    'Timezone: ${tz.local.name}'.log();
 
     final settings = InitializationSettings(
       android: AndroidInitializationSettings('@drawable/notification_icon'),
@@ -89,15 +92,13 @@ class LocalNotificationService extends NotificationService {
 
   tz.TZDateTime _convertTime(TimeOfDay time) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    var dateTime = time.toDateTime();
-    dateTime = dateTime.add(dateTime.timeZoneOffset);
     return tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-      dateTime.hour,
-      dateTime.minute,
+      time.hour,
+      time.minute,
     );
   }
 
