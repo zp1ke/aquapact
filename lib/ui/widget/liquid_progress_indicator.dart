@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../color.dart';
+import '../size.dart';
+
 class LiquidProgressIndicatorWidget extends StatefulWidget {
   final double loadValue;
   final Duration loadDuration;
@@ -66,6 +69,7 @@ class _LiquidProgressIndicatorWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox.expand(
       child: AnimatedBuilder(
         animation: Listenable.merge([loadController, waveController]),
@@ -77,7 +81,8 @@ class _LiquidProgressIndicatorWidgetState
                   painter: _WavePainter(
                     waveValue: waveController.value,
                     loadValue: loadValue.value,
-                    waveColor: widget.waveColor ?? Colors.blue,
+                    waveColor:
+                        widget.waveColor ?? theme.colorScheme.water,
                   ),
                 ),
               ),
@@ -85,9 +90,9 @@ class _LiquidProgressIndicatorWidgetState
                 child: Text(
                   '${(loadValue.value * 100).toStringAsFixed(0)}%',
                   style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black.withValues(alpha: 0.5),
+                    fontSize: AppSize.spacingLarge * 1.5,
                     fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
               )

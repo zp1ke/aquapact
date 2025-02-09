@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
             Divider(),
             SizedBox(
               width: size.width,
-              height: size.height * 0.3,
+              height: size.height * 0.2,
               child: Center(
                 child: LiquidProgressIndicatorWidget(
                   value: 1200.0,

@@ -4,6 +4,7 @@ import 'package:time_range_picker/time_range_picker.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
 import '../../util/number.dart';
+import '../color.dart';
 import '../size.dart';
 import '../widget/slider.dart';
 
@@ -64,6 +65,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   }
 
   Widget dailyTargetCard() {
+    final theme = Theme.of(context);
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
@@ -79,6 +81,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           max: 5000.0,
           enabled: !widget.saving,
           interval: 1000.0,
+          fromColor: Colors.blue,
+          toColor: theme.colorScheme.water,
+          textColor: Colors.white,
           onChanged: (value) {
             setState(() {
               targetSettings = targetSettings.copyWith(

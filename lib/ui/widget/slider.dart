@@ -9,6 +9,9 @@ class SliderWidget extends StatelessWidget {
   final bool enabled;
   final double height;
   final double? interval;
+  final Color? fromColor;
+  final Color? toColor;
+  final Color? textColor;
   final Function(double) onChanged;
 
   const SliderWidget({
@@ -17,26 +20,30 @@ class SliderWidget extends StatelessWidget {
     required this.max,
     required this.value,
     this.enabled = true,
-    this.height = 48,
+    this.height = AppSize.spacingXL * 1.1,
     required this.interval,
     required this.onChanged,
+    this.fromColor,
+    this.toColor,
+    this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final paddingFactor = .2;
+    final theme = Theme.of(context);
 
     return Container(
       width: double.infinity,
-      height: height * 1.2,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(height * paddingFactor),
         ),
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF00c6ff),
-            const Color(0xFF0072ff),
+            fromColor ?? theme.colorScheme.primaryContainer,
+            toColor ?? theme.colorScheme.primaryContainer,
           ],
           begin: const FractionalOffset(0.0, 0.0),
           end: const FractionalOffset(1.0, 1.00),
@@ -46,8 +53,8 @@ class SliderWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: height * paddingFactor * 1.5,
-          vertical: AppSize.spacingXS,
+          horizontal: height * paddingFactor,
+          vertical: AppSize.spacingSmall,
         ),
         child: Row(
           spacing: AppSize.spacingXS / 2,
@@ -58,25 +65,24 @@ class SliderWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: height * paddingFactor * 1.2,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: textColor ?? theme.colorScheme.onPrimaryContainer,
               ),
             ),
             Expanded(
               child: Center(
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: Colors.white.withValues(alpha: 1.0),
-                    inactiveTrackColor: Colors.white.withValues(alpha: .5),
+                    activeTrackColor: theme.indicatorColor,
+                    inactiveTrackColor:
+                        theme.indicatorColor.withValues(alpha: .5),
                     trackHeight: AppSize.spacingXS,
-                    thumbShape: CustomSliderThumbCircle(
-                      thumbRadius: (height - paddingFactor * 2) * 0.55,
+                    thumbShape: _SliderThumbCircle(
+                      thumbRadius: height * 0.45,
                       min: min,
                       max: max,
+                      color: theme.colorScheme.surface,
+                      textColor: theme.colorScheme.onSurface,
                     ),
-                    overlayColor: Colors.white.withValues(alpha: .4),
-                    //valueIndicatorColor: Colors.white,
-                    activeTickMarkColor: Colors.white,
-                    inactiveTickMarkColor: Colors.red.withValues(alpha: .7),
                   ),
                   child: Slider(
                     min: min,
@@ -93,7 +99,7 @@ class SliderWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: height * paddingFactor * 1.2,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: textColor ?? theme.colorScheme.onPrimaryContainer,
               ),
             ),
           ],
@@ -103,15 +109,19 @@ class SliderWidget extends StatelessWidget {
   }
 }
 
-class CustomSliderThumbCircle extends SliderComponentShape {
+class _SliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
   final double min;
   final double max;
+  final Color color;
+  final Color textColor;
 
-  const CustomSliderThumbCircle({
+  const _SliderThumbCircle({
     required this.thumbRadius,
     required this.min,
     required this.max,
+    required this.color,
+    required this.textColor,
   });
 
   @override
@@ -137,14 +147,14 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
-      ..color = Colors.white //Thumb Background Color
+      ..color = color
       ..style = PaintingStyle.fill;
 
     TextSpan span = TextSpan(
       style: TextStyle(
         fontSize: thumbRadius * .6,
         fontWeight: FontWeight.w700,
-        color: sliderTheme.thumbColor, //Text Color of Value on Thumb
+        color: textColor,
       ),
       text: getValue(value),
     );
