@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   var targetSettings = TargetSettings();
   var notifications = <AppNotification>[];
 
+  var intakeValue = 1800.0;
   var loadingSettings = false;
   var loadingNotifications = false;
 
@@ -89,22 +90,46 @@ class _HomePageState extends State<HomePage> {
               Text(
                   'Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
             Divider(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSize.spacingSmall),
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                label: Text('TODO'),
+                icon: const Icon(Icons.add),
+              ),
+            ),
+            Text('SOME Tip TODO'),
+            Divider(),
             if (loadingNotifications)
               const CircularProgressIndicator.adaptive(),
             if (!loadingNotifications && notifications.isNotEmpty)
-              Text('Next notifications:'),
-            if (!loadingNotifications)
-              ...notifications.map((notification) =>
-                  Text('${notification.id} - ${notification.time}')),
+              Padding(
+                padding: EdgeInsets.only(right: AppSize.spacingSmall),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    AppL10n.of(context).nextNotificationAt(
+                        notifications.first.time.format(context)),
+                    textScaler: TextScaler.linear(0.8),
+                  ),
+                ),
+              ),
             Spacer(),
+            Text(
+              '${intakeValue.toStringAsFixed(0)} / ${targetSettings.dailyTarget.toStringAsFixed(0)} ${targetSettings.volumeMeasureUnit.symbol}',
+              textScaler: TextScaler.linear(1.5),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Divider(),
             SizedBox(
               width: size.width,
               height: size.height * 0.2,
               child: Center(
                 child: LiquidProgressIndicatorWidget(
-                  value: 1200.0,
-                  targetValue: 2500.0,
+                  value: intakeValue,
+                  targetValue: targetSettings.dailyTarget,
                 ),
               ),
             ),

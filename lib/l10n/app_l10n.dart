@@ -135,6 +135,12 @@ abstract class AppL10n {
   /// **'let\'s Start!'**
   String get letsStart;
 
+  /// No description provided for @nextNotificationAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Notification at {time}'**
+  String nextNotificationAt(String time);
+
   /// No description provided for @notificationTitle.
   ///
   /// In en, this message translates to:

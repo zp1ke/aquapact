@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'theme.dart';
-
 extension AppColorScheme on ColorScheme {
   Color get success {
     if (brightness == Brightness.light) {

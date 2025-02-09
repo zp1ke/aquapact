@@ -30,6 +30,11 @@ class AppL10nEn extends AppL10n {
   String get letsStart => 'let\'s Start!';
 
   @override
+  String nextNotificationAt(String time) {
+    return 'Next Notification at $time';
+  }
+
+  @override
   String get notificationTitle => 'Drink Water Reminder';
 
   @override

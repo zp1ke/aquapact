@@ -15,8 +15,8 @@ class LiquidProgressIndicatorWidget extends StatefulWidget {
     super.key,
     required double value,
     required double targetValue,
-    this.loadDuration = const Duration(milliseconds: 500),
-    this.waveDuration = const Duration(milliseconds: 50),
+    this.loadDuration = const Duration(milliseconds: 2000),
+    this.waveDuration = const Duration(milliseconds: 800),
     this.waveColor,
   }) : loadValue = value / targetValue;
 
