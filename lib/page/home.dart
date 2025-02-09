@@ -5,10 +5,12 @@ import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/notification.dart';
 import '../model/target_settings.dart';
+import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/size.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
+import '../ui/widget/popup_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,13 +19,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   var targetSettings = TargetSettings();
   var notifications = <AppNotification>[];
 
-  var intakeValue = 1800.0;
+  var intakeValue = .0;
   var loadingSettings = false;
   var loadingNotifications = false;
+  var processing = false;
 
   @override
   void initState() {
@@ -37,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void readTargetSettings() {
-    if (loadingSettings) {
+    if (processing || loadingSettings) {
       return;
     }
     setState(() {
@@ -51,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void fetchNotifications() async {
-    if (loadingNotifications) {
+    if (processing || loadingNotifications) {
       return;
     }
     setState(() {
@@ -67,7 +70,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).appTitle),
@@ -81,58 +83,22 @@ class _HomePageState extends State<HomePage> {
           spacing: AppSize.spacingSmall,
           children: [
             Text(
-                'From notification: ${service<NotificationService>().appLaunchedByNotification}'),
+                'TODO From notification: ${service<NotificationService>().appLaunchedByNotification}'),
             if (loadingSettings) const CircularProgressIndicator.adaptive(),
             if (!loadingSettings)
               Text(
-                  'Notif from ${targetSettings.wakeUpTime} to ${targetSettings.sleepTime}'),
+                  'TODO Notif from ${targetSettings.wakeUpTime} to ${targetSettings.sleepTime}'),
             if (!loadingSettings)
               Text(
-                  'Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
+                  'TODO Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
             Divider(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSize.spacingSmall),
-              child: ElevatedButton.icon(
-                onPressed: () {},
-                label: Text('TODO'),
-                icon: const Icon(Icons.add),
-              ),
-            ),
-            Text('SOME Tip TODO'),
+            addIntakeButton(),
+            tipText(),
             Divider(),
-            if (loadingNotifications)
-              const CircularProgressIndicator.adaptive(),
-            if (!loadingNotifications && notifications.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.only(right: AppSize.spacingSmall),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    AppL10n.of(context).nextNotificationAt(
-                        notifications.first.time.format(context)),
-                    textScaler: TextScaler.linear(0.8),
-                  ),
-                ),
-              ),
+            nextNotifications(),
             Spacer(),
-            Text(
-              '${intakeValue.toStringAsFixed(0)} / ${targetSettings.dailyTarget.toStringAsFixed(0)} ${targetSettings.volumeMeasureUnit.symbol}',
-              textScaler: TextScaler.linear(1.5),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Divider(),
-            SizedBox(
-              width: size.width,
-              height: size.height * 0.2,
-              child: Center(
-                child: LiquidProgressIndicatorWidget(
-                  value: intakeValue,
-                  targetValue: targetSettings.dailyTarget,
-                ),
-              ),
-            ),
+            dailyStatusText(),
+            dailyStatusWidget(),
           ],
         ),
       ),
@@ -142,10 +108,12 @@ class _HomePageState extends State<HomePage> {
   Widget settingsButton() {
     return IconButton(
       icon: const Icon(Icons.settings),
-      onPressed: () async {
-        await context.navigateTo<TargetSettings?>(AppPage.targetSettings);
-        loadData();
-      },
+      onPressed: !processing
+          ? () async {
+              await context.navigateTo<TargetSettings?>(AppPage.targetSettings);
+              loadData();
+            }
+          : null,
     );
   }
 
@@ -159,7 +127,111 @@ class _HomePageState extends State<HomePage> {
               height: AppSize.spacingXS,
               child: CircularProgressIndicator.adaptive(),
             ),
-      onPressed: isNotLoading ? loadData : null,
+      onPressed: (!processing && isNotLoading) ? loadData : null,
     );
+  }
+
+  Widget addIntakeButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: AppSize.spacingSmall),
+      child: PopupButton<double>(
+        enabled: !processing,
+        value: targetSettings.defaultIntakeValue,
+        values: targetSettings.intakeValues,
+        icon: const Icon(Icons.add),
+        onSelected: addIntake,
+        itemBuilder: intakeWidget,
+      ),
+    );
+  }
+
+  Widget intakeWidget(double value) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      spacing: AppSize.spacingSmall,
+      children: [
+        Icon(Icons.local_drink),
+        Text(
+          '$value ${targetSettings.volumeMeasureUnit.symbol}',
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget tipText() {
+    return Text(
+      'SOME Tip TODO',
+      style: TextStyle(
+        fontStyle: FontStyle.italic,
+      ),
+    );
+  }
+
+  Widget nextNotifications() {
+    if (loadingNotifications) {
+      return const CircularProgressIndicator.adaptive();
+    }
+    if (!loadingNotifications && notifications.isNotEmpty) {
+      return Padding(
+        padding: EdgeInsets.only(right: AppSize.spacingSmall),
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            AppL10n.of(context)
+                .nextNotificationAt(notifications.first.time.format(context)),
+            textScaler: TextScaler.linear(0.8),
+          ),
+        ),
+      );
+    }
+    return Container();
+  }
+
+  Widget dailyStatusText() {
+    return Text(
+      '${intakeValue.toStringAsFixed(0)} / ${targetSettings.dailyTarget.toStringAsFixed(0)} ${targetSettings.volumeMeasureUnit.symbol}',
+      textScaler: TextScaler.linear(1.5),
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget dailyStatusWidget() {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: size.height * 0.2,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ),
+        ),
+      ),
+      child: Center(
+        child: LiquidProgressIndicatorWidget(
+          value: intakeValue,
+          targetValue: targetSettings.dailyTarget,
+        ),
+      ),
+    );
+  }
+
+  void addIntake(double value) async {
+    setState(() {
+      processing = true;
+    });
+    targetSettings = targetSettings.copyWith(
+      defaultIntakeValue: value,
+    );
+    await saveSettings(context, targetSettings, scheduleNotifications: false);
+    setState(() {
+      intakeValue += value;
+      processing = false;
+    });
   }
 }

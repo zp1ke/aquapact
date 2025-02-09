@@ -13,6 +13,10 @@ class TargetSettings extends Equatable {
 
   final VolumeMeasureUnit volumeMeasureUnit;
 
+  final List<double> intakeValues;
+
+  final double defaultIntakeValue;
+
   @TimeOfDayConverter()
   final TimeOfDay wakeUpTime;
 
@@ -24,6 +28,8 @@ class TargetSettings extends Equatable {
   const TargetSettings({
     this.dailyTarget = 2500.0,
     this.volumeMeasureUnit = VolumeMeasureUnit.ml,
+    this.intakeValues = const [100.0, 250.0, 400.0, 500.0],
+    this.defaultIntakeValue = 250.0,
     this.wakeUpTime = const TimeOfDay(hour: 7, minute: 0),
     this.sleepTime = const TimeOfDay(hour: 23, minute: 0),
     this.notificationIntervalInMinutes = 60,
@@ -41,6 +47,8 @@ class TargetSettings extends Equatable {
   List<Object?> get props => [
         dailyTarget,
         volumeMeasureUnit,
+        intakeValues,
+        defaultIntakeValue,
         wakeUpTime,
         sleepTime,
         notificationIntervalInMinutes,
@@ -49,6 +57,8 @@ class TargetSettings extends Equatable {
   TargetSettings copyWith({
     double? dailyTarget,
     VolumeMeasureUnit? volumeMeasureUnit,
+    List<double>? intakeValues,
+    double? defaultIntakeValue,
     TimeOfDay? wakeUpTime,
     TimeOfDay? sleepTime,
     int? notificationIntervalInMinutes,
@@ -56,6 +66,8 @@ class TargetSettings extends Equatable {
     return TargetSettings(
       dailyTarget: dailyTarget ?? this.dailyTarget,
       volumeMeasureUnit: volumeMeasureUnit ?? this.volumeMeasureUnit,
+      intakeValues: intakeValues ?? this.intakeValues,
+      defaultIntakeValue: defaultIntakeValue ?? this.defaultIntakeValue,
       wakeUpTime: wakeUpTime ?? this.wakeUpTime,
       sleepTime: sleepTime ?? this.sleepTime,
       notificationIntervalInMinutes:

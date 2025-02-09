@@ -33,12 +33,15 @@ class LocalSettingsService implements SettingsService {
     TargetSettings targetSettings, {
     required String notificationTitle,
     required String notificationMessage,
+    required bool scheduleNotifications,
   }) async {
-    await service<NotificationService>().scheduleNotificationsOf(
-      targetSettings,
-      title: notificationTitle,
-      message: notificationMessage,
-    );
+    if (scheduleNotifications) {
+      await service<NotificationService>().scheduleNotificationsOf(
+        targetSettings,
+        title: notificationTitle,
+        message: notificationMessage,
+      );
+    }
     return _write(_targetSettingsKey, targetSettings.toMap());
   }
 

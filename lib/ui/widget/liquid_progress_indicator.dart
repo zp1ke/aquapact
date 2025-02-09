@@ -6,19 +6,20 @@ import '../color.dart';
 import '../size.dart';
 
 class LiquidProgressIndicatorWidget extends StatefulWidget {
-  final double loadValue;
+  final double value;
+  final double targetValue;
   final Duration loadDuration;
   final Duration waveDuration;
   final Color? waveColor;
 
   const LiquidProgressIndicatorWidget({
     super.key,
-    required double value,
-    required double targetValue,
+    required this.value,
+    required this.targetValue,
     this.loadDuration = const Duration(milliseconds: 2000),
     this.waveDuration = const Duration(milliseconds: 800),
     this.waveColor,
-  }) : loadValue = value / targetValue;
+  });
 
   @override
   State<LiquidProgressIndicatorWidget> createState() =>
@@ -27,21 +28,20 @@ class LiquidProgressIndicatorWidget extends StatefulWidget {
 
 class _LiquidProgressIndicatorWidgetState
     extends State<LiquidProgressIndicatorWidget> with TickerProviderStateMixin {
-  late final double targetValue;
-  double loadStep = 0.1;
   late final AnimationController waveController;
   late final AnimationController loadController;
-  late final Animation<double> loadValue;
+
+  late Animation<double> loadValue;
+
+  double get loadedValue => min(widget.value / widget.targetValue, 1.0);
+
+  double get loadStep =>
+      loadedValue /
+      (widget.loadDuration.inMilliseconds / widget.waveDuration.inMilliseconds);
 
   @override
   initState() {
     super.initState();
-
-    targetValue = min(widget.loadValue, 1);
-
-    loadStep = targetValue /
-        (widget.loadDuration.inMilliseconds /
-            widget.waveDuration.inMilliseconds);
     waveController = AnimationController(
       vsync: this,
       duration: widget.waveDuration,
@@ -52,12 +52,12 @@ class _LiquidProgressIndicatorWidgetState
     );
     loadValue = Tween<double>(
       begin: 0,
-      end: targetValue,
+      end: loadedValue,
     ).animate(loadController);
 
     loadValue.addStatusListener((status) {
       if (status == AnimationStatus.completed &&
-          loadValue.value == targetValue) {
+          loadValue.value == loadedValue) {
         waveController.stop();
       }
       if (status == AnimationStatus.forward) {
@@ -81,8 +81,7 @@ class _LiquidProgressIndicatorWidgetState
                   painter: _WavePainter(
                     waveValue: waveController.value,
                     loadValue: loadValue.value,
-                    waveColor:
-                        widget.waveColor ?? theme.colorScheme.water,
+                    waveColor: widget.waveColor ?? theme.colorScheme.water,
                   ),
                 ),
               ),
@@ -106,10 +105,11 @@ class _LiquidProgressIndicatorWidgetState
   @override
   void didUpdateWidget(covariant oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.loadValue != targetValue) {
+    if (oldWidget.value != widget.value ||
+        oldWidget.targetValue != widget.targetValue) {
       loadValue = Tween<double>(
         begin: loadValue.value,
-        end: targetValue,
+        end: loadedValue,
       ).animate(loadController);
       loadController.reset();
       loadController.forward();

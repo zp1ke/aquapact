@@ -7,5 +7,6 @@ abstract class SettingsService {
     TargetSettings targetSettings, {
     required String notificationTitle,
     required String notificationMessage,
+    required bool scheduleNotifications,
   });
 }

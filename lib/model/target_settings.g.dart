@@ -12,6 +12,12 @@ TargetSettings _$TargetSettingsFromJson(Map<String, dynamic> json) =>
       volumeMeasureUnit: $enumDecodeNullable(
               _$VolumeMeasureUnitEnumMap, json['volumeMeasureUnit']) ??
           VolumeMeasureUnit.ml,
+      intakeValues: (json['intakeValues'] as List<dynamic>?)
+              ?.map((e) => (e as num).toDouble())
+              .toList() ??
+          const [100.0, 250.0, 400.0, 500.0],
+      defaultIntakeValue:
+          (json['defaultIntakeValue'] as num?)?.toDouble() ?? 250.0,
       wakeUpTime: json['wakeUpTime'] == null
           ? const TimeOfDay(hour: 7, minute: 0)
           : const TimeOfDayConverter().fromJson(json['wakeUpTime'] as String),
@@ -27,6 +33,8 @@ Map<String, dynamic> _$TargetSettingsToJson(TargetSettings instance) =>
       'dailyTarget': instance.dailyTarget,
       'volumeMeasureUnit':
           _$VolumeMeasureUnitEnumMap[instance.volumeMeasureUnit]!,
+      'intakeValues': instance.intakeValues,
+      'defaultIntakeValue': instance.defaultIntakeValue,
       'wakeUpTime': const TimeOfDayConverter().toJson(instance.wakeUpTime),
       'sleepTime': const TimeOfDayConverter().toJson(instance.sleepTime),
       'notificationIntervalInMinutes': instance.notificationIntervalInMinutes,
