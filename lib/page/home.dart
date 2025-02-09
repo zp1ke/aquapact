@@ -8,6 +8,7 @@ import '../model/target_settings.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/size.dart';
+import '../ui/widget/liquid_progress_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).appTitle),
@@ -94,6 +96,18 @@ class _HomePageState extends State<HomePage> {
             if (!loadingNotifications)
               ...notifications.map((notification) =>
                   Text('${notification.id} - ${notification.time}')),
+            Spacer(),
+            Divider(),
+            SizedBox(
+              width: size.width,
+              height: size.height * 0.3,
+              child: Center(
+                child: LiquidProgressIndicatorWidget(
+                  value: 1200.0,
+                  targetValue: 2500.0,
+                ),
+              ),
+            ),
           ],
         ),
       ),
