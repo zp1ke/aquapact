@@ -20,6 +20,10 @@ dependencies:
   intl: any
   json_annotation: ^4.9.0
   logger: ^2.5.0
+  objectbox: ^4.1.0
+  objectbox_flutter_libs: ^4.1.0
+  path: ^1.9.0
+  path_provider: ^2.1.5
   shared_preferences: ^2.5.1
   time_range_picker: ^2.3.0
   timezone: ^0.10.0
@@ -30,7 +34,11 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   json_serializable: ^6.9.3
+  objectbox_generator: ^4.1.0
   test: any
+
+dependency_overrides:
+  source_gen: 2.0.0
 
 flutter:
   assets:
@@ -38,3 +46,6 @@ flutter:
     - assets/fonts/
   generate: true
   uses-material-design: true
+
+objectbox:
+  output_dir: vendor/objectbox
