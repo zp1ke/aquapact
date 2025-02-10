@@ -7,6 +7,7 @@ import '../model/target_settings.dart';
 import '../service/mixin/target_settings_saver.dart';
 import '../service/settings.dart';
 import '../ui/form/target_settings.dart';
+import '../ui/icon.dart';
 
 class TargetSettingsPage extends StatefulWidget {
   const TargetSettingsPage({super.key});
@@ -46,9 +47,7 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
                 context.navigateBack();
               },
             )
-          : Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
+          : Center(child: AppIcon.loading),
     );
   }
 

@@ -5,6 +5,7 @@ import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
 import '../../util/number.dart';
 import '../color.dart';
+import '../icon.dart';
 import '../size.dart';
 import '../widget/slider.dart';
 
@@ -65,12 +66,13 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   }
 
   Widget dailyTargetCard() {
+    final measureUnit = targetSettings.volumeMeasureUnit;
     final theme = Theme.of(context);
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
         Text(
-          '${AppL10n.of(context).dailyWaterIntake} (${targetSettings.volumeMeasureUnit.symbol})',
+          '${AppL10n.of(context).dailyWaterIntake} (${measureUnit.symbol})',
           style: TextTheme.of(context).bodyLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -84,6 +86,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           fromColor: Colors.blue,
           toColor: theme.colorScheme.water,
           textColor: Colors.white,
+          valueFormatter: (value) =>
+              measureUnit.formatValue(value, withSymbol: false),
           onChanged: (value) {
             setState(() {
               targetSettings = targetSettings.copyWith(
@@ -170,6 +174,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           max: 4.0,
           enabled: !widget.saving,
           interval: 1.0,
+          valueFormatter: (value) => value.toInt().toString(),
           onChanged: (value) {
             setState(() {
               targetSettings = targetSettings.copyWith(
@@ -200,27 +205,16 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   }
 
   Widget saveButton() {
-    return OutlinedButton(
+    return OutlinedButton.icon(
       onPressed: !widget.saving
           ? () {
               widget.onSave(targetSettings);
             }
           : null,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: AppSize.spacingMedium,
-        children: [
-          if (widget.saving)
-            SizedBox(
-              width: AppSize.spacingXM,
-              height: AppSize.spacingXM,
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          Text(widget.saving
-              ? AppL10n.of(context).saving
-              : AppL10n.of(context).save),
-        ],
-      ),
+      icon: widget.saving ? AppIcon.loading : null,
+      label: Text(widget.saving
+          ? AppL10n.of(context).saving
+          : AppL10n.of(context).save),
     );
   }
 }

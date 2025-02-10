@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../size.dart';
 
+typedef ValueFormatter = String Function(double value);
+
 class SliderWidget extends StatelessWidget {
   final double min;
   final double max;
@@ -13,6 +15,7 @@ class SliderWidget extends StatelessWidget {
   final Color? toColor;
   final Color? textColor;
   final Function(double) onChanged;
+  final ValueFormatter valueFormatter;
 
   const SliderWidget({
     super.key,
@@ -26,6 +29,7 @@ class SliderWidget extends StatelessWidget {
     this.fromColor,
     this.toColor,
     this.textColor,
+    required this.valueFormatter,
   });
 
   @override
@@ -60,7 +64,7 @@ class SliderWidget extends StatelessWidget {
           spacing: AppSize.spacingXS / 2,
           children: <Widget>[
             Text(
-              min.toStringAsFixed(0),
+              valueFormatter(min),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: height * paddingFactor * 1.2,
@@ -82,6 +86,7 @@ class SliderWidget extends StatelessWidget {
                       max: max,
                       color: theme.colorScheme.surface,
                       textColor: theme.colorScheme.onSurface,
+                      valueFormatter: valueFormatter,
                     ),
                   ),
                   child: Slider(
@@ -94,7 +99,7 @@ class SliderWidget extends StatelessWidget {
               ),
             ),
             Text(
-              max.toStringAsFixed(0),
+              valueFormatter(max),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: height * paddingFactor * 1.2,
@@ -115,6 +120,7 @@ class _SliderThumbCircle extends SliderComponentShape {
   final double max;
   final Color color;
   final Color textColor;
+  final ValueFormatter valueFormatter;
 
   const _SliderThumbCircle({
     required this.thumbRadius,
@@ -122,6 +128,7 @@ class _SliderThumbCircle extends SliderComponentShape {
     required this.max,
     required this.color,
     required this.textColor,
+    required this.valueFormatter,
   });
 
   @override
@@ -172,6 +179,6 @@ class _SliderThumbCircle extends SliderComponentShape {
   }
 
   String getValue(double value) {
-    return (min + (max - min) * value).round().toString();
+    return valueFormatter(min + (max - min) * value);
   }
 }

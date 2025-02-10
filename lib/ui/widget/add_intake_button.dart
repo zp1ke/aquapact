@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/di.dart';
 import '../../model/target_settings.dart';
 import '../../service/intakes.dart';
+import '../icon.dart';
 import '../size.dart';
 import 'popup_button.dart';
 
@@ -28,16 +29,16 @@ class AddIntakeButton extends StatelessWidget {
         enabled: enabled,
         value: targetSettings.defaultIntakeValue,
         values: targetSettings.intakeValues,
-        icon: const Icon(Icons.add),
+        icon: AppIcon.add,
         onSelected: addIntake,
         itemBuilder: intakeWidget,
       ),
     );
   }
 
-  Widget intakeWidget(double value, bool isButton) {
+  Widget intakeWidget(BuildContext context, double value, bool isButton) {
     final text = Text(
-      '$value ${targetSettings.volumeMeasureUnit.symbol}',
+      targetSettings.volumeMeasureUnit.formatValue(value),
       style: TextStyle(
         fontWeight: FontWeight.w500,
       ),
@@ -49,7 +50,7 @@ class AddIntakeButton extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: AppSize.spacingSmall,
       children: [
-        Icon(Icons.local_drink),
+        AppIcon.waterGlass(context),
         text,
       ],
     );

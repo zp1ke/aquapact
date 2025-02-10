@@ -6,6 +6,7 @@ import '../model/target_settings.dart';
 import '../service/intakes.dart';
 import '../service/mixin/target_settings_saver.dart';
 import '../service/settings.dart';
+import '../ui/icon.dart';
 import '../ui/size.dart';
 import '../ui/widget/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
@@ -83,7 +84,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
 
   Widget reloadButton() {
     return IconButton(
-      icon: const Icon(Icons.refresh),
+      icon: AppIcon.refresh,
       onPressed: loadData,
     );
   }
@@ -92,8 +93,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
     return ListTile(
       title: Text(
         AppL10n.of(context).totalIntake(
-          intakeValue.toStringAsFixed(0),
-          targetSettings.volumeMeasureUnit.symbol,
+          targetSettings.volumeMeasureUnit.formatValue(intakeValue),
         ),
       ),
       subtitle: Text(

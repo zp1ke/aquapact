@@ -9,6 +9,7 @@ import '../service/intakes.dart';
 import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
+import '../ui/icon.dart';
 import '../ui/size.dart';
 import '../ui/widget/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
@@ -103,10 +104,10 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         child: Column(
           spacing: AppSize.spacingSmall,
           children: [
+            nextNotifications(),
             addIntakeButton(),
             tipText(),
             Divider(),
-            nextNotifications(),
             intakesToolbar(),
             lastIntakes(),
             dailyStatusText(),
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget settingsButton() {
     return IconButton(
-      icon: const Icon(Icons.settings),
+      icon: AppIcon.settings,
       onPressed: !processing
           ? () async {
               await context.navigateTo(AppPage.targetSettings);
@@ -132,13 +133,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   Widget reloadButton() {
     final isNotLoading = !loadingSettings && !loadingNotifications;
     return IconButton(
-      icon: isNotLoading
-          ? const Icon(Icons.refresh)
-          : const SizedBox(
-              width: AppSize.spacingXS,
-              height: AppSize.spacingXS,
-              child: CircularProgressIndicator.adaptive(),
-            ),
+      icon: isNotLoading ? AppIcon.refresh : AppIcon.loading,
       onPressed: (!processing && isNotLoading) ? loadData : null,
     );
   }
@@ -147,7 +142,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     final isNotLoading =
         !processing && !loadingSettings && !loadingNotifications;
     return IconButton(
-      icon: const Icon(Icons.area_chart),
+      icon: AppIcon.stats,
       onPressed: isNotLoading ? () {} : null,
     );
   }
@@ -183,9 +178,9 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   Widget nextNotifications() {
     if (notifications.isNotEmpty) {
       return Padding(
-        padding: EdgeInsets.only(right: AppSize.spacingSmall),
+        padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
         child: Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.topLeft,
           child: Text(
             AppL10n.of(context)
                 .nextNotificationAt(notifications.first.time.format(context)),
@@ -210,7 +205,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
               fontWeight: FontWeight.w600,
             ),
           ),
-          TextButton(
+          OutlinedButton(
             child: Text(AppL10n.of(context).showAll),
             onPressed: () async {
               await context.navigateTo(AppPage.intakes);
@@ -236,8 +231,11 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget dailyStatusText() {
+    final intake = targetSettings.volumeMeasureUnit.formatValue(intakeValue, withSymbol: false);
+    final target = targetSettings.volumeMeasureUnit
+        .formatValue(targetSettings.dailyTarget);
     return Text(
-      '${intakeValue.toStringAsFixed(0)} / ${targetSettings.dailyTarget.toStringAsFixed(0)} ${targetSettings.volumeMeasureUnit.symbol}',
+      '$intake / $target',
       textScaler: TextScaler.linear(1.5),
       style: TextStyle(
         fontWeight: FontWeight.bold,

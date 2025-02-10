@@ -7,6 +7,7 @@ import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/form/target_settings.dart';
+import '../ui/icon.dart';
 import '../ui/size.dart';
 import '../ui/widget/ready_start.dart';
 import '../ui/widget/request_permission.dart';
@@ -59,7 +60,7 @@ class _StartPageState extends State<StartPage> with TargetSettingsSaver {
 
   Widget content(BuildContext context) {
     if (hasPermission == null) {
-      return CircularProgressIndicator.adaptive();
+      return AppIcon.loading;
     }
     if (hasPermission == false) {
       return Padding(

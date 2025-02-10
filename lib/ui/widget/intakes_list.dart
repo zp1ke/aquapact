@@ -5,6 +5,7 @@ import '../../l10n/app_l10n.dart';
 import '../../model/intake.dart';
 import '../../service/intakes.dart';
 import '../../util/date_time.dart';
+import '../icon.dart';
 
 class IntakesController {
   final _listeners = <_IntakesListener>[];
@@ -67,7 +68,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
   @override
   Widget build(BuildContext context) {
     if (loading && intakes.isEmpty) {
-      return const Center(child: CircularProgressIndicator.adaptive());
+      return Center(child: AppIcon.loading);
     }
     if (intakes.isEmpty) {
       return Center(
@@ -88,9 +89,8 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
         final intake = intakes[index];
         return ListTile(
           dense: widget.dense,
-          leading: Icon(Icons.local_drink),
-          title: Text(
-              '${intake.amount.toStringAsFixed(0)} ${intake.measureUnit.symbol}'),
+          leading: AppIcon.waterGlass(context),
+          title: Text(intake.measureUnit.formatValue(intake.amount)),
           subtitle: Text(intake.dateTime.format(context)),
         );
       },

@@ -288,8 +288,8 @@ abstract class AppL10n {
   /// No description provided for @totalIntake.
   ///
   /// In en, this message translates to:
-  /// **'Total Intake: {amount} {unit}'**
-  String totalIntake(String amount, String unit);
+  /// **'Total Intake: {amount}'**
+  String totalIntake(String amount);
 
   /// No description provided for @wakeUpSleepTimes.
   ///

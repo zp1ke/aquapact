@@ -60,13 +60,10 @@
       }
     }
   },
-  "totalIntake": "Total Intake: {amount} {unit}",
+  "totalIntake": "Total Intake: {amount}",
   "@totalIntake": {
     "placeholders": {
       "amount": {
-        "type": "String"
-      },
-      "unit": {
         "type": "String"
       }
     }

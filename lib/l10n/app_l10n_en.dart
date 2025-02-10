@@ -121,8 +121,8 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String totalIntake(String amount, String unit) {
-    return 'Total Intake: $amount $unit';
+  String totalIntake(String amount) {
+    return 'Total Intake: $amount';
   }
 
   @override
