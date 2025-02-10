@@ -9,21 +9,24 @@ import '../../util/date_time.dart';
 class IntakesController {
   final _listeners = <_IntakesListener>[];
 
-  void refresh() {
+  void refresh({
+    required DateTime from,
+    required DateTime to,
+  }) {
     for (final listener in _listeners) {
-      listener.onRefresh();
+      listener.onRefresh(from: from, to: to);
     }
   }
 }
 
 class IntakesListWidget extends StatefulWidget {
-  final int limit;
+  final int? limit;
   final IntakesController controller;
   final bool dense;
 
   const IntakesListWidget({
     super.key,
-    required this.limit,
+    this.limit,
     required this.controller,
     this.dense = false,
   });
@@ -34,6 +37,8 @@ class IntakesListWidget extends StatefulWidget {
 
 class _IntakesListWidgetState extends State<IntakesListWidget>
     implements _IntakesListener {
+  var from = DateTime.now().atStartOfDay();
+  late DateTime to = from.add(Duration(days: 1));
   var intakes = <Intake>[];
 
   bool loading = false;
@@ -49,10 +54,9 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
     setState(() {
       loading = true;
     });
-    final today = DateTime.now().atStartOfDay();
     intakes = await service<IntakesService>().fetchIntakes(
-      from: today,
-      to: today.add(Duration(days: 1)),
+      from: from,
+      to: to,
       limit: widget.limit,
     );
     setState(() {
@@ -87,7 +91,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
           leading: Icon(Icons.local_drink),
           title: Text(
               '${intake.amount.toStringAsFixed(0)} ${intake.measureUnit.symbol}'),
-          subtitle: Text(intake.dateTime.toString()),
+          subtitle: Text(intake.dateTime.format(context)),
         );
       },
       separatorBuilder: (context, index) {
@@ -97,11 +101,19 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
   }
 
   @override
-  void onRefresh() {
+  void onRefresh({
+    required DateTime from,
+    required DateTime to,
+  }) {
+    this.from = from;
+    this.to = to;
     loadData();
   }
 }
 
 abstract class _IntakesListener {
-  void onRefresh();
+  void onRefresh({
+    required DateTime from,
+    required DateTime to,
+  });
 }

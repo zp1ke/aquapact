@@ -15,8 +15,7 @@ class AppL10nEn extends AppL10n {
   String get allowAppNotifications => 'Allow App Notifications';
 
   @override
-  String get allowAppNotificationsDescription =>
-      'We will need permission so the app can send you notifications.';
+  String get allowAppNotificationsDescription => 'We will need permission so the app can send you notifications.';
 
   @override
   String get cancel => 'Cancel';
@@ -26,6 +25,14 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get intakes => 'Intakes';
+
+  @override
+  String intakesOf(String date) {
+    return 'Intakes of $date';
+  }
 
   @override
   String get lastIntakes => 'Last Intakes';
@@ -75,6 +82,19 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get targetSettings => 'Target Settings';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String todayAt(String time) {
+    return 'Today at $time';
+  }
+
+  @override
+  String totalIntake(String amount, String unit) {
+    return 'Total Intake: $amount $unit';
+  }
 
   @override
   String wakeUpSleepTimes(String wakeUpTime, String sleepTime) {

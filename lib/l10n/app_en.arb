@@ -6,6 +6,15 @@
   "cancel": "Cancel",
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
+  "intakes": "Intakes",
+  "intakesOf": "Intakes of {date}",
+  "@intakesOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "lastIntakes": "Last Intakes",
   "letsStart": "let's Start!",
   "nextNotificationAt": "Next Notification at {time}",
@@ -26,6 +35,26 @@
   "sleep": "Sleep",
   "sureLetsDoIt": "Sure, let's do it",
   "targetSettings": "Target Settings",
+  "today": "Today",
+  "todayAt": "Today at {time}",
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "totalIntake": "Total Intake: {amount} {unit}",
+  "@totalIntake": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",
   "@wakeUpSleepTimes": {
     "placeholders": {

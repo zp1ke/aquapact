@@ -61,8 +61,7 @@ import 'app_l10n_en.dart';
 /// be consistent with the languages listed in the AppL10n.supportedLocales
 /// property.
 abstract class AppL10n {
-  AppL10n(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppL10n(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -82,8 +81,7 @@ abstract class AppL10n {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -91,7 +89,9 @@ abstract class AppL10n {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en')
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -128,6 +128,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @intakes.
+  ///
+  /// In en, this message translates to:
+  /// **'Intakes'**
+  String get intakes;
+
+  /// No description provided for @intakesOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Intakes of {date}'**
+  String intakesOf(String date);
 
   /// No description provided for @lastIntakes.
   ///
@@ -207,6 +219,24 @@ abstract class AppL10n {
   /// **'Target Settings'**
   String get targetSettings;
 
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @todayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Today at {time}'**
+  String todayAt(String time);
+
+  /// No description provided for @totalIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Intake: {amount} {unit}'**
+  String totalIntake(String amount, String unit);
+
   /// No description provided for @wakeUpSleepTimes.
   ///
   /// In en, this message translates to:
@@ -235,23 +265,24 @@ class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppL10nDelegate old) => false;
 }
 
 AppL10n lookupAppL10n(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppL10nEn();
+    case 'en': return AppL10nEn();
   }
 
   throw FlutterError(
-      'AppL10n.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppL10n.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

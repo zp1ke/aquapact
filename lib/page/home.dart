@@ -10,9 +10,9 @@ import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/size.dart';
+import '../ui/widget/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
-import '../ui/widget/popup_button.dart';
 import '../util/date_time.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,7 +42,11 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   void loadData() {
     readTargetSettings();
     fetchNotifications();
-    intakeCtrl.refresh();
+    final today = DateTime.now().atStartOfDay();
+    intakeCtrl.refresh(
+      from: today,
+      to: today.add(const Duration(days: 1)),
+    );
     fetchIntakeValue();
   }
 
@@ -118,7 +122,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       icon: const Icon(Icons.settings),
       onPressed: !processing
           ? () async {
-              await context.navigateTo<TargetSettings?>(AppPage.targetSettings);
+              await context.navigateTo(AppPage.targetSettings);
               loadData();
             }
           : null,
@@ -149,32 +153,15 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget addIntakeButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: AppSize.spacingSmall),
-      child: PopupButton<double>(
-        enabled: !processing,
-        value: targetSettings.defaultIntakeValue,
-        values: targetSettings.intakeValues,
-        icon: const Icon(Icons.add),
-        onSelected: addIntake,
-        itemBuilder: intakeWidget,
-      ),
-    );
-  }
-
-  Widget intakeWidget(double value) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: AppSize.spacingSmall,
-      children: [
-        Icon(Icons.local_drink),
-        Text(
-          '$value ${targetSettings.volumeMeasureUnit.symbol}',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+    return AddIntakeButton(
+      enabled: !processing,
+      targetSettings: targetSettings,
+      onAdding: () {
+        setState(() {
+          processing = true;
+        });
+      },
+      onAdded: addedIntake,
     );
   }
 
@@ -219,8 +206,9 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           ),
           TextButton(
             child: Text(AppL10n.of(context).showAll),
-            onPressed: () {
-              // context.navigateTo(AppPage.intakes)
+            onPressed: () async {
+              await context.navigateTo(AppPage.intakes);
+              loadData();
             },
           ),
         ],
@@ -272,14 +260,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     );
   }
 
-  void addIntake(double value) async {
-    setState(() {
-      processing = true;
-    });
-    await service<IntakesService>().addIntake(
-      amount: value,
-      measureUnit: targetSettings.volumeMeasureUnit,
-    );
+  void addedIntake(double value) async {
     targetSettings = targetSettings.copyWith(
       defaultIntakeValue: value,
     );

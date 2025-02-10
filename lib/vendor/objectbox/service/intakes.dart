@@ -33,7 +33,7 @@ class BoxIntakesService implements IntakesService {
     int? limit,
   }) async {
     final query = (box.query(IntakeBox_.dateTime.betweenDate(from, to))
-          ..order(IntakeBox_.dateTime))
+          ..order(IntakeBox_.dateTime, flags: Order.descending))
         .build();
     if (limit != null) {
       query.limit = limit;

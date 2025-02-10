@@ -7,7 +7,7 @@ class PopupButton<T> extends StatefulWidget {
   final Widget? icon;
   final T value;
   final List<T> values;
-  final Widget Function(T) itemBuilder;
+  final Widget Function(T, bool) itemBuilder;
   final Function(T) onSelected;
 
   const PopupButton({
@@ -42,7 +42,7 @@ class _PopupButtonState<T> extends State<PopupButton<T>> {
                 widget.onSelected(widget.value);
               }
             : null,
-        label: widget.itemBuilder(widget.value),
+        label: widget.itemBuilder(widget.value, true),
         icon: widget.icon,
       ),
     );
@@ -59,7 +59,7 @@ class _PopupButtonState<T> extends State<PopupButton<T>> {
       items: widget.values.map((value) {
         return PopupMenuItem<T>(
           value: value,
-          child: widget.itemBuilder(value),
+          child: widget.itemBuilder(value, false),
         );
       }).toList(),
     );

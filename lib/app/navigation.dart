@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../page/home.dart';
+import '../page/intakes.dart';
 import '../page/target_settings.dart';
 
 enum AppPage {
   home,
-  targetSettings;
+  targetSettings,
+  intakes;
 
   Widget build(Map<String, Object> args) {
     switch (this) {
@@ -13,6 +15,8 @@ enum AppPage {
         return HomePage();
       case AppPage.targetSettings:
         return TargetSettingsPage();
+      case AppPage.intakes:
+        return IntakesPage();
     }
   }
 }
