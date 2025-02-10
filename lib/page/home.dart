@@ -5,10 +5,12 @@ import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/notification.dart';
 import '../model/target_settings.dart';
+import '../service/intakes.dart';
 import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/size.dart';
+import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/popup_button.dart';
 
@@ -20,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TargetSettingsSaver {
+  final intakeCtrl = IntakesController();
+
   var targetSettings = TargetSettings();
   var notifications = <AppNotification>[];
 
@@ -37,6 +41,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   void loadData() {
     readTargetSettings();
     fetchNotifications();
+    intakeCtrl.refresh();
   }
 
   void readTargetSettings() {
@@ -75,6 +80,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         title: Text(AppL10n.of(context).appTitle),
         actions: [
           reloadButton(),
+          statsButton(),
           settingsButton(),
         ],
       ),
@@ -82,21 +88,12 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         child: Column(
           spacing: AppSize.spacingSmall,
           children: [
-            Text(
-                'TODO From notification: ${service<NotificationService>().appLaunchedByNotification}'),
-            if (loadingSettings) const CircularProgressIndicator.adaptive(),
-            if (!loadingSettings)
-              Text(
-                  'TODO Notif from ${targetSettings.wakeUpTime} to ${targetSettings.sleepTime}'),
-            if (!loadingSettings)
-              Text(
-                  'TODO Notif e/ ${targetSettings.notificationInterval.inHours} hours'),
-            Divider(),
             addIntakeButton(),
             tipText(),
             Divider(),
             nextNotifications(),
-            Spacer(),
+            intakesToolbar(),
+            lastIntakes(),
             dailyStatusText(),
             dailyStatusWidget(),
           ],
@@ -128,6 +125,15 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
               child: CircularProgressIndicator.adaptive(),
             ),
       onPressed: (!processing && isNotLoading) ? loadData : null,
+    );
+  }
+
+  Widget statsButton() {
+    final isNotLoading =
+        !processing && !loadingSettings && !loadingNotifications;
+    return IconButton(
+      icon: const Icon(Icons.area_chart),
+      onPressed: isNotLoading ? () {} : null,
     );
   }
 
@@ -171,10 +177,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget nextNotifications() {
-    if (loadingNotifications) {
-      return const CircularProgressIndicator.adaptive();
-    }
-    if (!loadingNotifications && notifications.isNotEmpty) {
+    if (notifications.isNotEmpty) {
       return Padding(
         padding: EdgeInsets.only(right: AppSize.spacingSmall),
         child: Align(
@@ -188,6 +191,43 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       );
     }
     return Container();
+  }
+
+  Widget intakesToolbar() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            AppL10n.of(context).lastIntakes,
+            textScaler: TextScaler.linear(1.2),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          TextButton(
+            child: Text(AppL10n.of(context).showAll),
+            onPressed: () {
+              // context.navigateTo(AppPage.intakes)
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget lastIntakes() {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
+        child: IntakesListWidget(
+          limit: 4,
+          controller: intakeCtrl,
+          dense: true,
+        ),
+      ),
+    );
   }
 
   Widget dailyStatusText() {
@@ -225,13 +265,20 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     setState(() {
       processing = true;
     });
+    await service<IntakesService>().addIntake(
+      amount: value,
+      measureUnit: targetSettings.volumeMeasureUnit,
+    );
     targetSettings = targetSettings.copyWith(
       defaultIntakeValue: value,
     );
-    await saveSettings(context, targetSettings, scheduleNotifications: false);
+    if (mounted) {
+      await saveSettings(context, targetSettings, scheduleNotifications: false);
+    }
     setState(() {
       intakeValue += value;
       processing = false;
     });
+    loadData();
   }
 }

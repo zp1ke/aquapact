@@ -129,6 +129,12 @@ abstract class AppL10n {
   /// **'Edit'**
   String get edit;
 
+  /// No description provided for @lastIntakes.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Intakes'**
+  String get lastIntakes;
+
   /// No description provided for @letsStart.
   ///
   /// In en, this message translates to:
@@ -140,6 +146,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Next Notification at {time}'**
   String nextNotificationAt(String time);
+
+  /// No description provided for @noIntakesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No intakes yet. Drink some water to get started.'**
+  String get noIntakesYet;
 
   /// No description provided for @notificationTitle.
   ///
@@ -170,6 +182,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Saving...'**
   String get saving;
+
+  /// No description provided for @showAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show All'**
+  String get showAll;
 
   /// No description provided for @sleep.
   ///

@@ -8,6 +8,10 @@ extension AppTime on TimeOfDay {
   }
 }
 
+extension AppDateTime on DateTime {
+  DateTime atStartOfDay() => DateTime(year, month, day);
+}
+
 class TimeOfDayConverter implements JsonConverter<TimeOfDay, String> {
   const TimeOfDayConverter();
 

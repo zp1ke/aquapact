@@ -6,6 +6,7 @@
   "cancel": "Cancel",
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
+  "lastIntakes": "Last Intakes",
   "letsStart": "let's Start!",
   "nextNotificationAt": "Next Notification at {time}",
   "@nextNotificationAt": {
@@ -15,11 +16,13 @@
       }
     }
   },
+  "noIntakesYet": "No intakes yet. Drink some water to get started.",
   "notificationTitle": "Drink Water Reminder",
   "notificationMessage": "It's time to drink water!",
   "notifyEveryHours": "{count, plural, =1{Notify hourly} other{Notify every {count} hours}}",
   "save": "Save",
   "saving": "Saving...",
+  "showAll": "Show All",
   "sleep": "Sleep",
   "sureLetsDoIt": "Sure, let's do it",
   "targetSettings": "Target Settings",
