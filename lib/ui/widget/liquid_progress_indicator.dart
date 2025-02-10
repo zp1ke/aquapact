@@ -86,12 +86,22 @@ class _LiquidProgressIndicatorWidgetState
                 ),
               ),
               Center(
-                child: Text(
-                  '${(loadValue.value * 100).toStringAsFixed(0)}%',
-                  style: TextStyle(
-                    fontSize: AppSize.spacingLarge * 1.5,
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onSurface,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSize.spacingXS * 2,
+                    vertical: .0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(AppSize.spacingLarge),
+                  ),
+                  child: Text(
+                    '${(loadValue.value * 100).toStringAsFixed(0)}%',
+                    style: TextStyle(
+                      fontSize: AppSize.spacingLarge * 1.4,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
                 ),
               )

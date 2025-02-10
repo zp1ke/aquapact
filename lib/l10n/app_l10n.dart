@@ -135,6 +135,60 @@ abstract class AppL10n {
   /// **'Intakes'**
   String get intakes;
 
+  /// No description provided for @intakeMessageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached {percent}% of your hydration goal. Keep it going and stay refreshed! 💧💪'**
+  String intakeMessageOf(String percent);
+
+  /// No description provided for @intakeMessageMorning0.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning! 🌞 Start your day right with a refreshing glass of water! 💧 Let\'s begin our journey to staying hydrated today!'**
+  String get intakeMessageMorning0;
+
+  /// No description provided for @intakeMessageMidday25.
+  ///
+  /// In en, this message translates to:
+  /// **'Great start! You\'ve reached 25% of your hydration goal. Keep it going and stay refreshed! 💧💪'**
+  String get intakeMessageMidday25;
+
+  /// No description provided for @intakeMessageMidday50.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re halfway there! 50% of your goal is complete. Keep sipping and stay on track! 💦👏'**
+  String get intakeMessageMidday50;
+
+  /// No description provided for @intakeMessageAfternoon75.
+  ///
+  /// In en, this message translates to:
+  /// **'Fantastic progress! You\'re at 75% of your hydration goal. Just a little more to go! 💧🚀'**
+  String get intakeMessageAfternoon75;
+
+  /// No description provided for @intakeMessageEvening90.
+  ///
+  /// In en, this message translates to:
+  /// **'Almost there! You\'re at 90% of your goal. Just a little more effort and you\'ll make it! 💦✨'**
+  String get intakeMessageEvening90;
+
+  /// No description provided for @intakeMessage10.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t worry, you still have time to catch up! Drink a cup of water now and stay on track to reach your goal. 💧🌟'**
+  String get intakeMessage10;
+
+  /// No description provided for @intakeMessage30.
+  ///
+  /// In en, this message translates to:
+  /// **'You can do it! Take a moment to drink a glass of water and keep pushing towards your goal. 💦💪'**
+  String get intakeMessage30;
+
+  /// No description provided for @intakeMessage100.
+  ///
+  /// In en, this message translates to:
+  /// **'Congratulations! You\'ve achieved 100% of your hydration goal today. Great job staying hydrated! 💧🥳'**
+  String get intakeMessage100;
+
   /// No description provided for @intakesOf.
   ///
   /// In en, this message translates to:

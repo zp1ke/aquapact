@@ -167,7 +167,13 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget tipText() {
     return Text(
-      'SOME Tip TODO',
+      service<IntakesService>().tip(
+        context,
+        intakeValue: intakeValue,
+        targetValue: targetSettings.dailyTarget,
+      ),
+      textScaler: TextScaler.linear(0.95),
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontStyle: FontStyle.italic,
       ),

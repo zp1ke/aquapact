@@ -7,6 +7,22 @@
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
   "intakes": "Intakes",
+  "intakeMessageOf": "You've reached {percent}% of your hydration goal. Keep it going and stay refreshed! \uD83D\uDCA7\uD83D\uDCAA",
+  "@intakeMessageOf": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeMessageMorning0": "Good morning! \uD83C\uDF1E Start your day right with a refreshing glass of water! \uD83D\uDCA7 Let's begin our journey to staying hydrated today!",
+  "intakeMessageMidday25": "Great start! You've reached 25% of your hydration goal. Keep it going and stay refreshed! \uD83D\uDCA7\uD83D\uDCAA",
+  "intakeMessageMidday50": "You're halfway there! 50% of your goal is complete. Keep sipping and stay on track! \uD83D\uDCA6\uD83D\uDC4F",
+  "intakeMessageAfternoon75": "Fantastic progress! You're at 75% of your hydration goal. Just a little more to go! \uD83D\uDCA7\uD83D\uDE80",
+  "intakeMessageEvening90": "Almost there! You're at 90% of your goal. Just a little more effort and you'll make it! \uD83D\uDCA6✨",
+  "intakeMessage10": "Don't worry, you still have time to catch up! Drink a cup of water now and stay on track to reach your goal. \uD83D\uDCA7\uD83C\uDF1F",
+  "intakeMessage30": "You can do it! Take a moment to drink a glass of water and keep pushing towards your goal. \uD83D\uDCA6\uD83D\uDCAA",
+  "intakeMessage100": "Congratulations! You've achieved 100% of your hydration goal today. Great job staying hydrated! \uD83D\uDCA7\uD83E\uDD73",
   "intakesOf": "Intakes of {date}",
   "@intakesOf": {
     "placeholders": {

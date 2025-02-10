@@ -6,7 +6,7 @@ import '../object_box.dart';
 import '../objectbox.g.dart';
 
 // https://docs.objectbox.io/queries
-class BoxIntakesService implements IntakesService {
+class BoxIntakesService extends IntakesService {
   final Box<IntakeBox> box;
 
   BoxIntakesService(ObjectBox objectBox)
