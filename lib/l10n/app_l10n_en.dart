@@ -15,7 +15,8 @@ class AppL10nEn extends AppL10n {
   String get allowAppNotifications => 'Allow App Notifications';
 
   @override
-  String get allowAppNotificationsDescription => 'We will need permission so the app can send you notifications.';
+  String get allowAppNotificationsDescription =>
+      'We will need permission so the app can send you notifications.';
 
   @override
   String get cancel => 'Cancel';

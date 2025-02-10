@@ -13,6 +13,7 @@ import '../ui/size.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/popup_button.dart';
+import '../util/date_time.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     readTargetSettings();
     fetchNotifications();
     intakeCtrl.refresh();
+    fetchIntakeValue();
   }
 
   void readTargetSettings() {
@@ -71,6 +73,15 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       this.notifications = notifications;
       loadingNotifications = false;
     });
+  }
+
+  void fetchIntakeValue() async {
+    final today = DateTime.now().atStartOfDay();
+    intakeValue = await service<IntakesService>()
+        .sumIntakesAmount(from: today, to: today.add(const Duration(days: 1)));
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -276,7 +287,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       await saveSettings(context, targetSettings, scheduleNotifications: false);
     }
     setState(() {
-      intakeValue += value;
       processing = false;
     });
     loadData();

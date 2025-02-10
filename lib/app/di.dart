@@ -7,7 +7,7 @@ import '../service/intakes.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
 import '../vendor/objectbox/object_box.dart';
-import '../vendor/objectbox/service/BoxIntakesService.dart';
+import '../vendor/objectbox/service/intakes.dart';
 
 final _getIt = GetIt.instance;
 

@@ -12,4 +12,9 @@ abstract class IntakesService {
     required double amount,
     required VolumeMeasureUnit measureUnit,
   });
+
+  Future<double> sumIntakesAmount({
+    required DateTime from,
+    required DateTime to,
+  });
 }

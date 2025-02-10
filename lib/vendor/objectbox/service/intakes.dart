@@ -39,7 +39,19 @@ class BoxIntakesService implements IntakesService {
       query.limit = limit;
     }
     final intakes = await query.stream().map(_toIntake).toList();
+    query.close();
     return intakes;
+  }
+
+  @override
+  Future<double> sumIntakesAmount({
+    required DateTime from,
+    required DateTime to,
+  }) {
+    final query = box.query(IntakeBox_.dateTime.betweenDate(from, to)).build();
+    final sum = query.property(IntakeBox_.amount).sum();
+    query.close();
+    return Future.value(sum);
   }
 
   Intake _toIntake(IntakeBox intake) {

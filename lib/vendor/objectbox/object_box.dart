@@ -8,11 +8,11 @@ import 'objectbox.g.dart';
 class ObjectBox implements DatabaseService {
   late final Store store;
 
-  ObjectBox._create(this.store) {}
+  ObjectBox._create(this.store);
 
   static Future<ObjectBox> create() async {
     final docsDir = await getApplicationDocumentsDirectory();
-    final store = await openStore(directory: p.join(docsDir.path, "aqua_pact"));
+    final store = await openStore(directory: p.join(docsDir.path, 'aqua_pact'));
     return ObjectBox._create(store);
   }
 }
