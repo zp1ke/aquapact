@@ -6,6 +6,14 @@
   "cancel": "Cancel",
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
+  "intakeAverage": "{amount} average",
+  "@intakeAverage": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "intakes": "Intakes",
   "intakeMessageOf": "You've reached {percent}% of your hydration goal. Keep it going and stay refreshed! \uD83D\uDCA7\uD83D\uDCAA",
   "@intakeMessageOf": {
@@ -31,6 +39,14 @@
       }
     }
   },
+  "lastNDays": "Last {days} days",
+  "@lastNDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "lastIntakes": "Last Intakes",
   "letsStart": "let's Start!",
   "nextNotificationAt": "Next Notification at {time}",
@@ -49,6 +65,7 @@
   "saving": "Saving...",
   "showAll": "Show All",
   "sleep": "Sleep",
+  "stats": "Stats",
   "sureLetsDoIt": "Sure, let's do it",
   "targetSettings": "Target Settings",
   "today": "Today",

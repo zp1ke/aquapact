@@ -21,6 +21,11 @@ abstract class IntakesService {
     required DateTime to,
   });
 
+  Future<List<Intake>> fetchAmounts({
+    required DateTime from,
+    required DateTime to,
+  });
+
   /// Returns a tip for the user according to the current intake value and target value.
   String tip(
     BuildContext context, {

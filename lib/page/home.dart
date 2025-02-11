@@ -118,18 +118,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     );
   }
 
-  Widget settingsButton() {
-    return IconButton(
-      icon: AppIcon.settings,
-      onPressed: !processing
-          ? () async {
-              await context.navigateTo(AppPage.targetSettings);
-              loadData();
-            }
-          : null,
-    );
-  }
-
   Widget reloadButton() {
     final isNotLoading = !loadingSettings && !loadingNotifications;
     return IconButton(
@@ -143,7 +131,25 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         !processing && !loadingSettings && !loadingNotifications;
     return IconButton(
       icon: AppIcon.stats,
-      onPressed: isNotLoading ? () {} : null,
+      onPressed: isNotLoading
+          ? () {
+              context.navigateTo(AppPage.stats);
+            }
+          : null,
+    );
+  }
+
+  Widget settingsButton() {
+    final isNotLoading =
+        !processing && !loadingSettings && !loadingNotifications;
+    return IconButton(
+      icon: AppIcon.settings,
+      onPressed: isNotLoading
+          ? () async {
+              await context.navigateTo(AppPage.targetSettings);
+              loadData();
+            }
+          : null,
     );
   }
 
@@ -231,7 +237,8 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget dailyStatusText() {
-    final intake = targetSettings.volumeMeasureUnit.formatValue(intakeValue, withSymbol: false);
+    final intake = targetSettings.volumeMeasureUnit
+        .formatValue(intakeValue, withSymbol: false);
     final target = targetSettings.volumeMeasureUnit
         .formatValue(targetSettings.dailyTarget);
     return Text(

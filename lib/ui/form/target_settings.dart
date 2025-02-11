@@ -83,7 +83,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           max: 5000.0,
           enabled: !widget.saving,
           interval: 1000.0,
-          fromColor: Colors.blue,
+          fromColor: theme.colorScheme.deepWater,
           toColor: theme.colorScheme.water,
           textColor: Colors.white,
           valueFormatter: (value) =>

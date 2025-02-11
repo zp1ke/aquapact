@@ -27,6 +27,11 @@ class AppL10nEn extends AppL10n {
   String get edit => 'Edit';
 
   @override
+  String intakeAverage(String amount) {
+    return '$amount average';
+  }
+
+  @override
   String get intakes => 'Intakes';
 
   @override
@@ -61,6 +66,11 @@ class AppL10nEn extends AppL10n {
   @override
   String intakesOf(String date) {
     return 'Intakes of $date';
+  }
+
+  @override
+  String lastNDays(String days) {
+    return 'Last $days days';
   }
 
   @override
@@ -105,6 +115,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get sleep => 'Sleep';
+
+  @override
+  String get stats => 'Stats';
 
   @override
   String get sureLetsDoIt => 'Sure, let\'s do it';

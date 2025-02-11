@@ -129,6 +129,12 @@ abstract class AppL10n {
   /// **'Edit'**
   String get edit;
 
+  /// No description provided for @intakeAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} average'**
+  String intakeAverage(String amount);
+
   /// No description provided for @intakes.
   ///
   /// In en, this message translates to:
@@ -195,6 +201,12 @@ abstract class AppL10n {
   /// **'Intakes of {date}'**
   String intakesOf(String date);
 
+  /// No description provided for @lastNDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {days} days'**
+  String lastNDays(String days);
+
   /// No description provided for @lastIntakes.
   ///
   /// In en, this message translates to:
@@ -260,6 +272,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Sleep'**
   String get sleep;
+
+  /// No description provided for @stats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get stats;
 
   /// No description provided for @sureLetsDoIt.
   ///

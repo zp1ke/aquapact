@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonEnum(valueField: 'symbol')
 enum VolumeMeasureUnit {
   ml(factor: 1.0, symbol: 'ml', decimals: 0),
-  l(factor: .001, symbol: 'l', decimals: 2);
+  l(factor: .001, symbol: 'l', decimals: 1);
 
   final double factor;
   final String symbol;

@@ -14,6 +14,8 @@ extension AppTime on TimeOfDay {
 extension AppDateTime on DateTime {
   DateTime atStartOfDay() => DateTime(year, month, day);
 
+  DateTime atEndOfDay() => DateTime(year, month, day, 23, 59, 59);
+
   bool get isToday {
     final now = DateTime.now();
     return year == now.year && month == now.month && day == now.day;

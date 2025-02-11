@@ -1,6 +1,7 @@
 import '../../../model/intake.dart';
 import '../../../model/measure_unit.dart';
 import '../../../service/intakes.dart';
+import '../../../util/date_time.dart';
 import '../model/intake_box.dart';
 import '../object_box.dart';
 import '../objectbox.g.dart';
@@ -52,6 +53,27 @@ class BoxIntakesService extends IntakesService {
     final sum = query.property(IntakeBox_.amount).sum();
     query.close();
     return Future.value(sum);
+  }
+
+  @override
+  Future<List<Intake>> fetchAmounts({
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final intakes = <Intake>[];
+    final toDateTime = to.atStartOfDay().add(const Duration(days: 1));
+    var dateTime = from.atStartOfDay();
+    while (dateTime.isBefore(toDateTime)) {
+      final nextDateTime = dateTime.add(const Duration(days: 1));
+      final amount = await sumIntakesAmount(from: dateTime, to: nextDateTime);
+      intakes.add(Intake(
+        amount: amount,
+        dateTime: dateTime,
+        measureUnit: VolumeMeasureUnit.ml,
+      ));
+      dateTime = nextDateTime;
+    }
+    return intakes;
   }
 
   Intake _toIntake(IntakeBox intake) {
