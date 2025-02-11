@@ -25,12 +25,12 @@ dependencies:
   objectbox_flutter_libs: ^4.1.0
   path: ^1.9.0
   path_provider: ^2.1.5
-  shared_preferences: ^2.5.1
+  shared_preferences: ^2.5.2
   time_range_picker: ^2.3.0
   timezone: ^0.10.0
 
 dev_dependencies:
-  build_runner: ^2.4.14
+  build_runner: ^2.4.15
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
