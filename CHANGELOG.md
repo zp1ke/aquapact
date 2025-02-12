@@ -2,11 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.2] - TO DO
+
+### TODO
+- **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
+- **Pull to refresh**: Enable pull-to-refresh functionality on pages with reload actions for a smoother user experience.
+- **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
+- **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
+
 ## [0.0.1] - 2025-02-11
 
 ### Added
-- **Wakeup and Sleep Time Configuration**: Users can configure their wakeup and sleep times to tailor the hydration reminders according to their daily routine.
-- **Daily Target Hydration Goal**: Set your daily water intake target to ensure you stay hydrated throughout the day.
-- **Notifications**: Receive notifications at the configured times to remind you to drink water and meet your hydration goals.
-- **Daily Records**: Track your daily water intake records to monitor your hydration habits.
-- **Last Seven Days Statistics**: View your water intake statistics for the last seven days to analyze your hydration patterns and make necessary adjustments.
+- **Wakeup and Sleep Time Configuration**: Users can set their wakeup and sleep times to customize hydration reminders according to their daily routines.
+- **Daily Target Hydration Goal**: Users can define their daily water intake targets.
+- **Notifications**: Users receive reminders at configured times to help them stay hydrated and meet their hydration goals.
+- **Daily Records**: Users can log their daily water intake to monitor their hydration habits.
+- **Last Seven Days Statistics**: Users can view their water intake statistics for the past seven days to analyze their hydration patterns and make necessary adjustments.
