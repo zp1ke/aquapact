@@ -344,6 +344,8 @@ class AppTheme {
         useMaterial3: true,
         brightness: colorScheme.brightness,
         colorScheme: colorScheme,
+        visualDensity: VisualDensity.comfortable,
+        fontFamily: 'Outfit',
         textTheme: textTheme.apply(
           bodyColor: colorScheme.onSurface,
           displayColor: colorScheme.onSurface,
