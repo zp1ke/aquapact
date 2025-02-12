@@ -67,7 +67,8 @@ jobs:
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
-      - name: Show me the vars
-        run: |
-          echo "VERSION=${{ env.VERSION }}"
-          echo "TAG_EXISTS=${{ env.TAG_EXISTS }}"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/bundle/release/app-release.aab"
+          tag: ${{ env.VERSION }}
