@@ -34,20 +34,24 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
         title: Text(AppL10n.of(context).targetSettings),
       ),
       body: settings != null
-          ? TargetSettingsForm(
-              saving: saving,
-              targetSettings: settings,
-              onSave: (newSettings) async {
-                await saveTargetSettings(newSettings);
-                if (context.mounted) {
-                  context.navigateBack(newSettings);
-                }
-              },
-              onCancel: () {
-                context.navigateBack();
-              },
-            )
+          ? SafeArea(child: form())
           : Center(child: AppIcon.loading),
+    );
+  }
+
+  Widget form() {
+    return TargetSettingsForm(
+      saving: saving,
+      targetSettings: settings,
+      onSave: (newSettings) async {
+        await saveTargetSettings(newSettings);
+        if (mounted) {
+          context.navigateBack(newSettings);
+        }
+      },
+      onCancel: () {
+        context.navigateBack();
+      },
     );
   }
 

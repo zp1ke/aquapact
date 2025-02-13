@@ -14,6 +14,7 @@ import '../ui/size.dart';
 import '../ui/widget/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
+import '../ui/widget/pull_refresh.dart';
 import '../util/date_time.dart';
 
 class HomePage extends StatefulWidget {
@@ -101,20 +102,27 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          spacing: AppSize.spacingSmall,
-          children: [
-            nextNotifications(),
-            addIntakeButton(),
-            tipText(),
-            Divider(),
-            intakesToolbar(),
-            lastIntakes(),
-            dailyStatusText(),
-            dailyStatusWidget(),
-          ],
+        child: PullToRefresh(
+          onRefresh: loadData,
+          child: content(),
         ),
       ),
+    );
+  }
+
+  Widget content() {
+    return Column(
+      spacing: AppSize.spacingSmall,
+      children: [
+        nextNotifications(),
+        addIntakeButton(),
+        tipText(),
+        Divider(),
+        intakesToolbar(),
+        lastIntakes(),
+        dailyStatusText(),
+        dailyStatusWidget(),
+      ],
     );
   }
 

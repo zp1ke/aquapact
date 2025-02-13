@@ -11,6 +11,7 @@ import '../service/settings.dart';
 import '../ui/color.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/pull_refresh.dart';
 import '../util/collection.dart';
 import '../util/date_time.dart';
 
@@ -73,7 +74,6 @@ class _StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = loadingSettings || loadingIntakes;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).stats),
@@ -81,17 +81,24 @@ class _StatsPageState extends State<StatsPage> {
           reloadButton(),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSize.spacingXS),
-        child: Column(
-          spacing: AppSize.spacingXS,
-          children: [
-            if (isLoading) Center(child: AppIcon.loading),
-            if (!isLoading) chartTitle(),
-            if (!isLoading) chart(),
-          ],
+      body: SafeArea(
+        child: PullToRefresh(
+          onRefresh: loadData,
+          child: content(),
         ),
       ),
+    );
+  }
+
+  Widget content() {
+    final isLoading = loadingSettings || loadingIntakes;
+    return Column(
+      spacing: AppSize.spacingXS,
+      children: [
+        if (isLoading) Center(child: AppIcon.loading),
+        if (!isLoading) chartTitle(),
+        if (!isLoading) chart(),
+      ],
     );
   }
 
