@@ -2,42 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../size.dart';
 
-class ResponsiveWidget extends StatefulWidget {
+class ResponsiveWidget extends StatelessWidget {
   final WidgetBuilder standard;
-  final WidgetBuilder medium;
+  final WidgetBuilder? medium;
 
   const ResponsiveWidget({
     super.key,
     required this.standard,
-    required this.medium,
+    this.medium,
   });
-
-  @override
-  State<ResponsiveWidget> createState() => _ResponsiveWidgetState();
-}
-
-class _ResponsiveWidgetState extends State<ResponsiveWidget> {
-  Widget? standard;
-  Widget? medium;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        if (width > AppSize.mediumWidthBreakpoint) {
-          return mediumWidget(context);
+        if (width > AppSize.mediumWidthBreakpoint && medium != null) {
+          return medium!(context);
         }
-        return standardWidget(context);
+        return standard(context);
       },
     );
-  }
-
-  Widget standardWidget(BuildContext context) {
-    return standard ??= widget.standard(context);
-  }
-
-  Widget mediumWidget(BuildContext context) {
-    return medium ??= widget.medium(context);
   }
 }

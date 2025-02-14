@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
 - **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
 - **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
+- **Group notifications**: Group multiple notifications into a single notification to reduce clutter and improve user experience.
 
 ## [0.0.1] - 2025-02-11
 

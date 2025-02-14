@@ -24,12 +24,14 @@ class IntakesListWidget extends StatefulWidget {
   final int? limit;
   final IntakesController controller;
   final bool dense;
+  final bool shrinkWrap;
 
   const IntakesListWidget({
     super.key,
     this.limit,
     required this.controller,
     this.dense = false,
+    this.shrinkWrap = false,
   });
 
   @override
@@ -52,17 +54,21 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
   }
 
   void loadData() async {
-    setState(() {
-      loading = true;
-    });
+    if (mounted) {
+      setState(() {
+        loading = true;
+      });
+    }
     intakes = await service<IntakesService>().fetchIntakes(
       from: from,
       to: to,
       limit: widget.limit,
     );
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -85,6 +91,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
     return ListView.separated(
       padding: EdgeInsets.zero,
       itemCount: intakes.length,
+      shrinkWrap: widget.shrinkWrap,
       itemBuilder: (context, index) {
         final intake = intakes[index];
         return ListTile(

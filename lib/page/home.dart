@@ -15,6 +15,7 @@ import '../ui/widget/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/pull_refresh.dart';
+import '../ui/widget/responsive.dart';
 import '../util/date_time.dart';
 
 class HomePage extends StatefulWidget {
@@ -104,13 +105,19 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       body: SafeArea(
         child: PullToRefresh(
           onRefresh: loadData,
-          child: content(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
+            child: ResponsiveWidget(
+              standard: (_) => standardContent(),
+              medium: (_) => mediumContent(),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget content() {
+  Widget standardContent() {
     return Column(
       spacing: AppSize.spacingSmall,
       children: [
@@ -122,6 +129,46 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         lastIntakes(),
         dailyStatusText(),
         dailyStatusWidget(),
+      ],
+    );
+  }
+
+  Widget mediumContent() {
+    return Column(
+      spacing: AppSize.spacingSmall,
+      children: [
+        nextNotifications(),
+        addIntakeButton(),
+        tipText(),
+        Divider(),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  spacing: AppSize.spacingSmall,
+                  children: [
+                    intakesToolbar(),
+                    lastIntakes(),
+                  ],
+                ),
+              ),
+              VerticalDivider(),
+              Flexible(
+                child: Column(
+                  spacing: AppSize.spacingSmall,
+                  children: [
+                    dailyStatusText(),
+                    Spacer(),
+                    dailyStatusWidget(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -198,6 +245,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           child: Text(
             AppL10n.of(context)
                 .nextNotificationAt(notifications.first.time.format(context)),
+            textAlign: TextAlign.left,
             textScaler: TextScaler.linear(0.8),
           ),
         ),
