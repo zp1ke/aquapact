@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../size.dart';
-
 class PullToRefresh extends StatelessWidget {
   final Widget child;
   final VoidCallback onRefresh;
@@ -24,12 +22,7 @@ class PullToRefresh extends StatelessWidget {
           height: MediaQuery.of(context).size.height -
               kToolbarHeight -
               kBottomNavigationBarHeight,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSize.spacingSmall,
-            ),
-            child: child,
-          ),
+          child: child,
         ),
       ),
     );

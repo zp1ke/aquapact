@@ -105,12 +105,9 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       body: SafeArea(
         child: PullToRefresh(
           onRefresh: loadData,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
-            child: ResponsiveWidget(
-              standard: (_) => standardContent(),
-              medium: (_) => mediumContent(),
-            ),
+          child: ResponsiveWidget(
+            standard: (_) => standardContent(),
+            medium: (_) => mediumContent(),
           ),
         ),
       ),
@@ -222,16 +219,19 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget tipText() {
-    return Text(
-      service<IntakesService>().tip(
-        context,
-        intakeValue: intakeValue,
-        targetValue: targetSettings.dailyTarget,
-      ),
-      textScaler: TextScaler.linear(0.95),
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontStyle: FontStyle.italic,
+    return Padding(
+      padding: const EdgeInsets.all(AppSize.spacingSmall),
+      child: Text(
+        service<IntakesService>().tip(
+          context,
+          intakeValue: intakeValue,
+          targetValue: targetSettings.dailyTarget,
+        ),
+        textScaler: TextScaler.linear(0.95),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
       ),
     );
   }
