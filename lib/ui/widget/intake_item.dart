@@ -26,21 +26,7 @@ class IntakeItem extends StatelessWidget {
       key: Key(intake.code),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          var delete = true;
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
-          scaffoldMessenger.clearSnackBars();
-          final l10n = AppL10n.of(context);
-          final undoController = scaffoldMessenger.showSnackBar(
-            SnackBar(
-              content: Text(l10n.intakeRecordDeleted),
-              action: SnackBarAction(
-                label: l10n.undo,
-                onPressed: () => delete = false,
-              ),
-            ),
-          );
-          await undoController.closed;
-          return delete;
+          return alertDelete(context);
         }
         return false;
       },
@@ -57,9 +43,40 @@ class IntakeItem extends StatelessWidget {
       child: ListTile(
         dense: dense,
         leading: AppIcon.waterGlass(context),
-        title: Text(intake.measureUnit.formatValue(intake.amount)),
-        subtitle: Text(intake.dateTime.format(context)),
+        title: Text(intake.measureUnit.formatValue(intake.amount)), // TODO: edit
+        trailing: TextButton(
+          onPressed: () => pickTime(context),
+          child: Text(intake.dateTime.format(context)),
+        ),
       ),
     );
+  }
+
+  Future<void> pickTime(BuildContext context) async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: intake.timeOfDay,
+    );
+    if (time != null) {
+      onEdit(intake.copyWith(timeOfDay: time));
+    }
+  }
+
+  Future<bool> alertDelete(BuildContext context) async {
+    var delete = true;
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.clearSnackBars();
+    final l10n = AppL10n.of(context);
+    final undoController = scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(l10n.intakeRecordDeleted),
+        action: SnackBarAction(
+          label: l10n.undo,
+          onPressed: () => delete = false,
+        ),
+      ),
+    );
+    await undoController.closed;
+    return delete;
   }
 }

@@ -97,7 +97,11 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       shrinkWrap: widget.shrinkWrap,
       itemBuilder: (context, index) => IntakeItem(
         intake: intakes[index],
-        onEdit: (intake) {},
+        onEdit: (intake) async {
+          await service<IntakesService>().updateIntake(intake);
+          widget.onChanged();
+          loadData();
+        },
         onDelete: (intake) async {
           intakes.removeWhere((element) => element.code == intake.code);
           await service<IntakesService>().deleteIntake(intake);

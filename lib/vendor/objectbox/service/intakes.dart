@@ -78,6 +78,19 @@ class BoxIntakesService extends IntakesService {
   }
 
   @override
+  Future<Intake> updateIntake(Intake intake) async {
+    final intakeId = int.parse(intake.code);
+    final query = box.query(IntakeBox_.id.equals(intakeId)).build();
+    final intakeBox = query.findFirst();
+    if (intakeBox != null) {
+      intakeBox.amount = intake.amount;
+      intakeBox.dateTime = intake.dateTime;
+      await box.putAsync(intakeBox);
+    }
+    return intake;
+  }
+
+  @override
   Future<void> deleteIntake(Intake intake) {
     final intakeId = int.parse(intake.code);
     final query = box.query(IntakeBox_.id.equals(intakeId)).build();
