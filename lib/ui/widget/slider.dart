@@ -10,7 +10,7 @@ class SliderWidget extends StatelessWidget {
   final double value;
   final bool enabled;
   final double height;
-  final double? interval;
+  final double interval;
   final Color? fromColor;
   final Color? toColor;
   final Color? textColor;
@@ -82,17 +82,18 @@ class SliderWidget extends StatelessWidget {
                     trackHeight: AppSize.spacingXS,
                     thumbShape: _SliderThumbCircle(
                       thumbRadius: height * 0.45,
-                      min: min,
-                      max: max,
+                      label: valueFormatter(value),
                       color: theme.colorScheme.surface,
                       textColor: theme.colorScheme.onSurface,
-                      valueFormatter: valueFormatter,
                     ),
                   ),
-                  child: Slider(
+                  child: Slider.adaptive(
+                    year2023: false,
                     min: min,
                     max: max,
                     value: value,
+                    divisions: ((max - min) / interval).toInt(),
+                    label: valueFormatter(value),
                     onChanged: onChanged,
                   ),
                 ),
@@ -116,19 +117,15 @@ class SliderWidget extends StatelessWidget {
 
 class _SliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
-  final double min;
-  final double max;
+  final String label;
   final Color color;
   final Color textColor;
-  final ValueFormatter valueFormatter;
 
   const _SliderThumbCircle({
     required this.thumbRadius,
-    required this.min,
-    required this.max,
+    required this.label,
     required this.color,
     required this.textColor,
-    required this.valueFormatter,
   });
 
   @override
@@ -163,7 +160,7 @@ class _SliderThumbCircle extends SliderComponentShape {
         fontWeight: FontWeight.w700,
         color: textColor,
       ),
-      text: getValue(value),
+      text: label,
     );
 
     TextPainter tp = TextPainter(
@@ -176,9 +173,5 @@ class _SliderThumbCircle extends SliderComponentShape {
 
     canvas.drawCircle(center, thumbRadius * .9, paint);
     tp.paint(canvas, textCenter);
-  }
-
-  String getValue(double value) {
-    return valueFormatter(min + (max - min) * value);
   }
 }
