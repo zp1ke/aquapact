@@ -9,9 +9,9 @@ All notable changes to this project will be documented in this file.
 
 ### Improved
 - **Sliders inputs**: Added value label when changing slider values.
+- **Responsive design**: Make the app responsive to ensure a consistent user experience across different devices.
 
 ### TODO
-- **Responsive design**: Make the app responsive to ensure a consistent user experience across different devices.
 - **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
 - **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
 - **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.

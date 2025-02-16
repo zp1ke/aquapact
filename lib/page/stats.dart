@@ -12,6 +12,7 @@ import '../ui/color.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
 import '../ui/widget/pull_refresh.dart';
+import '../ui/widget/responsive.dart';
 import '../util/collection.dart';
 import '../util/date_time.dart';
 
@@ -84,20 +85,50 @@ class _StatsPageState extends State<StatsPage> {
       body: SafeArea(
         child: PullToRefresh(
           onRefresh: loadData,
-          child: content(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
+            child: ResponsiveWidget(
+              standard: (_) => standardContent(),
+              medium: (_) => mediumContent(),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget content() {
-    final isLoading = loadingSettings || loadingIntakes;
+  Widget standardContent() {
+    if (loadingSettings || loadingIntakes) {
+      return Center(child: AppIcon.loading);
+    }
     return Column(
       spacing: AppSize.spacingXS,
       children: [
-        if (isLoading) Center(child: AppIcon.loading),
-        if (!isLoading) chartTitle(),
-        if (!isLoading) chart(),
+        chartTitle(),
+        chart(),
+      ],
+    );
+  }
+
+  Widget mediumContent() {
+    if (loadingSettings || loadingIntakes) {
+      return Center(child: AppIcon.loading);
+    }
+    return Column(
+      children: [
+        chartTitle(),
+        Expanded(
+          child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: AppSize.spacingMedium,
+            mainAxisSpacing: AppSize.spacingMedium,
+            childAspectRatio: 10 / 4,
+            children: [
+              Container(),
+              chart(),
+            ],
+          ),
+        )
       ],
     );
   }

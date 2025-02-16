@@ -9,6 +9,8 @@ class AppSize {
   static const spacingXL = spacingLarge * 2;
   static const spacing4Xl = spacingLarge * 4;
 
+  static const icon = 28.0;
+
   static const chartBarWidth = 26.0;
 
   static const mediumWidthBreakpoint = 600.0;

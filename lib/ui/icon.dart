@@ -7,10 +7,10 @@ abstract class AppIcon {
   static const add = Icon(Icons.add);
 
   static const loading = SizedBox(
-    width: AppSize.spacingXM,
-    height: AppSize.spacingXM,
+    width: AppSize.icon,
+    height: AppSize.icon,
     child: CircularProgressIndicator.adaptive(
-        year2023: false,
+      year2023: false,
     ),
   );
 
