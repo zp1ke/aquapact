@@ -6,6 +6,7 @@ import '../../model/intake.dart';
 import '../../service/intakes.dart';
 import '../../util/date_time.dart';
 import '../icon.dart';
+import 'intake_item.dart';
 
 class IntakesController {
   final _listeners = <_IntakesListener>[];
@@ -94,56 +95,19 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       padding: EdgeInsets.zero,
       itemCount: intakes.length,
       shrinkWrap: widget.shrinkWrap,
-      itemBuilder: (context, index) => intakeItem(intakes[index]),
+      itemBuilder: (context, index) => IntakeItem(
+        intake: intakes[index],
+        onEdit: (intake) {},
+        onDelete: (intake) async {
+          intakes.removeWhere((element) => element.code == intake.code);
+          await service<IntakesService>().deleteIntake(intake);
+          widget.onChanged();
+          loadData();
+        },
+      ),
       separatorBuilder: (context, index) {
         return Divider(height: .0);
       },
-    );
-  }
-
-  Widget intakeItem(Intake intake) {
-    final theme = Theme.of(context);
-    return Dismissible(
-      key: Key(intake.code),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.endToStart) {
-          var delete = true;
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
-          scaffoldMessenger.clearSnackBars();
-          final l10n = AppL10n.of(context);
-          final undoController = scaffoldMessenger.showSnackBar(
-            SnackBar(
-              content: Text(l10n.intakeRecordDeleted),
-              action: SnackBarAction(
-                label: l10n.undo,
-                onPressed: () => delete = false,
-              ),
-            ),
-          );
-          await undoController.closed;
-          return delete;
-        }
-        return false;
-      },
-      background: Container(),
-      secondaryBackground: Container(
-        color: theme.colorScheme.errorContainer,
-        child: Center(
-          child: AppIcon.delete(context, hasBackground: true),
-        ),
-      ),
-      onDismissed: (_) async {
-        intakes.removeWhere((element) => element.code == intake.code);
-        await service<IntakesService>().deleteIntake(intake);
-        widget.onChanged();
-        loadData();
-      },
-      child: ListTile(
-        dense: widget.dense,
-        leading: AppIcon.waterGlass(context),
-        title: Text(intake.measureUnit.formatValue(intake.amount)),
-        subtitle: Text(intake.dateTime.format(context)),
-      ),
     );
   }
 
