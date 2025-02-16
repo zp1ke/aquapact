@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.2] - TO DO
+## [0.0.3] - TODO
+
+### TODO
+- **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
+- **Group notifications**: Group multiple notifications into a single notification to reduce clutter and improve user experience.
+- **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
+- **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
+
+## [0.0.2] - 2025-02-15
 
 ### Added
 - **Pull to refresh**: Enable pull-to-refresh functionality on pages with reload actions for a smoother user experience.
@@ -10,12 +18,6 @@ All notable changes to this project will be documented in this file.
 ### Improved
 - **Sliders inputs**: Added value label when changing slider values.
 - **Responsive design**: Make the app responsive to ensure a consistent user experience across different devices.
-
-### TODO
-- **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
-- **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
-- **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
-- **Group notifications**: Group multiple notifications into a single notification to reduce clutter and improve user experience.
 
 ## [0.0.1] - 2025-02-11
 
