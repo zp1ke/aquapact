@@ -15,7 +15,8 @@ class AppL10nEn extends AppL10n {
   String get allowAppNotifications => 'Allow App Notifications';
 
   @override
-  String get allowAppNotificationsDescription => 'We will need permission so the app can send you notifications.';
+  String get allowAppNotificationsDescription =>
+      'We will need permission so the app can send you notifications.';
 
   @override
   String get cancel => 'Cancel';
@@ -40,33 +41,44 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get intakeMessageMorning0 => 'Good morning! 🌞 Start your day right with a refreshing glass of water! 💧 Let\'s begin our journey to staying hydrated today!';
+  String get intakeMessageMorning0 =>
+      'Good morning! 🌞 Start your day right with a refreshing glass of water! 💧 Let\'s begin our journey to staying hydrated today!';
 
   @override
-  String get intakeMessageMidday25 => 'Great start! You\'ve reached 25% of your hydration goal. Keep it going and stay refreshed! 💧💪';
+  String get intakeMessageMidday25 =>
+      'Great start! You\'ve reached 25% of your hydration goal. Keep it going and stay refreshed! 💧💪';
 
   @override
-  String get intakeMessageMidday50 => 'You\'re halfway there! 50% of your goal is complete. Keep sipping and stay on track! 💦👏';
+  String get intakeMessageMidday50 =>
+      'You\'re halfway there! 50% of your goal is complete. Keep sipping and stay on track! 💦👏';
 
   @override
-  String get intakeMessageAfternoon75 => 'Fantastic progress! You\'re at 75% of your hydration goal. Just a little more to go! 💧🚀';
+  String get intakeMessageAfternoon75 =>
+      'Fantastic progress! You\'re at 75% of your hydration goal. Just a little more to go! 💧🚀';
 
   @override
-  String get intakeMessageEvening90 => 'Almost there! You\'re at 90% of your goal. Just a little more effort and you\'ll make it! 💦✨';
+  String get intakeMessageEvening90 =>
+      'Almost there! You\'re at 90% of your goal. Just a little more effort and you\'ll make it! 💦✨';
 
   @override
-  String get intakeMessage10 => 'Don\'t worry, you still have time to catch up! Drink a cup of water now and stay on track to reach your goal. 💧🌟';
+  String get intakeMessage10 =>
+      'Don\'t worry, you still have time to catch up! Drink a cup of water now and stay on track to reach your goal. 💧🌟';
 
   @override
-  String get intakeMessage30 => 'You can do it! Take a moment to drink a glass of water and keep pushing towards your goal. 💦💪';
+  String get intakeMessage30 =>
+      'You can do it! Take a moment to drink a glass of water and keep pushing towards your goal. 💦💪';
 
   @override
-  String get intakeMessage100 => 'Congratulations! You\'ve achieved 100% of your hydration goal today. Great job staying hydrated! 💧🥳';
+  String get intakeMessage100 =>
+      'Congratulations! You\'ve achieved 100% of your hydration goal today. Great job staying hydrated! 💧🥳';
 
   @override
   String intakesOf(String date) {
     return 'Intakes of $date';
   }
+
+  @override
+  String get intakeRecordDeleted => 'Intake record deleted';
 
   @override
   String lastNDays(String days) {
@@ -137,6 +149,9 @@ class AppL10nEn extends AppL10n {
   String totalIntake(String amount) {
     return 'Total Intake: $amount';
   }
+
+  @override
+  String get undo => 'Undo';
 
   @override
   String wakeUpSleepTimes(String wakeUpTime, String sleepTime) {

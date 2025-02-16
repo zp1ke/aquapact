@@ -6,6 +6,15 @@ import 'size.dart';
 abstract class AppIcon {
   static const add = Icon(Icons.add);
 
+  static Icon delete(BuildContext context, {bool hasBackground = false}) {
+    return Icon(
+      Icons.delete,
+      color: hasBackground
+          ? Theme.of(context).colorScheme.onErrorContainer
+          : Theme.of(context).colorScheme.error,
+    );
+  }
+
   static const loading = SizedBox(
     width: AppSize.icon,
     height: AppSize.icon,

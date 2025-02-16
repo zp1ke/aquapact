@@ -26,6 +26,8 @@ abstract class IntakesService {
     required DateTime to,
   });
 
+  Future<void> deleteIntake(Intake intake);
+
   /// Returns a tip for the user according to the current intake value and target value.
   String tip(
     BuildContext context, {

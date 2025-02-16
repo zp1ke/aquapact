@@ -287,6 +287,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           limit: 4,
           controller: intakeCtrl,
           dense: true,
+          onChanged: fetchIntakeValue,
         ),
       ),
     );

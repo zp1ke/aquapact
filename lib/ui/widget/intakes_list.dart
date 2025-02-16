@@ -25,6 +25,7 @@ class IntakesListWidget extends StatefulWidget {
   final IntakesController controller;
   final bool dense;
   final bool shrinkWrap;
+  final VoidCallback onChanged;
 
   const IntakesListWidget({
     super.key,
@@ -32,6 +33,7 @@ class IntakesListWidget extends StatefulWidget {
     required this.controller,
     this.dense = false,
     this.shrinkWrap = false,
+    required this.onChanged,
   });
 
   @override
@@ -92,18 +94,56 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       padding: EdgeInsets.zero,
       itemCount: intakes.length,
       shrinkWrap: widget.shrinkWrap,
-      itemBuilder: (context, index) {
-        final intake = intakes[index];
-        return ListTile(
-          dense: widget.dense,
-          leading: AppIcon.waterGlass(context),
-          title: Text(intake.measureUnit.formatValue(intake.amount)),
-          subtitle: Text(intake.dateTime.format(context)),
-        );
-      },
+      itemBuilder: (context, index) => intakeItem(intakes[index]),
       separatorBuilder: (context, index) {
         return Divider(height: .0);
       },
+    );
+  }
+
+  Widget intakeItem(Intake intake) {
+    final theme = Theme.of(context);
+    return Dismissible(
+      key: Key(intake.code),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.endToStart) {
+          var delete = true;
+          final scaffoldMessenger = ScaffoldMessenger.of(context);
+          scaffoldMessenger.clearSnackBars();
+          final l10n = AppL10n.of(context);
+          final undoController = scaffoldMessenger.showSnackBar(
+            SnackBar(
+              content: Text(l10n.intakeRecordDeleted),
+              action: SnackBarAction(
+                label: l10n.undo,
+                onPressed: () => delete = false,
+              ),
+            ),
+          );
+          await undoController.closed;
+          return delete;
+        }
+        return false;
+      },
+      background: Container(),
+      secondaryBackground: Container(
+        color: theme.colorScheme.errorContainer,
+        child: Center(
+          child: AppIcon.delete(context, hasBackground: true),
+        ),
+      ),
+      onDismissed: (_) async {
+        intakes.removeWhere((element) => element.code == intake.code);
+        await service<IntakesService>().deleteIntake(intake);
+        widget.onChanged();
+        loadData();
+      },
+      child: ListTile(
+        dense: widget.dense,
+        leading: AppIcon.waterGlass(context),
+        title: Text(intake.measureUnit.formatValue(intake.amount)),
+        subtitle: Text(intake.dateTime.format(context)),
+      ),
     );
   }
 

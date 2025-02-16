@@ -67,6 +67,7 @@ class BoxIntakesService extends IntakesService {
       final nextDateTime = dateTime.add(const Duration(days: 1));
       final amount = await sumIntakesAmount(from: dateTime, to: nextDateTime);
       intakes.add(Intake(
+        code: dateTime.millisecondsSinceEpoch.toString(),
         amount: amount,
         dateTime: dateTime,
         measureUnit: VolumeMeasureUnit.ml,
@@ -76,10 +77,18 @@ class BoxIntakesService extends IntakesService {
     return intakes;
   }
 
+  @override
+  Future<void> deleteIntake(Intake intake) {
+    final intakeId = int.parse(intake.code);
+    final query = box.query(IntakeBox_.id.equals(intakeId)).build();
+    return query.removeAsync();
+  }
+
   Intake _toIntake(IntakeBox intake) {
     final measureUnit = VolumeMeasureUnit.values
         .firstWhere((element) => element.symbol == intake.measureUnit!);
     return Intake(
+      code: intake.id.toString(),
       amount: intake.amount!,
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,

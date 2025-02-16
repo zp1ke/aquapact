@@ -39,6 +39,7 @@
       }
     }
   },
+  "intakeRecordDeleted": "Intake record deleted",
   "lastNDays": "Last {days} days",
   "@lastNDays": {
     "placeholders": {
@@ -85,6 +86,7 @@
       }
     }
   },
+  "undo": "Undo",
   "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",
   "@wakeUpSleepTimes": {
     "placeholders": {

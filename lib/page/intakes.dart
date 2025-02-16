@@ -120,6 +120,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
         padding: EdgeInsets.symmetric(horizontal: AppSize.spacingSmall),
         child: IntakesListWidget(
           controller: intakeCtrl,
+          onChanged: fetchIntakeValue,
         ),
       ),
     );
