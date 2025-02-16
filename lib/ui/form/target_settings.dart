@@ -7,6 +7,7 @@ import '../../util/number.dart';
 import '../color.dart';
 import '../icon.dart';
 import '../size.dart';
+import '../widget/responsive.dart';
 import '../widget/slider.dart';
 
 class TargetSettingsForm extends StatefulWidget {
@@ -40,6 +41,13 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
 
   @override
   Widget build(BuildContext context) {
+    return ResponsiveWidget(
+      standard: (_) => standardContent(),
+      medium: (_) => mediumContent(),
+    );
+  }
+
+  Widget standardContent() {
     return Padding(
       padding: const EdgeInsets.all(AppSize.spacingMedium),
       child: Column(
@@ -49,6 +57,30 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(wakeUpSleepTimesCard()),
           card(notificationIntervalCard()),
           SizedBox(height: AppSize.spacingLarge),
+          toolbar(),
+        ],
+      ),
+    );
+  }
+
+  Widget mediumContent() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.spacingMedium),
+      child: Column(
+        children: [
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: AppSize.spacingMedium,
+              mainAxisSpacing: AppSize.spacingMedium,
+              childAspectRatio: 10 / 4,
+              children: [
+                card(dailyTargetCard()),
+                card(wakeUpSleepTimesCard()),
+                card(notificationIntervalCard()),
+              ],
+            ),
+          ),
           toolbar(),
         ],
       ),

@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - **Pull to refresh**: Enable pull-to-refresh functionality on pages with reload actions for a smoother user experience.
 
+### Improved
+- **Sliders inputs**: Added value label when changing slider values.
+
 ### TODO
 - **Responsive design**: Make the app responsive to ensure a consistent user experience across different devices.
 - **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
