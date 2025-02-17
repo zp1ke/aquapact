@@ -9,15 +9,19 @@ class PopupButton<T> extends StatefulWidget {
   final List<T> values;
   final Widget Function(BuildContext, T, bool) itemBuilder;
   final Function(T) onSelected;
+  final bool elevated;
+  final bool disableValue;
 
   const PopupButton({
     super.key,
     this.enabled = true,
-    required this.icon,
+    this.icon,
     required this.value,
     required this.values,
     required this.itemBuilder,
     required this.onSelected,
+    this.elevated = true,
+    this.disableValue = false,
   });
 
   @override
@@ -36,16 +40,30 @@ class _PopupButtonState<T> extends State<PopupButton<T>> {
             }
           : null,
       onLongPress: widget.enabled ? showPopupMenu : null,
-      child: ElevatedButton.icon(
-        onPressed: widget.enabled
-            ? () {
-                widget.onSelected(widget.value);
-              }
-            : null,
-        label: widget.itemBuilder(context, widget.value, true),
-        icon: widget.icon,
-      ),
+      child: button(),
     );
+  }
+
+  Widget button() {
+    final label = widget.itemBuilder(context, widget.value, true);
+    if (widget.elevated) {
+      return ElevatedButton.icon(
+        onPressed: widget.enabled ? onButtonPressed : null,
+        label: label,
+        icon: widget.icon,
+      );
+    }
+    return TextButton.icon(
+      onPressed: widget.enabled ? onButtonPressed : null,
+      label: label,
+      icon: widget.icon,
+    );
+  }
+
+  void onButtonPressed() {
+    if (!widget.disableValue) {
+      widget.onSelected(widget.value);
+    }
   }
 
   void showPopupMenu() async {
@@ -58,6 +76,7 @@ class _PopupButtonState<T> extends State<PopupButton<T>> {
       ),
       items: widget.values.map((value) {
         return PopupMenuItem<T>(
+          enabled: !widget.disableValue || value != widget.value,
           value: value,
           child: widget.itemBuilder(context, value, false),
         );

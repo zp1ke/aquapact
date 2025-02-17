@@ -11,7 +11,7 @@ import '../service/notification.dart';
 import '../service/settings.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
-import '../ui/widget/add_intake_button.dart';
+import '../ui/form/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/pull_refresh.dart';

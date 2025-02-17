@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/intake.dart';
+import '../../model/target_settings.dart';
 import '../../service/intakes.dart';
+import '../../service/settings.dart';
 import '../../util/date_time.dart';
 import '../icon.dart';
 import 'intake_item.dart';
@@ -43,6 +45,7 @@ class IntakesListWidget extends StatefulWidget {
 
 class _IntakesListWidgetState extends State<IntakesListWidget>
     implements _IntakesListener {
+  var targetSettings = TargetSettings();
   var from = DateTime.now().atStartOfDay();
   late DateTime to = from.add(Duration(days: 1));
   var intakes = <Intake>[];
@@ -62,6 +65,8 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
         loading = true;
       });
     }
+    targetSettings =
+        service<SettingsService>().readTargetSettings() ?? TargetSettings();
     intakes = await service<IntakesService>().fetchIntakes(
       from: from,
       to: to,
@@ -97,6 +102,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       shrinkWrap: widget.shrinkWrap,
       itemBuilder: (context, index) => IntakeItem(
         intake: intakes[index],
+        targetSettings: targetSettings,
         onEdit: (intake) async {
           await service<IntakesService>().updateIntake(intake);
           widget.onChanged();

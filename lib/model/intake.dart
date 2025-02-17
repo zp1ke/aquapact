@@ -20,7 +20,10 @@ class Intake {
         minute: dateTime.minute,
       );
 
-  Intake copyWith({TimeOfDay? timeOfDay}) {
+  Intake copyWith({
+    double? amount,
+    TimeOfDay? timeOfDay,
+  }) {
     var dateTime = this.dateTime.copyWith();
     if (timeOfDay != null) {
       dateTime = dateTime.copyWith(
@@ -30,7 +33,7 @@ class Intake {
     }
     return Intake(
       code: code,
-      amount: amount,
+      amount: amount ?? this.amount,
       dateTime: dateTime,
       measureUnit: measureUnit,
     );

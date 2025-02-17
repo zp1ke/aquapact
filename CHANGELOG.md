@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### TODO
 - **Group notifications**: Group multiple notifications into a single notification to reduce clutter and improve user experience.
+- **Drawer navigation**: Implement a drawer navigation menu to provide easy access to different sections of the app.
 - **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
 - **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
 

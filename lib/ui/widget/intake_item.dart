@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/app_l10n.dart';
 import '../../model/intake.dart';
+import '../../model/target_settings.dart';
 import '../../util/date_time.dart';
+import '../form/edit_intake_button.dart';
 import '../icon.dart';
 
 class IntakeItem extends StatelessWidget {
   final Intake intake;
+  final TargetSettings targetSettings;
   final bool dense;
   final Function(Intake) onEdit;
   final Function(Intake) onDelete;
@@ -14,6 +17,7 @@ class IntakeItem extends StatelessWidget {
   const IntakeItem({
     super.key,
     required this.intake,
+    required this.targetSettings,
     this.dense = false,
     required this.onEdit,
     required this.onDelete,
@@ -42,8 +46,13 @@ class IntakeItem extends StatelessWidget {
       },
       child: ListTile(
         dense: dense,
-        leading: AppIcon.waterGlass(context),
-        title: Text(intake.measureUnit.formatValue(intake.amount)), // TODO: edit
+        leading: EditIntakeButton(
+          value: intake.amount,
+          targetSettings: targetSettings,
+          onChanged: (amount) {
+            onEdit(intake.copyWith(amount: amount));
+          },
+        ),
         trailing: TextButton(
           onPressed: () => pickTime(context),
           child: Text(intake.dateTime.format(context)),

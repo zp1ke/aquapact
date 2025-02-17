@@ -8,7 +8,7 @@ import '../color.dart';
 import '../icon.dart';
 import '../size.dart';
 import '../widget/responsive.dart';
-import '../widget/slider.dart';
+import 'slider.dart';
 
 class TargetSettingsForm extends StatefulWidget {
   final TargetSettings? targetSettings;
@@ -29,7 +29,7 @@ class TargetSettingsForm extends StatefulWidget {
 }
 
 class _TargetSettingsFormState extends State<TargetSettingsForm> {
-  TargetSettings targetSettings = TargetSettings();
+  var targetSettings = TargetSettings();
 
   @override
   void initState() {
