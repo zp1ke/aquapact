@@ -45,6 +45,14 @@ class LocalNotificationService extends NotificationService {
     final launchDetails = await _plugin.getNotificationAppLaunchDetails();
     _appLaunchedByNotification =
         launchDetails?.didNotificationLaunchApp ?? false;
+
+    final activeNotifications = await _plugin.getActiveNotifications();
+    for (var notification in activeNotifications) {
+      'Active notification: ${notification.title} ${notification.body}'.log();
+      if (notification.id != null) {
+        await _plugin.cancel(notification.id!, tag: notification.tag);
+      }
+    }
   }
 
   @override
@@ -87,6 +95,8 @@ class LocalNotificationService extends NotificationService {
       enableLights: true,
       enableVibration: true,
       vibrationPattern: Int64List.fromList(<int>[1000, 500, 1000]),
+      groupAlertBehavior: GroupAlertBehavior.summary,
+      groupKey: 'org.zp1ke.aquapact.REMINDER',
     );
   }
 
