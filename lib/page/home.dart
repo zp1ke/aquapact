@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../app/di.dart';
@@ -9,9 +11,10 @@ import '../service/intakes.dart';
 import '../service/mixin/target_settings_saver.dart';
 import '../service/notification.dart';
 import '../service/settings.dart';
+import '../ui/android/app_menu.dart';
+import '../ui/form/add_intake_button.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
-import '../ui/form/add_intake_button.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/pull_refresh.dart';
@@ -98,8 +101,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         title: Text(AppL10n.of(context).appTitle),
         actions: [
           reloadButton(),
-          statsButton(),
-          settingsButton(),
         ],
       ),
       body: SafeArea(
@@ -111,7 +112,17 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           ),
         ),
       ),
+      drawer: menu(),
     );
+  }
+
+  Widget? menu() {
+    if (Platform.isAndroid) {
+      return Drawer(
+        child: AppMenu(onChanged: loadData),
+      );
+    }
+    return null;
   }
 
   Widget standardContent() {
@@ -175,33 +186,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     return IconButton(
       icon: isNotLoading ? AppIcon.refresh : AppIcon.loading,
       onPressed: (!processing && isNotLoading) ? loadData : null,
-    );
-  }
-
-  Widget statsButton() {
-    final isNotLoading =
-        !processing && !loadingSettings && !loadingNotifications;
-    return IconButton(
-      icon: AppIcon.stats,
-      onPressed: isNotLoading
-          ? () {
-              context.navigateTo(AppPage.stats);
-            }
-          : null,
-    );
-  }
-
-  Widget settingsButton() {
-    final isNotLoading =
-        !processing && !loadingSettings && !loadingNotifications;
-    return IconButton(
-      icon: AppIcon.settings,
-      onPressed: isNotLoading
-          ? () async {
-              await context.navigateTo(AppPage.targetSettings);
-              loadData();
-            }
-          : null,
     );
   }
 

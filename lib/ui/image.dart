@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum AppImage {
+  logo(isPng: true),
   notification(isPng: true);
 
   final bool isPng;

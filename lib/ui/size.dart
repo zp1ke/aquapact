@@ -7,7 +7,7 @@ class AppSize {
   static const spacingXM = 18.0;
   static const spacingLarge = 24.0;
   static const spacingXL = spacingLarge * 2;
-  static const spacing4Xl = spacingLarge * 4;
+  static const spacing4XL = spacingLarge * 4;
 
   static const icon = 28.0;
 

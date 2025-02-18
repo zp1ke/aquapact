@@ -23,7 +23,7 @@ class RequestPermissionWidget extends StatelessWidget {
       children: <Widget>[
         Image(
           image: AppImage.notification.assetImage(context),
-          height: AppSize.spacing4Xl,
+          height: AppSize.spacing4XL,
           fit: BoxFit.fitHeight,
         ),
         Column(

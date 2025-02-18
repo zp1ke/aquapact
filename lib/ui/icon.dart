@@ -4,11 +4,13 @@ import 'color.dart';
 import 'size.dart';
 
 abstract class AppIcon {
-  static const add = Icon(Icons.add);
+  static const about = Icon(Icons.info_outline_rounded);
+
+  static const add = Icon(Icons.add_sharp);
 
   static Icon delete(BuildContext context, {bool hasBackground = false}) {
     return Icon(
-      Icons.delete,
+      Icons.delete_forever_sharp,
       color: hasBackground
           ? Theme.of(context).colorScheme.onErrorContainer
           : Theme.of(context).colorScheme.error,
@@ -23,15 +25,15 @@ abstract class AppIcon {
     ),
   );
 
-  static const refresh = Icon(Icons.refresh);
+  static const refresh = Icon(Icons.refresh_sharp);
 
-  static const settings = Icon(Icons.settings);
+  static const settings = Icon(Icons.settings_sharp);
 
-  static const stats = Icon(Icons.area_chart);
+  static const stats = Icon(Icons.area_chart_outlined);
 
   static Icon waterGlass(BuildContext context) {
     return Icon(
-      Icons.local_drink,
+      Icons.local_drink_sharp,
       color: Theme.of(context).colorScheme.water,
     );
   }
