@@ -4,16 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.3] - TODO
 
+### TODO
+- **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
+
 ### Added
 - **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
 - **Drawer navigation**: Implement a drawer navigation menu to provide easy access to different sections of the app.
+- **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
 
 ### Improved
 - **Group notifications**: Group multiple notifications into a single notification to reduce clutter and improve user experience.
-
-### TODO
-- **Filter intakes by day**: Add a filter option on the Intakes page to view records by specific days.
-- **Filter stats by date range**: Implement a date range filter on the Stats page to analyze water intake over custom periods.
 
 ## [0.0.2] - 2025-02-15
 

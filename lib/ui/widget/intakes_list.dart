@@ -85,9 +85,12 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       return Center(child: AppIcon.loading);
     }
     if (intakes.isEmpty) {
+      final message = from.isToday
+          ? AppL10n.of(context).noIntakesYet
+          : AppL10n.of(context).noIntakesRecorded;
       return Center(
         child: Text(
-          AppL10n.of(context).noIntakesYet,
+          message,
           textScaler: TextScaler.linear(1.2),
           textAlign: TextAlign.center,
           style: TextStyle(

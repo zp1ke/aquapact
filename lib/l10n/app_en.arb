@@ -59,6 +59,7 @@
       }
     }
   },
+  "noIntakesRecorded": "No intakes recorded :(",
   "noIntakesYet": "No intakes yet. Drink some water to get started.",
   "notificationTitle": "Drink Water Reminder",
   "notificationMessage": "It's time to drink water!",
