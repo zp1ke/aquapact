@@ -41,7 +41,7 @@
     }
   },
   "intakeRecordDeleted": "Intake record deleted",
-  "lastNDays": "Last {days} days",
+  "lastNDays": "Last {days} days (and today)",
   "@lastNDays": {
     "placeholders": {
       "days": {

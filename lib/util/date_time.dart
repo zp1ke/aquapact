@@ -16,9 +16,18 @@ extension AppDateTime on DateTime {
 
   DateTime atEndOfDay() => DateTime(year, month, day, 23, 59, 59);
 
-  bool get isToday {
-    final now = DateTime.now();
-    return year == now.year && month == now.month && day == now.day;
+  bool get isToday => isSameDay(DateTime.now());
+
+  bool isSameDay(DateTime other) {
+    return isSameMonth(other) && day == other.day;
+  }
+
+  bool isSameMonth(DateTime other) {
+    return year == other.year && month == other.month;
+  }
+
+  DateTime min(DateTime other) {
+    return isBefore(other) ? this : other;
   }
 
   String format(BuildContext context) {

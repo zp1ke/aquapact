@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../app/config.dart';
 import '../app/di.dart';
 import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
@@ -150,7 +151,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
     final now = DateTime.now();
     final date = await showDatePicker(
       context: context,
-      firstDate: DateTime(2025, 1),
+      firstDate: AppConfig.launchDateTime,
       initialDate: dateTime,
       lastDate: now,
     );

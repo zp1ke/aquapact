@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_l10n.dart';
 import '../model/intake.dart';
+import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
 
 abstract class IntakesService {
@@ -21,7 +22,7 @@ abstract class IntakesService {
     required DateTime to,
   });
 
-  Future<List<Intake>> fetchAmounts({
+  Future<List<IntakeRange>> fetchAmounts({
     required DateTime from,
     required DateTime to,
   });

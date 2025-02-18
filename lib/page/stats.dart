@@ -1,10 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../app/config.dart';
 import '../app/di.dart';
 import '../l10n/app_l10n.dart';
-import '../model/intake.dart';
+import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
+import '../model/range_type.dart';
 import '../model/target_settings.dart';
 import '../service/intakes.dart';
 import '../service/settings.dart';
@@ -28,7 +30,7 @@ class _StatsPageState extends State<StatsPage> {
   late DateTime to;
 
   var targetSettings = TargetSettings();
-  var intakes = <Intake>[];
+  var intakes = <IntakeRange>[];
 
   var loadingSettings = false;
   var loadingIntakes = false;
@@ -104,7 +106,7 @@ class _StatsPageState extends State<StatsPage> {
     return Column(
       spacing: AppSize.spacingXS,
       children: [
-        chartTitle(),
+        chartSummary(),
         chart(),
       ],
     );
@@ -116,7 +118,7 @@ class _StatsPageState extends State<StatsPage> {
     }
     return Column(
       children: [
-        chartTitle(),
+        chartSummary(),
         Expanded(
           child: GridView.count(
             crossAxisCount: 2,
@@ -141,14 +143,14 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  Widget chartTitle() {
+  Widget chartSummary() {
     final appL10n = AppL10n.of(context);
-    String title;
+    String dateRange;
     if (to.isToday) {
       final days = to.difference(from).inDays;
-      title = appL10n.lastNDays(days.toStringAsFixed(0));
+      dateRange = appL10n.lastNDays(days.toStringAsFixed(0));
     } else {
-      title = '${from.formatDate(context)} - ${to.formatDate(context)}';
+      dateRange = '${from.formatDate(context)} - ${to.formatDate(context)}';
     }
     final avg = intakes
             .map((e) => e.amount)
@@ -157,29 +159,45 @@ class _StatsPageState extends State<StatsPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title),
-        Text(appL10n
-            .intakeAverage(targetSettings.volumeMeasureUnit.formatValue(avg))),
+        TextButton(onPressed: pickDateRange, child: Text(dateRange)),
+        Text(intakes.first.rangeType == RangeType.daily
+            ? appL10n.intakeAverage(
+                targetSettings.volumeMeasureUnit.formatValue(avg))
+            : ''),
       ],
     );
   }
 
   Widget chart() {
     final screenSize = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       height: screenSize.height / 4,
       child: BarChart(
         BarChartData(
+          barTouchData: BarTouchData(
+            touchTooltipData: BarTouchTooltipData(
+              getTooltipColor: (data) {
+                if (data.barRods.isNotEmpty) {
+                  return backgroundColorOf(
+                      data.barRods.first.toY, intakes.first.rangeType);
+                }
+                return Theme.of(context).colorScheme.surface;
+              },
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                final intake = intakes[groupIndex];
+                return BarTooltipItem(
+                  VolumeMeasureUnit.l.formatValue(intake.amount),
+                  TextStyle(
+                    color: colorOf(intake.amount, intake.rangeType),
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
+              },
+            ),
+          ),
           barGroups: intakes.mapIndexed((index, intake) {
-            final percent = intake.amount / targetSettings.dailyTarget;
-            var color = theme.colorScheme.water;
-            if (percent < 0.3) {
-              color = theme.colorScheme.warning;
-            } else if (percent > 0.95) {
-              color = theme.colorScheme.deepWater;
-            }
+            final color = backgroundColorOf(intake.amount, intake.rangeType);
             return BarChartGroupData(
               x: index,
               barRods: [
@@ -188,7 +206,7 @@ class _StatsPageState extends State<StatsPage> {
                   width: AppSize.chartBarWidth,
                   color: color,
                   backDrawRodData: BackgroundBarChartRodData(
-                    show: true,
+                    show: intake.rangeType == RangeType.daily,
                     toY: targetSettings.dailyTarget,
                     color: color.withValues(alpha: 0.5),
                   ),
@@ -200,7 +218,7 @@ class _StatsPageState extends State<StatsPage> {
             topTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: (value, meta) => Text(''),
+                getTitlesWidget: (_, __) => Text(''),
                 reservedSize: AppSize.spacingXL,
               ),
             ),
@@ -235,9 +253,8 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Widget xTitle(double index, TitleMeta meta) {
-    final day = intakes[index.toInt()].dateTime.day;
     final text = Text(
-      day.toString(),
+      intakes[index.toInt()].label(context),
       style: TextStyle(fontWeight: FontWeight.bold),
     );
     return SideTitleWidget(
@@ -257,5 +274,45 @@ class _StatsPageState extends State<StatsPage> {
       space: AppSize.spacingMedium,
       child: text,
     );
+  }
+
+  void pickDateRange() async {
+    final range = await showDateRangePicker(
+      context: context,
+      firstDate: AppConfig.launchDateTime,
+      initialDateRange: DateTimeRange(start: from, end: to),
+      lastDate: DateTime.now(),
+    );
+    if (range != null) {
+      setState(() {
+        from = range.start.atStartOfDay();
+        to = range.end.atEndOfDay();
+      });
+      fetchIntakes();
+    }
+  }
+
+  Color backgroundColorOf(double amount, RangeType rangeType) {
+    if (rangeType == RangeType.daily) {
+      final percent = amount / targetSettings.dailyTarget;
+      if (percent < 0.3) {
+        return Theme.of(context).colorScheme.warning;
+      } else if (percent > 0.95) {
+        return Theme.of(context).colorScheme.deepWater;
+      }
+    }
+    return Theme.of(context).colorScheme.water;
+  }
+
+  Color colorOf(double amount, RangeType rangeType) {
+    if (rangeType != RangeType.daily) {
+      final percent = amount / targetSettings.dailyTarget;
+      if (percent < 0.3) {
+        return Theme.of(context).colorScheme.onWarning;
+      } else if (percent > 0.95) {
+        return Theme.of(context).colorScheme.onDeepWater;
+      }
+    }
+    return Theme.of(context).colorScheme.onWater;
   }
 }

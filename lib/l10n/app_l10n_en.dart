@@ -85,7 +85,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String lastNDays(String days) {
-    return 'Last $days days';
+    return 'Last $days days (and today)';
   }
 
   @override

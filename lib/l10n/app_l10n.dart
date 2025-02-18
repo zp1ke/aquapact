@@ -216,7 +216,7 @@ abstract class AppL10n {
   /// No description provided for @lastNDays.
   ///
   /// In en, this message translates to:
-  /// **'Last {days} days'**
+  /// **'Last {days} days (and today)'**
   String lastNDays(String days);
 
   /// No description provided for @lastIntakes.

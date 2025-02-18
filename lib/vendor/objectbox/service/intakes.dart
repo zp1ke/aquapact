@@ -1,5 +1,7 @@
 import '../../../model/intake.dart';
+import '../../../model/intake_range.dart';
 import '../../../model/measure_unit.dart';
+import '../../../model/range_type.dart';
 import '../../../service/intakes.dart';
 import '../../../util/date_time.dart';
 import '../model/intake_box.dart';
@@ -56,21 +58,25 @@ class BoxIntakesService extends IntakesService {
   }
 
   @override
-  Future<List<Intake>> fetchAmounts({
+  Future<List<IntakeRange>> fetchAmounts({
     required DateTime from,
     required DateTime to,
   }) async {
-    final intakes = <Intake>[];
+    final intakes = <IntakeRange>[];
     final toDateTime = to.atStartOfDay().add(const Duration(days: 1));
+    final days = to.difference(from).inDays;
+    final rangeType = _rangeType(days);
     var dateTime = from.atStartOfDay();
     while (dateTime.isBefore(toDateTime)) {
-      final nextDateTime = dateTime.add(const Duration(days: 1));
+      final nextDateTime =
+          rangeType.nextDateTime(dateTime, days).min(toDateTime);
       final amount = await sumIntakesAmount(from: dateTime, to: nextDateTime);
-      intakes.add(Intake(
-        code: dateTime.millisecondsSinceEpoch.toString(),
+      intakes.add(IntakeRange(
         amount: amount,
-        dateTime: dateTime,
+        from: dateTime,
+        to: nextDateTime,
         measureUnit: VolumeMeasureUnit.ml,
+        rangeType: rangeType,
       ));
       dateTime = nextDateTime;
     }
@@ -106,5 +112,15 @@ class BoxIntakesService extends IntakesService {
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,
     );
+  }
+
+  RangeType _rangeType(int days) {
+    return switch (days) {
+      > 365 => RangeType.yearly,
+      <= 365 && > 180 => RangeType.monthly,
+      <= 180 && > 30 => RangeType.twoWeeks,
+      <= 30 && > 10 => RangeType.weekly,
+      <= 10 || _ => RangeType.daily,
+    };
   }
 }
