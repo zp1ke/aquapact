@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.3] - TODO
+## [0.0.3] - 2025-02-19
 
 ### Added
 - **Edit and delete intake records**: Allow users to update and delete their water intake records for better management.
