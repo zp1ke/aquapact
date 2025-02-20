@@ -103,14 +103,12 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           reloadButton(),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: kToolbarHeight),
-        child: PullToRefresh(
-          onRefresh: loadData,
-          child: ResponsiveWidget(
-            standard: (_) => standardContent(),
-            medium: (_) => mediumContent(),
-          ),
+      body: PullToRefresh(
+        onRefresh: loadData,
+        withBottomPadding: false,
+        child: ResponsiveWidget(
+          standard: (_) => standardContent(),
+          medium: (_) => mediumContent(),
         ),
       ),
       drawer: menu(),
@@ -304,11 +302,9 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           ),
         ),
       ),
-      child: Center(
-        child: LiquidProgressIndicatorWidget(
-          value: intakeValue,
-          targetValue: targetSettings.dailyTarget,
-        ),
+      child: LiquidProgressIndicatorWidget(
+        value: intakeValue,
+        targetValue: targetSettings.dailyTarget,
       ),
     );
   }

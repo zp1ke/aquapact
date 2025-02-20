@@ -14,14 +14,10 @@ class ResponsiveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        if (width > AppSize.mediumWidthBreakpoint && medium != null) {
-          return medium!(context);
-        }
-        return standard(context);
-      },
-    );
+    final width = MediaQuery.of(context).size.width;
+    if (width > AppSize.mediumWidthBreakpoint && medium != null) {
+      return medium!(context);
+    }
+    return standard(context);
   }
 }

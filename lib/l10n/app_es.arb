@@ -1,0 +1,107 @@
+{
+  "@@locale": "es",
+  "about": "Acerca de",
+  "appTitle": "AquaPact",
+  "allowAppNotifications": "Permitir notificaciones de la aplicación",
+  "allowAppNotificationsDescription": "Necesitaremos permiso para que la aplicación pueda enviarte notificaciones.",
+  "cancel": "Cancelar",
+  "dailyWaterIntake": "Consumo diario de agua",
+  "edit": "Editar",
+  "intakeAverage": "{amount} promedio",
+  "@intakeAverage": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "intakes": "Consumos",
+  "intakeMessageOf": "Has alcanzado el {percent}% de tu objetivo de hidratación. ¡Sigue así! \uD83D\uDCA7\uD83D\uDCAA",
+  "@intakeMessageOf": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeMessageMorning0": "¡Buenos días! \uD83C\uDF1E Comienza tu día con un refrescante vaso de agua! \uD83D\uDCA7 ¡Empecemos nuestro viaje para mantenernos hidratados hoy!",
+  "intakeMessageMidday25": "¡Gran arrancada! Has alcanzado el 25% de tu objetivo de hidratación. ¡Sigue así y mantente fresco! \uD83D\uDCA7\uD83D\uDCAA",
+  "intakeMessageMidday50": "¡Estás a mitad de camino! El 50% de tu objetivo está completo. ¡Sigue bebiendo y mantente en la ruta! \uD83D\uDCA6\uD83D\uDC4F",
+  "intakeMessageAfternoon75": "¡Progreso fantástico! Estás en el 75% de tu objetivo de hidratación. ¡Solo un poco más para llegar! \uD83D\uDCA7\uD83D\uDE80",
+  "intakeMessageEvening90": "¡Casi llegas! Estás en el 90% de tu objetivo. ¡Solo un poco más de esfuerzo y lo lograrás! \uD83D\uDCA6✨",
+  "intakeMessage10": "No te preocupes, ¡aún tienes tiempo para ponerte al día! Bebe un vaso de agua ahora y mantente en el camino para alcanzar tu objetivo. \uD83D\uDCA7\uD83C\uDF1F",
+  "intakeMessage30": "¡Tú puedes hacerlo! Toma un momento para beber un vaso de agua y sigue adelante hacia tu objetivo. \uD83D\uDCA6\uD83D\uDCAA",
+  "intakeMessage100": "¡Felicidades! Has alcanzado el 100% de tu objetivo de hidratación hoy. ¡Gran trabajo manteniéndote hidratado! \uD83D\uDCA7\uD83E\uDD73",
+  "intakesOf": "Consumos de {date}",
+  "@intakesOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeRecordDeleted": "Registro de consumo eliminado",
+  "lastNDays": "Últimos {days} días (y hoy)",
+  "@lastNDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "lastIntakes": "Últimos consumos",
+  "letsStart": "¡Empecemos!",
+  "nextNotificationAt": "Próxima notificación a las {time}",
+  "@nextNotificationAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "noIntakesRecorded": "No se han registrado Consumos :(",
+  "noIntakesYet": "Aún no hay Consumos. Bebe un poco de agua para comenzar.",
+  "notificationTitle": "Recordatorio de beber agua",
+  "notificationMessage": "¡Es hora de hidratarte!",
+  "notifyEveryHours": "{count, plural, =1{Notificar cada hora} other{Notificar cada {count} horas}}",
+  "save": "Guardar",
+  "saving": "Guardando...",
+  "settings": "Configuraciones",
+  "showAll": "Mostrar todo",
+  "sleep": "Dormir",
+  "stats": "Estadísticas",
+  "sureLetsDoIt": "Claro, hagámoslo",
+  "targetSettings": "Configuraciones de objetivo",
+  "today": "Hoy",
+  "todayAt": "Hoy a las {time}",
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "totalIntake": "Consumo total: {amount}",
+  "@totalIntake": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "undo": "Deshacer",
+  "version": "Versión",
+  "wakeUpSleepTimes": "Me despierto a las {wakeUpTime}, me duermo a las {sleepTime}",
+  "@wakeUpSleepTimes": {
+    "placeholders": {
+      "wakeUpTime": {
+        "type": "String"
+      },
+      "sleepTime": {
+        "type": "String"
+      }
+    }
+  },
+  "wakeUp": "Despertar",
+  "weAreGoodToGo": "Estamos listos"
+}

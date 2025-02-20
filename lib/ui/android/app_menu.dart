@@ -3,9 +3,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../app/navigation.dart';
 import '../../l10n/app_l10n.dart';
+import '../../util/logger.dart';
 import '../icon.dart';
 import '../image.dart';
 import '../size.dart';
+import '../widget/responsive.dart';
 
 class AppMenu extends StatefulWidget {
   final VoidCallback onChanged;
@@ -34,47 +36,31 @@ class _AppMenuState extends State<AppMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final appL10n = AppL10n.of(context);
+    return ResponsiveWidget(
+      standard: (_) => standard(0.17),
+      medium: (_) => standard(0.3),
+    );
+  }
+
+  Widget standard(double headerHeightFactor) {
+    'headerHeightFactor: $headerHeightFactor'.log();
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSize.spacingMedium),
       child: Column(
         children: [
-          header(),
-          ListTile(
-            title: Text(appL10n.stats),
-            leading: AppIcon.stats,
-            onTap: () {
-              context.navigateBack();
-              context.navigateTo(AppPage.stats);
-            },
-          ),
-          ListTile(
-            title: Text(appL10n.intakes),
-            leading: AppIcon.waterGlass(context),
-            onTap: () async {
-              context.navigateBack();
-              await context.navigateTo(AppPage.intakes);
-              widget.onChanged();
-            },
-          ),
+          header(headerHeightFactor),
+          stats(),
+          intakes(),
           Spacer(),
           Divider(),
-          ListTile(
-            title: Text(appL10n.settings),
-            leading: AppIcon.settings,
-            onTap: () async {
-              context.navigateBack();
-              await context.navigateTo(AppPage.targetSettings);
-              widget.onChanged();
-            },
-          ),
+          settings(),
           about(),
         ],
       ),
     );
   }
 
-  Widget header() {
+  Widget header(double headerHeightFactor) {
     final content = Stack(
       children: [
         Positioned(
@@ -98,7 +84,7 @@ class _AppMenuState extends State<AppMenu> {
     );
     return Container(
       padding: EdgeInsets.only(top: AppSize.spacingMedium),
-      height: AppSize.spacing4XL * 1.75,
+      height: MediaQuery.of(context).size.height * headerHeightFactor,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.only(
@@ -120,6 +106,41 @@ class _AppMenuState extends State<AppMenu> {
   void loadPackageInfo() async {
     packageInfo = await PackageInfo.fromPlatform();
     setState(() {});
+  }
+
+  Widget stats() {
+    return ListTile(
+      title: Text(AppL10n.of(context).stats),
+      leading: AppIcon.stats,
+      onTap: () {
+        context.navigateBack();
+        context.navigateTo(AppPage.stats);
+      },
+    );
+  }
+
+  Widget intakes() {
+    return ListTile(
+      title: Text(AppL10n.of(context).intakes),
+      leading: AppIcon.waterGlass(context),
+      onTap: () async {
+        context.navigateBack();
+        await context.navigateTo(AppPage.intakes);
+        widget.onChanged();
+      },
+    );
+  }
+
+  Widget settings() {
+    return ListTile(
+      title: Text(AppL10n.of(context).settings),
+      leading: AppIcon.settings,
+      onTap: () async {
+        context.navigateBack();
+        await context.navigateTo(AppPage.targetSettings);
+        widget.onChanged();
+      },
+    );
   }
 
   Widget about() {
