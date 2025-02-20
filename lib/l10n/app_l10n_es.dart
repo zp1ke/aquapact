@@ -15,10 +15,12 @@ class AppL10nEs extends AppL10n {
   String get appTitle => 'AquaPact';
 
   @override
-  String get allowAppNotifications => 'Permitir notificaciones de la aplicación';
+  String get allowAppNotifications =>
+      'Permitir notificaciones de la aplicación';
 
   @override
-  String get allowAppNotificationsDescription => 'Necesitaremos permiso para que la aplicación pueda enviarte notificaciones.';
+  String get allowAppNotificationsDescription =>
+      'Necesitaremos permiso para que la aplicación pueda enviarte notificaciones.';
 
   @override
   String get cancel => 'Cancelar';
@@ -43,28 +45,36 @@ class AppL10nEs extends AppL10n {
   }
 
   @override
-  String get intakeMessageMorning0 => '¡Buenos días! 🌞 Comienza tu día con un refrescante vaso de agua! 💧 ¡Empecemos nuestro viaje para mantenernos hidratados hoy!';
+  String get intakeMessageMorning0 =>
+      '¡Buenos días! 🌞 Comienza tu día con un refrescante vaso de agua! 💧 ¡Empecemos nuestro viaje para mantenernos hidratados hoy!';
 
   @override
-  String get intakeMessageMidday25 => '¡Gran arrancada! Has alcanzado el 25% de tu objetivo de hidratación. ¡Sigue así y mantente fresco! 💧💪';
+  String get intakeMessageMidday25 =>
+      '¡Gran arrancada! Has alcanzado el 25% de tu objetivo de hidratación. ¡Sigue así y mantente fresco! 💧💪';
 
   @override
-  String get intakeMessageMidday50 => '¡Estás a mitad de camino! El 50% de tu objetivo está completo. ¡Sigue bebiendo y mantente en la ruta! 💦👏';
+  String get intakeMessageMidday50 =>
+      '¡Estás a mitad de camino! El 50% de tu objetivo está completo. ¡Sigue bebiendo y mantente en la ruta! 💦👏';
 
   @override
-  String get intakeMessageAfternoon75 => '¡Progreso fantástico! Estás en el 75% de tu objetivo de hidratación. ¡Solo un poco más para llegar! 💧🚀';
+  String get intakeMessageAfternoon75 =>
+      '¡Progreso fantástico! Estás en el 75% de tu objetivo de hidratación. ¡Solo un poco más para llegar! 💧🚀';
 
   @override
-  String get intakeMessageEvening90 => '¡Casi llegas! Estás en el 90% de tu objetivo. ¡Solo un poco más de esfuerzo y lo lograrás! 💦✨';
+  String get intakeMessageEvening90 =>
+      '¡Casi llegas! Estás en el 90% de tu objetivo. ¡Solo un poco más de esfuerzo y lo lograrás! 💦✨';
 
   @override
-  String get intakeMessage10 => 'No te preocupes, ¡aún tienes tiempo para ponerte al día! Bebe un vaso de agua ahora y mantente en el camino para alcanzar tu objetivo. 💧🌟';
+  String get intakeMessage10 =>
+      'No te preocupes, ¡aún tienes tiempo para ponerte al día! Bebe un vaso de agua ahora y mantente en el camino para alcanzar tu objetivo. 💧🌟';
 
   @override
-  String get intakeMessage30 => '¡Tú puedes hacerlo! Toma un momento para beber un vaso de agua y sigue adelante hacia tu objetivo. 💦💪';
+  String get intakeMessage30 =>
+      '¡Tú puedes hacerlo! Toma un momento para beber un vaso de agua y sigue adelante hacia tu objetivo. 💦💪';
 
   @override
-  String get intakeMessage100 => '¡Felicidades! Has alcanzado el 100% de tu objetivo de hidratación hoy. ¡Gran trabajo manteniéndote hidratado! 💧🥳';
+  String get intakeMessage100 =>
+      '¡Felicidades! Has alcanzado el 100% de tu objetivo de hidratación hoy. ¡Gran trabajo manteniéndote hidratado! 💧🥳';
 
   @override
   String intakesOf(String date) {
@@ -94,7 +104,8 @@ class AppL10nEs extends AppL10n {
   String get noIntakesRecorded => 'No se han registrado Consumos :(';
 
   @override
-  String get noIntakesYet => 'Aún no hay Consumos. Bebe un poco de agua para comenzar.';
+  String get noIntakesYet =>
+      'Aún no hay Consumos. Bebe un poco de agua para comenzar.';
 
   @override
   String get notificationTitle => 'Recordatorio de beber agua';
