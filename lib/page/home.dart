@@ -103,7 +103,8 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           reloadButton(),
         ],
       ),
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.only(top: kToolbarHeight),
         child: PullToRefresh(
           onRefresh: loadData,
           child: ResponsiveWidget(
