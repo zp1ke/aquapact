@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - TODO
+
 ## [0.0.4] - 2025-02-25
 
 ### Added
