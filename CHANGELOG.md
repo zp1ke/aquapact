@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.4] - TODO
+## [0.0.4] - 2025-02-25
 
 ### Added
 - **Translate to Spanish**: Translate the entire application interface and content to Spanish to cater to Spanish-speaking users.
