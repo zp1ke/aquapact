@@ -291,7 +291,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget dailyStatusWidget() {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     return Container(
       width: size.width,
       height: size.height * 0.2,

@@ -169,7 +169,7 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Widget chart() {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.sizeOf(context);
     return SizedBox(
       width: double.infinity,
       height: screenSize.height / 4,

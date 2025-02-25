@@ -84,7 +84,7 @@ class _AppMenuState extends State<AppMenu> {
     );
     return Container(
       padding: EdgeInsets.only(top: AppSize.spacingMedium),
-      height: MediaQuery.of(context).size.height * headerHeightFactor,
+      height: MediaQuery.sizeOf(context).height * headerHeightFactor,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.only(

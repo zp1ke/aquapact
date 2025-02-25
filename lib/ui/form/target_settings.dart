@@ -170,7 +170,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
       ),
       disabledColor: theme.disabledColor,
       strokeWidth: AppSize.spacingSmall,
-      use24HourFormat: MediaQuery.of(context).alwaysUse24HourFormat,
+      use24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
       ticks: 24,
       ticksOffset: -7,
       ticksLength: 5,
