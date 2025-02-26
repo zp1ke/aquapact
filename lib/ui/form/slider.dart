@@ -76,9 +76,9 @@ class SliderWidget extends StatelessWidget {
               child: Center(
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: theme.indicatorColor,
+                    activeTrackColor: theme.tabBarTheme.indicatorColor,
                     inactiveTrackColor:
-                        theme.indicatorColor.withValues(alpha: .5),
+                        theme.tabBarTheme.indicatorColor?.withValues(alpha: .5),
                     trackHeight: AppSize.spacingXS,
                     thumbShape: _SliderThumbCircle(
                       thumbRadius: height * 0.45,
