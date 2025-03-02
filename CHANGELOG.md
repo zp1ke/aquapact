@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.5] - TODO
+## [0.0.5] - 2025-03-02
 
 ### Improved
 - **Custom intake values**: Allow users to input custom water intake values instead of using predefined options.
