@@ -5,6 +5,8 @@ import '../../model/target_settings.dart';
 import '../../service/intakes.dart';
 import '../icon.dart';
 import '../size.dart';
+import '../widget/custom_intake.dart';
+import '../widget/intake_option.dart';
 import 'popup_button.dart';
 
 class AddIntakeButton extends StatelessWidget {
@@ -28,31 +30,21 @@ class AddIntakeButton extends StatelessWidget {
       child: PopupButton<double>(
         enabled: enabled,
         value: targetSettings.defaultIntakeValue,
-        values: targetSettings.intakeValues,
+        values: [...targetSettings.intakeValues, -1.0],
         icon: AppIcon.add,
         onSelected: addIntake,
-        itemBuilder: intakeWidget,
+        itemBuilder: (_, value, isButton) => IntakeOption(
+          targetSettings: targetSettings,
+          value: value,
+          isButton: isButton,
+        ),
+        onSelectedTransform: (_, value) {
+          if (value <= 0) {
+            return getCustomIntake(context, targetSettings: targetSettings);
+          }
+          return Future.value(value);
+        },
       ),
-    );
-  }
-
-  Widget intakeWidget(BuildContext context, double value, bool isButton) {
-    final text = Text(
-      targetSettings.volumeMeasureUnit.formatValue(value),
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-      ),
-    );
-    if (isButton) {
-      return text;
-    }
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: AppSize.spacingSmall,
-      children: [
-        AppIcon.waterGlass(context),
-        text,
-      ],
     );
   }
 

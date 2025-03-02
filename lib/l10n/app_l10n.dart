@@ -125,6 +125,12 @@ abstract class AppL10n {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @customIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom...'**
+  String get customIntake;
+
   /// No description provided for @dailyWaterIntake.
   ///
   /// In en, this message translates to:
@@ -137,6 +143,12 @@ abstract class AppL10n {
   /// **'Edit'**
   String get edit;
 
+  /// No description provided for @enterCustomIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter custom Intake...'**
+  String get enterCustomIntake;
+
   /// No description provided for @intakeAverage.
   ///
   /// In en, this message translates to:
@@ -148,6 +160,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Intakes'**
   String get intakes;
+
+  /// No description provided for @intakeIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Intake amount ({unit})'**
+  String intakeIn(String unit);
 
   /// No description provided for @intakeMessageOf.
   ///

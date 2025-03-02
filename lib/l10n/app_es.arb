@@ -5,8 +5,10 @@
   "allowAppNotifications": "Permitir notificaciones de la aplicación",
   "allowAppNotificationsDescription": "Necesitaremos permiso para que la aplicación pueda enviarte notificaciones.",
   "cancel": "Cancelar",
+  "customIntake": "Otro...",
   "dailyWaterIntake": "Consumo diario de agua",
   "edit": "Editar",
+  "enterCustomIntake": "Ingrese otro Consumo...",
   "intakeAverage": "{amount} promedio",
   "@intakeAverage": {
     "placeholders": {
@@ -16,6 +18,14 @@
     }
   },
   "intakes": "Consumos",
+  "intakeIn": "Consumo ({unit})",
+  "@intakeIn": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
   "intakeMessageOf": "Has alcanzado el {percent}% de tu objetivo de hidratación. ¡Sigue así! \uD83D\uDCA7\uD83D\uDCAA",
   "@intakeMessageOf": {
     "placeholders": {

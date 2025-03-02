@@ -24,10 +24,16 @@ class AppL10nEn extends AppL10n {
   String get cancel => 'Cancel';
 
   @override
+  String get customIntake => 'Custom...';
+
+  @override
   String get dailyWaterIntake => 'Daily Water Intake';
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get enterCustomIntake => 'Enter custom Intake...';
 
   @override
   String intakeAverage(String amount) {
@@ -36,6 +42,11 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get intakes => 'Intakes';
+
+  @override
+  String intakeIn(String unit) {
+    return 'Intake amount ($unit)';
+  }
 
   @override
   String intakeMessageOf(String percent) {

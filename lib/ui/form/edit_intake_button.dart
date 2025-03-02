@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../model/target_settings.dart';
-import '../icon.dart';
 import '../size.dart';
+import '../widget/custom_intake.dart';
+import '../widget/intake_option.dart';
 import 'popup_button.dart';
 
 class EditIntakeButton extends StatelessWidget {
@@ -28,28 +29,24 @@ class EditIntakeButton extends StatelessWidget {
         value: value,
         elevated: false,
         disableValue: true,
-        values: targetSettings.intakeValues,
+        values: [...targetSettings.intakeValues, -1.0],
         onSelected: onChanged,
-        itemBuilder: intakeWidget,
+        itemBuilder: (_, value, __) => IntakeOption(
+          targetSettings: targetSettings,
+          value: value,
+          isButton: false,
+        ),
+        onSelectedTransform: (_, val) {
+          if (val <= 0) {
+            return getCustomIntake(
+              context,
+              targetSettings: targetSettings,
+              initialValue: value,
+            );
+          }
+          return Future.value(val);
+        },
       ),
-    );
-  }
-
-  Widget intakeWidget(BuildContext context, double value, _) {
-    final text = Text(
-      targetSettings.volumeMeasureUnit.formatValue(value),
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-      ),
-    );
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: AppSize.spacingSmall,
-      children: [
-        AppIcon.waterGlass(context),
-        text,
-      ],
     );
   }
 }
