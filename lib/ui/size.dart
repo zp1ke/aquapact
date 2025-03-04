@@ -13,5 +13,7 @@ class AppSize {
 
   static const chartBarWidth = 26.0;
 
+  static const mediumDrawerWidth = 350.0;
+
   static const mediumWidthBreakpoint = 600.0;
 }

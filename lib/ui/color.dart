@@ -33,4 +33,11 @@ extension AppColorScheme on ColorScheme {
   Color get onWarning {
     return Colors.white;
   }
+
+  Color get success {
+    if (brightness == Brightness.light) {
+      return Color(0xff29730b);
+    }
+    return Color(0xff2b8806);
+  }
 }

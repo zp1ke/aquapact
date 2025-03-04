@@ -28,8 +28,8 @@ class BoxIntakesService extends IntakesService {
       measureUnit: measureUnit.symbol,
       healthSynced: healthSynced,
     );
-    await box.putAsync(intake);
-    return _toIntake(intake);
+    final saved = await box.putAndGetAsync(intake);
+    return _toIntake(saved);
   }
 
   @override
@@ -95,7 +95,8 @@ class BoxIntakesService extends IntakesService {
       intakeBox.amount = intake.amount;
       intakeBox.dateTime = intake.dateTime;
       intakeBox.healthSynced = intake.healthSynced;
-      await box.putAsync(intakeBox);
+      final saved = await box.putAndGetAsync(intakeBox);
+      return _toIntake(saved);
     }
     return intake;
   }
@@ -115,7 +116,7 @@ class BoxIntakesService extends IntakesService {
       amount: intake.amount!,
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,
-      healthSynced: intake.healthSynced ?? false,
+      healthSynced: intake.healthSynced ?? true,
     );
   }
 

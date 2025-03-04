@@ -40,13 +40,14 @@ object HealthConnect {
             val record = HydrationRecord(
                 volume = Volume.liters(valueInLiters),
                 startTime = instant,
-                endTime = instant,
+                endTime = instant.plusMillis(1),
                 startZoneOffset = ZoneOffset.UTC,
                 endZoneOffset = ZoneOffset.UTC,
-                metadata = Metadata.manualEntryWithId(intakeId),
+                metadata = Metadata.manualEntry(clientRecordId = intakeId),
             )
-            healthConnectClient.insertRecords(listOf(record))
-            return true
+            val response = healthConnectClient.insertRecords(listOf(record))
+            Log.d("HealthConnect", "Record inserted: ${response.recordIdsList}")
+            return response.recordIdsList.size == 1
         } catch (e: Exception) {
             Log.e("HealthConnect", e.message, e)
             return false

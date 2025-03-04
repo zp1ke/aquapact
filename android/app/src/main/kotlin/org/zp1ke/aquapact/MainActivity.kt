@@ -21,7 +21,8 @@ class MainActivity : FlutterFragmentActivity() {
 
     private val permissions =
         setOf(
-            HealthPermission.getReadPermission(HydrationRecord::class)
+            HealthPermission.getReadPermission(HydrationRecord::class),
+            HealthPermission.getWritePermission(HydrationRecord::class),
         )
 
     private val requestPermissions =
@@ -52,6 +53,7 @@ class MainActivity : FlutterFragmentActivity() {
                             valueInLiters,
                             dateTimeMillis
                         ) { added ->
+                            Log.d("MainActivity", "addIntake: $intakeId = $added")
                             result.success(added)
                         }
                     }

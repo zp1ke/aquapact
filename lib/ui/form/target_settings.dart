@@ -81,6 +81,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
                 card(dailyTargetCard()),
                 card(wakeUpSleepTimesCard()),
                 card(notificationIntervalCard()),
+                card(healthSync()),
               ],
             ),
           ),

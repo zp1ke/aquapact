@@ -117,8 +117,14 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget? menu() {
     if (Platform.isAndroid) {
-      return Drawer(
-        child: AppMenu(onChanged: loadData),
+      return ResponsiveWidget(
+        standard: (_) => Drawer(
+          child: AppMenu(onChanged: loadData),
+        ),
+        medium: (_) => Drawer(
+          width: AppSize.mediumDrawerWidth,
+          child: AppMenu(onChanged: loadData),
+        ),
       );
     }
     return null;

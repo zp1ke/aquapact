@@ -14,7 +14,7 @@ class Intake {
     required this.amount,
     required this.dateTime,
     required this.measureUnit,
-    this.healthSynced = false,
+    required this.healthSynced,
   });
 
   TimeOfDay get timeOfDay => TimeOfDay(

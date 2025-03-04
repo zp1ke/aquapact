@@ -34,6 +34,16 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Permission handling for Android 13 and before -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+            <!-- Permission handling for Android 14 and later -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -56,28 +66,6 @@
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-
-        <!-- For supported versions through Android 13, show the rationale of
-            Health Connect permissions once users click the privacy policy link. -->
-        <activity
-            android:name=".PermissionsRationaleActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
-            </intent-filter>
-        </activity>
-        <!-- For versions starting Android 14, show the rationale of
-            Health Connect permissions once users click the privacy policy link. -->
-        <activity-alias
-            android:name="ViewPermissionUsageActivity"
-            android:exported="true"
-            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
-            android:targetActivity=".PermissionsRationaleActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
-                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
-            </intent-filter>
-        </activity-alias>
     </application>
 
     <queries>
@@ -87,7 +75,7 @@
         </intent>
     </queries>
 
-    <!-- Check if Health Connect is installed -->
+    <!-- Health Connect visibility -->
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
     </queries>

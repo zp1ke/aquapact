@@ -53,6 +53,9 @@ class IntakeItem extends StatelessWidget {
             onEdit(intake.copyWith(amount: amount));
           },
         ),
+        title: targetSettings.healthSync
+            ? AppIcon.healthSynced(context, synced: intake.healthSynced)
+            : null,
         trailing: TextButton(
           onPressed: () => pickTime(context),
           child: Text(intake.dateTime.format(context)),
