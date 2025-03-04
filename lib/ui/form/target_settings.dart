@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
+import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
+import '../../service/health.dart';
 import '../../util/number.dart';
 import '../color.dart';
 import '../icon.dart';
@@ -232,10 +234,14 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
         ),
         Switch(
           value: targetSettings.healthSync,
-          onChanged: (value) {
+          onChanged: (value) async {
+            var theValue = value;
+            if (value) {
+              theValue = await service<HealthService>().hasPermissionGranted();
+            }
             setState(() {
               targetSettings = targetSettings.copyWith(
-                healthSync: value,
+                healthSync: theValue,
               );
             });
           },

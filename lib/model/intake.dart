@@ -25,6 +25,7 @@ class Intake {
   Intake copyWith({
     double? amount,
     TimeOfDay? timeOfDay,
+    bool? healthSynced,
   }) {
     var dateTime = this.dateTime.copyWith();
     if (timeOfDay != null) {
@@ -38,7 +39,7 @@ class Intake {
       amount: amount ?? this.amount,
       dateTime: dateTime,
       measureUnit: measureUnit,
-      healthSynced: healthSynced,
+      healthSynced: healthSynced ?? this.healthSynced,
     );
   }
 }

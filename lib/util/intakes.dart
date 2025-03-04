@@ -16,21 +16,24 @@ class IntakesHandler {
     required VolumeMeasureUnit measureUnit,
     required bool healthSync,
   }) async {
-    var healthSynced = false;
     final now = DateTime.now();
+    var intake = await service<IntakesService>().addIntake(
+      amount: amount,
+      measureUnit: measureUnit,
+      dateTime: now,
+    );
     if (healthSync) {
-      healthSynced = await service<HealthService>().addIntake(
+      final synced = await service<HealthService>().addIntake(
+        intakeId: intake.code,
         amount: amount,
         measureUnit: measureUnit,
         dateTime: now,
       );
+      if (synced) {
+        intake = intake.copyWith(healthSynced: true);
+        await service<IntakesService>().updateIntake(intake);
+      }
     }
-    final intake = await service<IntakesService>().addIntake(
-      amount: amount,
-      measureUnit: measureUnit,
-      dateTime: now,
-      healthSynced: healthSynced,
-    );
     return intake;
   }
 }
