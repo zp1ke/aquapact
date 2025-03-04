@@ -19,11 +19,14 @@ class BoxIntakesService extends IntakesService {
   Future<Intake> addIntake({
     required double amount,
     required VolumeMeasureUnit measureUnit,
+    required DateTime dateTime,
+    bool healthSynced = false,
   }) async {
     final intake = IntakeBox(
       amount: amount,
-      dateTime: DateTime.now(),
+      dateTime: dateTime,
       measureUnit: measureUnit.symbol,
+      healthSynced: healthSynced,
     );
     await box.putAsync(intake);
     return _toIntake(intake);
@@ -91,6 +94,7 @@ class BoxIntakesService extends IntakesService {
     if (intakeBox != null) {
       intakeBox.amount = intake.amount;
       intakeBox.dateTime = intake.dateTime;
+      intakeBox.healthSynced = intake.healthSynced;
       await box.putAsync(intakeBox);
     }
     return intake;
@@ -111,6 +115,7 @@ class BoxIntakesService extends IntakesService {
       amount: intake.amount!,
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,
+      healthSynced: intake.healthSynced ?? false,
     );
   }
 

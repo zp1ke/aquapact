@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 
 import '../service/database.dart';
+import '../service/health.dart';
+import '../service/impl/health.dart';
 import '../service/impl/notification.dart';
 import '../service/impl/settings.dart';
 import '../service/intakes.dart';
@@ -23,6 +25,9 @@ Future<void> setupServices() async {
 
   final intakesService = BoxIntakesService(objectBoxService);
   _getIt.registerSingleton<IntakesService>(intakesService);
+
+  final healthService = HealthChannelService();
+  _getIt.registerSingleton<HealthService>(healthService);
 }
 
 T service<T extends Object>() => _getIt.get<T>();

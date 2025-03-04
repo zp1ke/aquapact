@@ -15,6 +15,8 @@ abstract class IntakesService {
   Future<Intake> addIntake({
     required double amount,
     required VolumeMeasureUnit measureUnit,
+    required DateTime dateTime,
+    bool healthSynced = false,
   });
 
   Future<double> sumIntakesAmount({

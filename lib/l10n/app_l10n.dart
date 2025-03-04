@@ -149,6 +149,12 @@ abstract class AppL10n {
   /// **'Enter custom Intake...'**
   String get enterCustomIntake;
 
+  /// No description provided for @healthSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync with Health Apps'**
+  String get healthSync;
+
   /// No description provided for @intakeAverage.
   ///
   /// In en, this message translates to:

@@ -7,12 +7,14 @@ class Intake {
   final double amount;
   final DateTime dateTime;
   final VolumeMeasureUnit measureUnit;
+  final bool healthSynced;
 
   Intake({
     required this.code,
     required this.amount,
     required this.dateTime,
     required this.measureUnit,
+    this.healthSynced = false,
   });
 
   TimeOfDay get timeOfDay => TimeOfDay(
@@ -36,6 +38,7 @@ class Intake {
       amount: amount ?? this.amount,
       dateTime: dateTime,
       measureUnit: measureUnit,
+      healthSynced: healthSynced,
     );
   }
 }

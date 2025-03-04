@@ -56,6 +56,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(dailyTargetCard()),
           card(wakeUpSleepTimesCard()),
           card(notificationIntervalCard()),
+          card(healthSync()),
           SizedBox(height: AppSize.spacingLarge),
           toolbar(),
         ],
@@ -211,6 +212,30 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
             setState(() {
               targetSettings = targetSettings.copyWith(
                 notificationIntervalInMinutes: value.toInt() * 60,
+              );
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget healthSync() {
+    return Row(
+      spacing: AppSize.spacingLarge,
+      children: [
+        Text(
+          AppL10n.of(context).healthSync,
+          style: TextTheme.of(context).bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        Switch(
+          value: targetSettings.healthSync,
+          onChanged: (value) {
+            setState(() {
+              targetSettings = targetSettings.copyWith(
+                healthSync: value,
               );
             });
           },
