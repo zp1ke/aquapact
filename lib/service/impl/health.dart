@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 
+import '../../model/intake.dart';
 import '../../model/measure_unit.dart';
 import '../../util/logger.dart';
 import '../health.dart';
@@ -20,19 +21,14 @@ class HealthChannelService extends HealthService {
   }
 
   @override
-  Future<bool> addIntake({
-    required String intakeId,
-    required double amount,
-    required VolumeMeasureUnit measureUnit,
-    required DateTime dateTime,
-  }) async {
+  Future<bool> addIntake(Intake intake) async {
     try {
-      final amountInLiters =
-          measureUnit.convertAmountTo(amount, VolumeMeasureUnit.l);
+      final amountInLiters = intake.measureUnit
+          .convertAmountTo(intake.amount, VolumeMeasureUnit.l);
       final data = {
-        'intakeId': intakeId,
+        'intakeId': intake.code,
         'valueInLiters': amountInLiters,
-        'dateTimeMillis': dateTime.millisecondsSinceEpoch,
+        'dateTimeMillis': intake.dateTime.millisecondsSinceEpoch,
       };
       final added = await platform.invokeMethod<bool>('addIntake', data);
       return added ?? false;

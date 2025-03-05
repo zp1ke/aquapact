@@ -2,6 +2,7 @@ import '../../../model/intake.dart';
 import '../../../model/intake_range.dart';
 import '../../../model/measure_unit.dart';
 import '../../../model/range_type.dart';
+import '../../../model/sync_status.dart';
 import '../../../service/intakes.dart';
 import '../../../util/date_time.dart';
 import '../model/intake_box.dart';
@@ -20,13 +21,13 @@ class BoxIntakesService extends IntakesService {
     required double amount,
     required VolumeMeasureUnit measureUnit,
     required DateTime dateTime,
-    bool healthSynced = false,
+    SyncStatus healthSync = SyncStatus.notSynced,
   }) async {
     final intake = IntakeBox(
       amount: amount,
       dateTime: dateTime,
       measureUnit: measureUnit.symbol,
-      healthSynced: healthSynced,
+      healthSync: healthSync.name,
     );
     final saved = await box.putAndGetAsync(intake);
     return _toIntake(saved);
@@ -94,7 +95,7 @@ class BoxIntakesService extends IntakesService {
     if (intakeBox != null) {
       intakeBox.amount = intake.amount;
       intakeBox.dateTime = intake.dateTime;
-      intakeBox.healthSynced = intake.healthSynced;
+      intakeBox.healthSync = intake.healthSync.name;
       final saved = await box.putAndGetAsync(intakeBox);
       return _toIntake(saved);
     }
@@ -111,12 +112,16 @@ class BoxIntakesService extends IntakesService {
   Intake _toIntake(IntakeBox intake) {
     final measureUnit = VolumeMeasureUnit.values
         .firstWhere((element) => element.symbol == intake.measureUnit!);
+    final syncStatus = SyncStatus.values.firstWhere(
+      (element) => element.name == intake.healthSync,
+      orElse: () => SyncStatus.notSynced,
+    );
     return Intake(
       code: intake.id.toString(),
       amount: intake.amount!,
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,
-      healthSynced: intake.healthSynced ?? true,
+      healthSync: syncStatus,
     );
   }
 

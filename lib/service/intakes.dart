@@ -4,6 +4,7 @@ import '../l10n/app_l10n.dart';
 import '../model/intake.dart';
 import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
+import '../model/sync_status.dart';
 
 abstract class IntakesService {
   Future<List<Intake>> fetchIntakes({
@@ -16,7 +17,7 @@ abstract class IntakesService {
     required double amount,
     required VolumeMeasureUnit measureUnit,
     required DateTime dateTime,
-    bool healthSynced = false,
+    SyncStatus healthSync = SyncStatus.notSynced,
   });
 
   Future<double> sumIntakesAmount({

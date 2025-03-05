@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -12,7 +14,12 @@ class ObjectBox implements DatabaseService {
 
   static Future<ObjectBox> create() async {
     final docsDir = await getApplicationDocumentsDirectory();
-    final store = await openStore(directory: p.join(docsDir.path, 'aqua_pact'));
+    return createOn(docsDir);
+  }
+
+  static Future<ObjectBox> createOn(Directory directory) async {
+    final storeDirectory = p.join(directory.path, 'aqua_pact');
+    final store = await openStore(directory: storeDirectory);
     return ObjectBox._create(store);
   }
 }

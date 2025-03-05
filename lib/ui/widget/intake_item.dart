@@ -54,7 +54,7 @@ class IntakeItem extends StatelessWidget {
           },
         ),
         title: targetSettings.healthSync
-            ? AppIcon.healthSynced(context, synced: intake.healthSynced)
+            ? AppIcon.healthSynced(context, synced: intake.isHealthSynced)
             : null,
         trailing: TextButton(
           onPressed: () => pickTime(context),
