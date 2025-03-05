@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 5110899916572817885),
       name: 'IntakeBox',
-      lastPropertyId: const obx_int.IdUid(4, 3797069203933768233),
+      lastPropertyId: const obx_int.IdUid(5, 3416076219431292405),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -44,6 +44,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(4, 3797069203933768233),
             name: 'measureUnit',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3416076219431292405),
+            name: 'healthSync',
             type: 9,
             flags: 0)
       ],
@@ -111,11 +116,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final measureUnitOffset = object.measureUnit == null
               ? null
               : fbb.writeString(object.measureUnit!);
-          fbb.startTable(5);
+          final healthSyncOffset = object.healthSync == null
+              ? null
+              : fbb.writeString(object.healthSync!);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addFloat32(1, object.amount);
           fbb.addInt64(2, object.dateTime?.millisecondsSinceEpoch);
           fbb.addOffset(3, measureUnitOffset);
+          fbb.addOffset(4, healthSyncOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -134,11 +143,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final measureUnitParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10);
+          final healthSyncParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
           final object = IntakeBox(
               id: idParam,
               amount: amountParam,
               dateTime: dateTimeParam,
-              measureUnit: measureUnitParam);
+              measureUnit: measureUnitParam,
+              healthSync: healthSyncParam);
 
           return object;
         })
@@ -164,4 +176,8 @@ class IntakeBox_ {
   /// See [IntakeBox.measureUnit].
   static final measureUnit =
       obx.QueryStringProperty<IntakeBox>(_entities[0].properties[3]);
+
+  /// See [IntakeBox.healthSync].
+  static final healthSync =
+      obx.QueryStringProperty<IntakeBox>(_entities[0].properties[4]);
 }

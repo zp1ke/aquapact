@@ -11,6 +11,7 @@
 
     <application
         android:name="${applicationName}"
+        android:allowBackup="true"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,17 +35,28 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
 
-            <!-- Permission handling for Android 13 and before -->
+        <!-- Android 13, show the rationale of Health Connect permissions once users click the privacy policy link. -->
+        <activity
+            android:name=".PermissionsRationaleActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
-            <!-- Permission handling for Android 14 and later -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
-                <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
-            </intent-filter>
         </activity>
+
+        <!-- Android 14, show the rationale of Health Connect permissions once users click the privacy policy link. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:targetActivity=".PermissionsRationaleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
 
         <meta-data
             android:name="flutterEmbedding"
@@ -78,5 +90,8 @@
     <!-- Health Connect visibility -->
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        </intent>
     </queries>
 </manifest>

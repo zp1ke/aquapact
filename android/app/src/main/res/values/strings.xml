@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AquaPact</string>
+    <string name="permissions_rationale">This application requires permission to synchronize (only) the hydration records to the Health Connect app.</string>
 </resources>
