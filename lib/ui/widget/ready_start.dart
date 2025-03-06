@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_l10n.dart';
+import '../image.dart';
 import '../size.dart';
 
 class ReadyStartWidget extends StatelessWidget {
@@ -16,9 +17,14 @@ class ReadyStartWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = AppL10n.of(context);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
       spacing: AppSize.spacing4XL,
       children: <Widget>[
+        Spacer(),
+        Image(
+          image: AppImage.logo.assetImage(context),
+          height: AppSize.spacing4XL * 1.5,
+          fit: BoxFit.fitHeight,
+        ),
         Text(
           l10n.weAreGoodToGo,
           textAlign: TextAlign.center,
