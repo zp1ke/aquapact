@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../app/di.dart';
 import '../../model/target_settings.dart';
-import '../../service/intakes.dart';
+import '../../util/intakes.dart';
 import '../icon.dart';
 import '../size.dart';
 import '../widget/custom_intake.dart';
@@ -52,9 +51,10 @@ class AddIntakeButton extends StatelessWidget {
     if (onAdding != null) {
       onAdding!();
     }
-    await service<IntakesService>().addIntake(
+    await IntakesHandler().addIntake(
       amount: value,
       measureUnit: targetSettings.volumeMeasureUnit,
+      healthSync: targetSettings.healthSync,
     );
     onAdded(value);
   }

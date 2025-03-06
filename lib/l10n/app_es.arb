@@ -9,6 +9,7 @@
   "dailyWaterIntake": "Consumo diario de agua",
   "edit": "Editar",
   "enterCustomIntake": "Ingrese otro Consumo...",
+  "healthSync": "Sincronizar con apps de salud",
   "intakeAverage": "{amount} promedio",
   "@intakeAverage": {
     "placeholders": {

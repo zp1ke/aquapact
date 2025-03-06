@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5110899916572817885",
-      "lastPropertyId": "4:3797069203933768233",
+      "lastPropertyId": "5:3416076219431292405",
       "name": "IntakeBox",
       "properties": [
         {
@@ -29,6 +29,11 @@
         {
           "id": "4:3797069203933768233",
           "name": "measureUnit",
+          "type": 9
+        },
+        {
+          "id": "5:3416076219431292405",
+          "name": "healthSync",
           "type": 9
         }
       ],

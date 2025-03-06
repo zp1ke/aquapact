@@ -22,4 +22,11 @@ enum VolumeMeasureUnit {
     }
     return valueStr;
   }
+
+  double convertAmountTo(double value, VolumeMeasureUnit toUnit) {
+    if (this == toUnit) {
+      return value;
+    }
+    return value / factor * toUnit.factor;
+  }
 }

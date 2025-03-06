@@ -17,6 +17,15 @@ abstract class AppIcon {
     );
   }
 
+  static Icon healthSynced(BuildContext context, {required bool synced}) {
+    return Icon(
+      synced ? Icons.check_circle_sharp : Icons.check_circle_outline_sharp,
+      color: synced
+          ? Theme.of(context).colorScheme.success
+          : Theme.of(context).disabledColor,
+    );
+  }
+
   static const loading = SizedBox(
     width: AppSize.icon,
     height: AppSize.icon,

@@ -25,6 +25,8 @@ class TargetSettings extends Equatable {
 
   final int notificationIntervalInMinutes;
 
+  final bool healthSync;
+
   const TargetSettings({
     this.dailyTarget = 2500.0,
     this.volumeMeasureUnit = VolumeMeasureUnit.ml,
@@ -33,6 +35,7 @@ class TargetSettings extends Equatable {
     this.wakeUpTime = const TimeOfDay(hour: 7, minute: 0),
     this.sleepTime = const TimeOfDay(hour: 23, minute: 0),
     this.notificationIntervalInMinutes = 60,
+    this.healthSync = false,
   });
 
   Duration get notificationInterval =>
@@ -52,6 +55,7 @@ class TargetSettings extends Equatable {
         wakeUpTime,
         sleepTime,
         notificationIntervalInMinutes,
+        healthSync,
       ];
 
   TargetSettings copyWith({
@@ -62,6 +66,7 @@ class TargetSettings extends Equatable {
     TimeOfDay? wakeUpTime,
     TimeOfDay? sleepTime,
     int? notificationIntervalInMinutes,
+    bool? healthSync,
   }) {
     return TargetSettings(
       dailyTarget: dailyTarget ?? this.dailyTarget,
@@ -72,6 +77,7 @@ class TargetSettings extends Equatable {
       sleepTime: sleepTime ?? this.sleepTime,
       notificationIntervalInMinutes:
           notificationIntervalInMinutes ?? this.notificationIntervalInMinutes,
+      healthSync: healthSync ?? this.healthSync,
     );
   }
 }

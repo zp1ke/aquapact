@@ -26,6 +26,7 @@ TargetSettings _$TargetSettingsFromJson(Map<String, dynamic> json) =>
           : const TimeOfDayConverter().fromJson(json['sleepTime'] as String),
       notificationIntervalInMinutes:
           (json['notificationIntervalInMinutes'] as num?)?.toInt() ?? 60,
+      healthSync: json['healthSync'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$TargetSettingsToJson(TargetSettings instance) =>
@@ -38,6 +39,7 @@ Map<String, dynamic> _$TargetSettingsToJson(TargetSettings instance) =>
       'wakeUpTime': const TimeOfDayConverter().toJson(instance.wakeUpTime),
       'sleepTime': const TimeOfDayConverter().toJson(instance.sleepTime),
       'notificationIntervalInMinutes': instance.notificationIntervalInMinutes,
+      'healthSync': instance.healthSync,
     };
 
 const _$VolumeMeasureUnitEnumMap = {

@@ -36,6 +36,9 @@ class AppL10nEn extends AppL10n {
   String get enterCustomIntake => 'Enter custom Intake...';
 
   @override
+  String get healthSync => 'Sync with Health Apps';
+
+  @override
   String intakeAverage(String amount) {
     return '$amount average';
   }

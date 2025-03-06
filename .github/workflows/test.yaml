@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install objectbox
+        run: bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --install
+
       - name: Checkout
         uses: actions/checkout@v4
 

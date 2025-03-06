@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
+import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
+import '../../service/health.dart';
 import '../../util/number.dart';
 import '../color.dart';
 import '../icon.dart';
@@ -56,6 +58,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(dailyTargetCard()),
           card(wakeUpSleepTimesCard()),
           card(notificationIntervalCard()),
+          card(healthSync()),
           SizedBox(height: AppSize.spacingLarge),
           toolbar(),
         ],
@@ -78,6 +81,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
                 card(dailyTargetCard()),
                 card(wakeUpSleepTimesCard()),
                 card(notificationIntervalCard()),
+                card(healthSync()),
               ],
             ),
           ),
@@ -211,6 +215,34 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
             setState(() {
               targetSettings = targetSettings.copyWith(
                 notificationIntervalInMinutes: value.toInt() * 60,
+              );
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget healthSync() {
+    return Row(
+      spacing: AppSize.spacingLarge,
+      children: [
+        Text(
+          AppL10n.of(context).healthSync,
+          style: TextTheme.of(context).bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        Switch(
+          value: targetSettings.healthSync,
+          onChanged: (value) async {
+            var theValue = value;
+            if (value) {
+              theValue = await service<HealthService>().hasPermissionGranted();
+            }
+            setState(() {
+              targetSettings = targetSettings.copyWith(
+                healthSync: theValue,
               );
             });
           },

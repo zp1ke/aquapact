@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AquaPact</string>
+
+    <string name="health_connect_logo">Health Connect logo</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy_description">
+        This privacy policy explains how we handle and use Health Connect data.
+        AquaPact respects your privacy and is committed to protecting your personal data.
+        AquaPact does not store or transmit any data outside of Health Connect without your explicit consent.
+    </string>
+    <string name="full_privacy_policy">Open full Privacy policy</string>
 </resources>

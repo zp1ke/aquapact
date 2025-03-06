@@ -9,6 +9,7 @@
   "dailyWaterIntake": "Daily Water Intake",
   "edit": "Edit",
   "enterCustomIntake": "Enter custom Intake...",
+  "healthSync": "Sync with Health Apps",
   "intakeAverage": "{amount} average",
   "@intakeAverage": {
     "placeholders": {

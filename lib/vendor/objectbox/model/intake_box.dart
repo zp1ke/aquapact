@@ -13,10 +13,13 @@ class IntakeBox {
 
   String? measureUnit;
 
+  String? healthSync;
+
   IntakeBox({
     this.id = 0,
     this.amount,
     this.dateTime,
     this.measureUnit,
+    this.healthSync,
   });
 }
