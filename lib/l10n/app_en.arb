@@ -61,6 +61,7 @@
     }
   },
   "lastIntakes": "Last Intakes",
+  "lastTip": "Press the item to finish",
   "letsStart": "let's Start!",
   "nextNotificationAt": "Next Notification at {time}",
   "@nextNotificationAt": {
@@ -70,6 +71,7 @@
       }
     }
   },
+  "nextTip": "Press the item to see the next tip",
   "noIntakesRecorded": "No intakes recorded :(",
   "noIntakesYet": "No intakes yet. Drink some water to get started.",
   "notificationTitle": "Drink Water Reminder",
@@ -79,6 +81,7 @@
   "saving": "Saving...",
   "settings": "Settings",
   "showAll": "Show All",
+  "skip": "Skip",
   "sleep": "Sleep",
   "stats": "Stats",
   "sureLetsDoIt": "Sure, let's do it",
@@ -100,6 +103,8 @@
       }
     }
   },
+  "tutorialAddIntake": "Press this button to add an intake. Long press to show more intake options.",
+  "tutorialNextNotification": "Here you can see when the next notification will be sent. You can change the frequency in the settings.",
   "undo": "Undo",
   "version": "Version",
   "wakeUpSleepTimes": "Wake Up at {wakeUpTime}, Sleep at {sleepTime}",

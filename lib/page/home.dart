@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../app/di.dart';
 import '../app/navigation.dart';
@@ -39,10 +41,19 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   var loadingNotifications = false;
   var processing = false;
 
+  final nextNotificationKey = GlobalKey();
+  final addIntakeKey = GlobalKey();
+  final tipTextKey = GlobalKey();
+  final showAllKey = GlobalKey();
+  final intakeAmountKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     loadData();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => setupTutorial()?.show(context: context),
+    );
   }
 
   void loadData() {
@@ -196,6 +207,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget addIntakeButton() {
     return AddIntakeButton(
+      key: addIntakeKey,
       enabled: !processing,
       targetSettings: targetSettings,
       onAdding: () {
@@ -209,6 +221,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget tipText() {
     return Padding(
+      key: tipTextKey,
       padding: const EdgeInsets.all(AppSize.spacingSmall),
       child: Text(
         service<IntakesService>().tip(
@@ -234,6 +247,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           child: Text(
             AppL10n.of(context)
                 .nextNotificationAt(notifications.first.time.format(context)),
+            key: nextNotificationKey,
             textAlign: TextAlign.left,
             textScaler: TextScaler.linear(0.8),
           ),
@@ -257,6 +271,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
             ),
           ),
           OutlinedButton(
+            key: showAllKey,
             child: Text(AppL10n.of(context).showAll),
             onPressed: () async {
               await context.navigateTo(AppPage.intakes);
@@ -289,6 +304,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         .formatValue(targetSettings.dailyTarget);
     return Text(
       '$intake / $target',
+      key: intakeAmountKey,
       textScaler: TextScaler.linear(1.5),
       style: TextStyle(
         fontWeight: FontWeight.bold,
@@ -326,5 +342,83 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       processing = false;
     });
     loadData();
+  }
+
+  TutorialCoachMark? setupTutorial() {
+    // TODO: check if tutorial should be shown
+    return TutorialCoachMark(
+      targets: tutorialTargets(),
+      textSkip: AppL10n.of(context).skip,
+      imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+      colorShadow: Theme.of(context).colorScheme.primary,
+      onFinish: () {
+        // TODO: save tutorial state
+        print('Tutorial finished =======================================');
+      },
+      onSkip: () {
+        // TODO: save tutorial state
+        print('Tutorial skipped =======================================');
+        return true;
+      },
+    );
+  }
+
+  List<TargetFocus> tutorialTargets() {
+    final appL10n = AppL10n.of(context);
+    return <TargetFocus>[
+      TargetFocus(
+        identify: 'nextNotificationKey',
+        keyTarget: nextNotificationKey,
+        alignSkip: Alignment.topRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingMedium,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (_, __) => tutorialCard(appL10n.tutorialNextNotification),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: 'addIntakeKey',
+        keyTarget: addIntakeKey,
+        alignSkip: Alignment.topRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingMedium,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (_, __) => tutorialCard(appL10n.tutorialAddIntake),
+          ),
+        ],
+      ),
+    ];
+    final tipTextKey = GlobalKey();
+    final showAllKey = GlobalKey();
+    final intakeAmountKey = GlobalKey();
+  }
+
+  Widget tutorialCard(String text, {bool isLast = false}) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSize.spacingSmall),
+        child: Column(
+          spacing: AppSize.spacingSmall,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(text, textAlign: TextAlign.justify),
+            Text(
+              isLast
+                  ? AppL10n.of(context).lastTip
+                  : AppL10n.of(context).nextTip,
+              textScaler: TextScaler.linear(0.75),
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

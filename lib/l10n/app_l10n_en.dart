@@ -97,12 +97,18 @@ class AppL10nEn extends AppL10n {
   String get lastIntakes => 'Last Intakes';
 
   @override
+  String get lastTip => 'Press the item to finish';
+
+  @override
   String get letsStart => 'let\'s Start!';
 
   @override
   String nextNotificationAt(String time) {
     return 'Next Notification at $time';
   }
+
+  @override
+  String get nextTip => 'Press the item to see the next tip';
 
   @override
   String get noIntakesRecorded => 'No intakes recorded :(';
@@ -140,6 +146,9 @@ class AppL10nEn extends AppL10n {
   String get showAll => 'Show All';
 
   @override
+  String get skip => 'Skip';
+
+  @override
   String get sleep => 'Sleep';
 
   @override
@@ -163,6 +172,12 @@ class AppL10nEn extends AppL10n {
   String totalIntake(String amount) {
     return 'Total Intake: $amount';
   }
+
+  @override
+  String get tutorialAddIntake => 'Press this button to add an intake. Long press to show more intake options.';
+
+  @override
+  String get tutorialNextNotification => 'Here you can see when the next notification will be sent. You can change the frequency in the settings.';
 
   @override
   String get undo => 'Undo';
