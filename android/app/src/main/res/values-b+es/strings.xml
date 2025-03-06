@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AquaPact</string>
-    <string name="permissions_rationale">Esta aplicación requiere permiso para sincronizar (solamente) los registros de hidratación con la aplicación Health Connect.</string>
+    <string name="health_connect_logo">Health Connect logo</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="privacy_policy_description">
+        Esta política de privacidad explica cómo manejamos y usamos los datos de Health Connect.
+        AquaPact respeta su privacidad y se compromete a proteger sus datos personales.
+        AquaPact no almacena ni transmite ningún dato fuera de Health Connect sin su consentimiento explícito.
+    </string>
+    <string name="full_privacy_policy">Ver toda la Política de privacidad</string>
 </resources>
