@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   final nextNotificationKey = GlobalKey();
   final addIntakeKey = GlobalKey();
-  final tipTextKey = GlobalKey();
   final showAllKey = GlobalKey();
   final intakeAmountKey = GlobalKey();
 
@@ -221,7 +220,6 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget tipText() {
     return Padding(
-      key: tipTextKey,
       padding: const EdgeInsets.all(AppSize.spacingSmall),
       child: Text(
         service<IntakesService>().tip(
@@ -369,12 +367,13 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       TargetFocus(
         identify: 'nextNotificationKey',
         keyTarget: nextNotificationKey,
-        alignSkip: Alignment.topRight,
+        alignSkip: Alignment.bottomRight,
         enableOverlayTab: true,
-        paddingFocus: AppSize.spacingMedium,
+        paddingFocus: AppSize.spacingSmall,
         contents: [
           TargetContent(
-            align: ContentAlign.bottom,
+            align: ContentAlign.right,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
             builder: (_, __) => tutorialCard(appL10n.tutorialNextNotification),
           ),
         ],
@@ -382,20 +381,49 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       TargetFocus(
         identify: 'addIntakeKey',
         keyTarget: addIntakeKey,
-        alignSkip: Alignment.topRight,
+        alignSkip: Alignment.bottomRight,
         enableOverlayTab: true,
-        paddingFocus: AppSize.spacingMedium,
+        paddingFocus: AppSize.spacingSmall,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
             builder: (_, __) => tutorialCard(appL10n.tutorialAddIntake),
           ),
         ],
       ),
+      TargetFocus(
+        identify: 'showAllKey',
+        keyTarget: showAllKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(appL10n.tutorialShowAll),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: 'intakeAmountKey',
+        keyTarget: intakeAmountKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(
+              appL10n.tutorialIntakeAmount,
+              isLast: true,
+            ),
+          ),
+        ],
+      ),
     ];
-    final tipTextKey = GlobalKey();
-    final showAllKey = GlobalKey();
-    final intakeAmountKey = GlobalKey();
   }
 
   Widget tutorialCard(String text, {bool isLast = false}) {

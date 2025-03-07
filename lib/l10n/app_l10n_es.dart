@@ -177,7 +177,13 @@ class AppL10nEs extends AppL10n {
   String get tutorialAddIntake => 'Presiona este botón para agregar un consumo. Mantén presionado para mostrar más opciones de consumo.';
 
   @override
+  String get tutorialIntakeAmount => 'Aquí se muestra la cantidad de agua que has consumido.';
+
+  @override
   String get tutorialNextNotification => 'Aquí puedes ver cuándo se enviará la próxima notificación. Puedes cambiar la frecuencia en la configuración.';
+
+  @override
+  String get tutorialShowAll => 'Aquí puedes ver todos tus consumos, donde puedes editar y eliminar.';
 
   @override
   String get undo => 'Deshacer';

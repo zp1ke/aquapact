@@ -104,7 +104,9 @@
     }
   },
   "tutorialAddIntake": "Presiona este botón para agregar un consumo. Mantén presionado para mostrar más opciones de consumo.",
+  "tutorialIntakeAmount": "Aquí se muestra la cantidad de agua que has consumido.",
   "tutorialNextNotification": "Aquí puedes ver cuándo se enviará la próxima notificación. Puedes cambiar la frecuencia en la configuración.",
+  "tutorialShowAll": "Aquí puedes ver todos tus consumos, donde puedes editar y eliminar.",
   "undo": "Deshacer",
   "version": "Versión",
   "wakeUpSleepTimes": "Me despierto a las {wakeUpTime}, me duermo a las {sleepTime}",

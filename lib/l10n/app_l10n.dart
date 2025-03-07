@@ -383,11 +383,23 @@ abstract class AppL10n {
   /// **'Press this button to add an intake. Long press to show more intake options.'**
   String get tutorialAddIntake;
 
+  /// No description provided for @tutorialIntakeAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'This shows the amount of water you have consumed.'**
+  String get tutorialIntakeAmount;
+
   /// No description provided for @tutorialNextNotification.
   ///
   /// In en, this message translates to:
   /// **'Here you can see when the next notification will be sent. You can change the frequency in the settings.'**
   String get tutorialNextNotification;
+
+  /// No description provided for @tutorialShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Here you can navigate to the list of all intakes, where you can edit and delete.'**
+  String get tutorialShowAll;
 
   /// No description provided for @undo.
   ///

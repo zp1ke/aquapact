@@ -177,7 +177,13 @@ class AppL10nEn extends AppL10n {
   String get tutorialAddIntake => 'Press this button to add an intake. Long press to show more intake options.';
 
   @override
+  String get tutorialIntakeAmount => 'This shows the amount of water you have consumed.';
+
+  @override
   String get tutorialNextNotification => 'Here you can see when the next notification will be sent. You can change the frequency in the settings.';
+
+  @override
+  String get tutorialShowAll => 'Here you can navigate to the list of all intakes, where you can edit and delete.';
 
   @override
   String get undo => 'Undo';
