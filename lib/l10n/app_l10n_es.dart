@@ -39,6 +39,9 @@ class AppL10nEs extends AppL10n {
   String get healthSync => 'Sincronizar con apps de salud';
 
   @override
+  String get home => 'Inicio';
+
+  @override
   String intakeAverage(String amount) {
     return '$amount promedio';
   }

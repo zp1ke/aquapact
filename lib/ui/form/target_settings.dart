@@ -43,15 +43,17 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(
-      standard: (_) => standardContent(),
-      medium: (_) => mediumContent(),
+    return SingleChildScrollView(
+      child: ResponsiveWidget(
+        standard: (_) => standardContent(),
+        medium: (_) => mediumContent(),
+      ),
     );
   }
 
   Widget standardContent() {
     return Padding(
-      padding: const EdgeInsets.all(AppSize.spacingMedium),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.spacingMedium),
       child: Column(
         spacing: AppSize.spacingMedium,
         children: [

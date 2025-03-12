@@ -17,6 +17,7 @@ import '../ui/android/app_menu.dart';
 import '../ui/form/add_intake_button.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/app_menu.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/pull_refresh.dart';
@@ -122,6 +123,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
       ),
       drawer: menu(),
+      bottomNavigationBar: appBottomMenu(page: AppPage.home, enabled: !processing),
     );
   }
 

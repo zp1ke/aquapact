@@ -28,6 +28,10 @@ class LocalNotificationService extends NotificationService {
       _plugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
 
+  IOSFlutterLocalNotificationsPlugin? get _iosPlugin =>
+      _plugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+
   Future<void> _initialize() async {
     tz.initializeTimeZones();
     final currentTimeZone = await FlutterTimezone.getLocalTimezone();
@@ -36,6 +40,7 @@ class LocalNotificationService extends NotificationService {
 
     final settings = InitializationSettings(
       android: AndroidInitializationSettings('@drawable/notification_icon'),
+      iOS: DarwinInitializationSettings(),
     );
     await _plugin.initialize(
       settings,
@@ -60,11 +65,20 @@ class LocalNotificationService extends NotificationService {
 
   @override
   Future<bool> hasPermissionGranted() async {
-    var enabled = await _androidPlugin?.requestNotificationsPermission();
-    if (enabled == true) {
-      enabled = await _androidPlugin?.requestExactAlarmsPermission();
+    var enabled =
+        await _androidPlugin?.requestNotificationsPermission() ?? false;
+    if (!enabled) {
+      enabled = await _iosPlugin?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          ) ??
+          false;
     }
-    return enabled ?? false;
+    if (enabled && _androidPlugin != null) {
+      enabled = await _androidPlugin!.requestExactAlarmsPermission() ?? false;
+    }
+    return enabled;
   }
 
   @override
@@ -77,7 +91,10 @@ class LocalNotificationService extends NotificationService {
       notification.body,
       dateTime,
       payload: jsonEncode(notification.toMap()),
-      NotificationDetails(android: _androidDetails()),
+      NotificationDetails(
+        android: _androidDetails(),
+        iOS: _iosDetails(),
+      ),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
@@ -97,6 +114,12 @@ class LocalNotificationService extends NotificationService {
       vibrationPattern: Int64List.fromList(<int>[1000, 500, 1000]),
       groupAlertBehavior: GroupAlertBehavior.summary,
       groupKey: 'org.zp1ke.aquapact.REMINDER',
+    );
+  }
+
+  DarwinNotificationDetails _iosDetails() {
+    return DarwinNotificationDetails(
+      threadIdentifier: 'aquapact_thread',
     );
   }
 

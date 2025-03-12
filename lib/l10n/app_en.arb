@@ -10,6 +10,7 @@
   "edit": "Edit",
   "enterCustomIntake": "Enter custom Intake...",
   "healthSync": "Sync with Health Apps",
+  "home": "Home",
   "intakeAverage": "{amount} average",
   "@intakeAverage": {
     "placeholders": {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../app/config.dart';
 import '../app/di.dart';
+import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
@@ -13,6 +14,7 @@ import '../service/settings.dart';
 import '../ui/color.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/app_menu.dart';
 import '../ui/widget/pull_refresh.dart';
 import '../ui/widget/responsive.dart';
 import '../util/collection.dart';
@@ -96,6 +98,8 @@ class _StatsPageState extends State<StatsPage> {
           ),
         ),
       ),
+      bottomNavigationBar:
+          appBottomMenu(page: AppPage.stats, enabled: !loadingIntakes),
     );
   }
 

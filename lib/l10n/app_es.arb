@@ -10,6 +10,7 @@
   "edit": "Editar",
   "enterCustomIntake": "Ingrese otro Consumo...",
   "healthSync": "Sincronizar con apps de salud",
+  "home": "Inicio",
   "intakeAverage": "{amount} promedio",
   "@intakeAverage": {
     "placeholders": {

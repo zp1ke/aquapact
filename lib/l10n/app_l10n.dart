@@ -155,6 +155,12 @@ abstract class AppL10n {
   /// **'Sync with Health Apps'**
   String get healthSync;
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
   /// No description provided for @intakeAverage.
   ///
   /// In en, this message translates to:
