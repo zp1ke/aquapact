@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
@@ -25,7 +24,7 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
   @override
   void initState() {
     super.initState();
-    settings = service<SettingsService>().readTargetSettings();
+    settings = SettingsService.get().readTargetSettings();
   }
 
   @override

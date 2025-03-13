@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../app/config.dart';
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
@@ -48,12 +47,12 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
   }
 
   void readTargetSettings() {
-    final settings = service<SettingsService>().readTargetSettings();
+    final settings = SettingsService.get().readTargetSettings();
     targetSettings = settings ?? TargetSettings();
   }
 
   void fetchIntakeValue() async {
-    intakeValue = await service<IntakesService>()
+    intakeValue = await IntakesService.get()
         .sumIntakesAmount(from: dateTime, to: toDateTime);
     if (mounted) {
       setState(() {});

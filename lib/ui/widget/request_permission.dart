@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../service/notification.dart';
 import '../image.dart';
@@ -50,7 +49,7 @@ class RequestPermissionWidget extends StatelessWidget {
   }
 
   void requestPermissions() async {
-    final granted = await service<NotificationService>().hasPermissionGranted();
+    final granted = await NotificationService.get().hasPermissionGranted();
     if (granted) {
       onGranted();
     }

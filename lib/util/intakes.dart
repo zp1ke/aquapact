@@ -1,4 +1,3 @@
-import '../app/di.dart';
 import '../model/intake.dart';
 import '../model/measure_unit.dart';
 import '../model/sync_status.dart';
@@ -20,14 +19,14 @@ class IntakesHandler {
     HealthService? healthService,
   }) async {
     final now = DateTime.now();
-    final intakesServ = intakesService ?? service<IntakesService>();
+    final intakesServ = intakesService ?? IntakesService.get();
     var intake = await intakesServ.addIntake(
       amount: amount,
       measureUnit: measureUnit,
       dateTime: now,
     );
     if (healthSync) {
-      final healthServ = healthService ?? service<HealthService>();
+      final healthServ = healthService ?? HealthService.get();
       final synced = await healthServ.addIntake(intake);
       if (synced) {
         intake = intake.copyWith(healthSync: SyncStatus.synced);

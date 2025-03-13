@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/notification.dart';
@@ -74,7 +73,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     setState(() {
       loadingSettings = true;
     });
-    final settings = service<SettingsService>().readTargetSettings();
+    final settings = SettingsService.get().readTargetSettings();
     setState(() {
       targetSettings = settings ?? TargetSettings();
       loadingSettings = false;
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       loadingNotifications = true;
     });
     final notifications =
-        await service<NotificationService>().nextNotifications();
+        await NotificationService.get().nextNotifications();
     setState(() {
       this.notifications = notifications;
       loadingNotifications = false;
@@ -98,7 +97,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   void fetchIntakeValue() async {
     final today = DateTime.now().atStartOfDay();
-    intakeValue = await service<IntakesService>()
+    intakeValue = await IntakesService.get()
         .sumIntakesAmount(from: today, to: today.add(const Duration(days: 1)));
     if (mounted) {
       setState(() {});
@@ -224,7 +223,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     return Padding(
       padding: const EdgeInsets.all(AppSize.spacingSmall),
       child: Text(
-        service<IntakesService>().tip(
+        IntakesService.get().tip(
           context,
           intakeValue: intakeValue,
           targetValue: targetSettings.dailyTarget,
@@ -345,19 +344,19 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   TutorialCoachMark? setupTutorial() {
-    // TODO: check if tutorial should be shown
+    if (SettingsService.get().homeWizardCompleted()) {
+      return null;
+    }
     return TutorialCoachMark(
       targets: tutorialTargets(),
       textSkip: AppL10n.of(context).skip,
       imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       colorShadow: Theme.of(context).colorScheme.primary,
       onFinish: () {
-        // TODO: save tutorial state
-        print('Tutorial finished =======================================');
+        SettingsService.get().saveHomeWizardCompleted();
       },
       onSkip: () {
-        // TODO: save tutorial state
-        print('Tutorial skipped =======================================');
+        SettingsService.get().saveHomeWizardCompleted();
         return true;
       },
     );

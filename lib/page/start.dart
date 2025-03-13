@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../model/target_settings.dart';
 import '../service/mixin/target_settings_saver.dart';
@@ -31,8 +30,8 @@ class _StartPageState extends State<StartPage> with TargetSettingsSaver {
   }
 
   void checkPermissionsAndSettings() async {
-    settings = service<SettingsService>().readTargetSettings();
-    final granted = await service<NotificationService>().hasPermissionGranted();
+    settings = SettingsService.get().readTargetSettings();
+    final granted = await NotificationService.get().hasPermissionGranted();
     if (mounted && granted && settings != null) {
       await navigateToHome(context);
     }

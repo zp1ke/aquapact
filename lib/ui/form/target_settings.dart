@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
-import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
 import '../../service/health.dart';
@@ -240,7 +239,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           onChanged: (value) async {
             var theValue = value;
             if (value) {
-              theValue = await service<HealthService>().hasPermissionGranted();
+              theValue = await HealthService.get().hasPermissionGranted();
             }
             setState(() {
               targetSettings = targetSettings.copyWith(
