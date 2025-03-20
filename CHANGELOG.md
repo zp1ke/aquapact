@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - **Upload data to health connect**: Allow users to sync their water intake data with health connect apps for better health monitoring.
+- **Improved onboarding**: Enhance the user onboarding process with a more intuitive and guided setup, including interactive tutorials and helpful tips to ensure users can easily navigate and utilize the app's features from the start.
 
 ## [0.0.5] - 2025-03-02
 

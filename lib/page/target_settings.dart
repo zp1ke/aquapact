@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
@@ -8,6 +7,7 @@ import '../service/mixin/target_settings_saver.dart';
 import '../service/settings.dart';
 import '../ui/form/target_settings.dart';
 import '../ui/icon.dart';
+import '../ui/widget/app_menu.dart';
 
 class TargetSettingsPage extends StatefulWidget {
   const TargetSettingsPage({super.key});
@@ -24,7 +24,7 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
   @override
   void initState() {
     super.initState();
-    settings = service<SettingsService>().readTargetSettings();
+    settings = SettingsService.get().readTargetSettings();
   }
 
   @override
@@ -36,6 +36,8 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
       body: settings != null
           ? SafeArea(child: form())
           : Center(child: AppIcon.loading),
+      bottomNavigationBar:
+          appBottomMenu(page: AppPage.targetSettings, enabled: !saving),
     );
   }
 

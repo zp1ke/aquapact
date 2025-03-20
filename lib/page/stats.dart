@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../app/config.dart';
-import '../app/di.dart';
+import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
@@ -13,6 +13,7 @@ import '../service/settings.dart';
 import '../ui/color.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/app_menu.dart';
 import '../ui/widget/pull_refresh.dart';
 import '../ui/widget/responsive.dart';
 import '../util/collection.dart';
@@ -55,7 +56,7 @@ class _StatsPageState extends State<StatsPage> {
     setState(() {
       loadingSettings = true;
     });
-    final settings = service<SettingsService>().readTargetSettings();
+    final settings = SettingsService.get().readTargetSettings();
     setState(() {
       targetSettings = settings ?? TargetSettings();
       loadingSettings = false;
@@ -69,7 +70,7 @@ class _StatsPageState extends State<StatsPage> {
     setState(() {
       loadingIntakes = true;
     });
-    intakes = await service<IntakesService>().fetchAmounts(from: from, to: to);
+    intakes = await IntakesService.get().fetchAmounts(from: from, to: to);
     setState(() {
       loadingIntakes = false;
     });
@@ -96,6 +97,8 @@ class _StatsPageState extends State<StatsPage> {
           ),
         ),
       ),
+      bottomNavigationBar:
+          appBottomMenu(page: AppPage.stats, enabled: !loadingIntakes),
     );
   }
 

@@ -10,6 +10,7 @@
   "edit": "Editar",
   "enterCustomIntake": "Ingrese otro Consumo...",
   "healthSync": "Sincronizar con apps de salud",
+  "home": "Inicio",
   "intakeAverage": "{amount} promedio",
   "@intakeAverage": {
     "placeholders": {
@@ -61,6 +62,7 @@
     }
   },
   "lastIntakes": "Últimos consumos",
+  "lastTip": "Presiona el elemento para terminar",
   "letsStart": "¡Empecemos!",
   "nextNotificationAt": "Próxima notificación a las {time}",
   "@nextNotificationAt": {
@@ -70,6 +72,7 @@
       }
     }
   },
+  "nextTip": "Presiona el elemento para ver el siguiente consejo",
   "noIntakesRecorded": "No se han registrado Consumos :(",
   "noIntakesYet": "Aún no hay Consumos. Bebe un poco de agua para comenzar.",
   "notificationTitle": "Recordatorio de beber agua",
@@ -79,6 +82,7 @@
   "saving": "Guardando...",
   "settings": "Configuraciones",
   "showAll": "Mostrar todo",
+  "skip": "Omitir",
   "sleep": "Dormir",
   "stats": "Estadísticas",
   "sureLetsDoIt": "Claro, hagámoslo",
@@ -100,6 +104,10 @@
       }
     }
   },
+  "tutorialAddIntake": "Presiona este botón para agregar un consumo. Mantén presionado para mostrar más opciones de consumo.",
+  "tutorialIntakeAmount": "Aquí se muestra la cantidad de agua que has consumido.",
+  "tutorialNextNotification": "Aquí puedes ver cuándo se enviará la próxima notificación. Puedes cambiar la frecuencia en la configuración.",
+  "tutorialShowAll": "Aquí puedes ver todos tus consumos, donde puedes editar y eliminar.",
   "undo": "Deshacer",
   "version": "Versión",
   "wakeUpSleepTimes": "Me despierto a las {wakeUpTime}, me duermo a las {sleepTime}",

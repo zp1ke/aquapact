@@ -26,6 +26,12 @@ abstract class AppIcon {
     );
   }
 
+  static const home = Icon(Icons.home_sharp);
+  static const homeOut = Icon(Icons.home_outlined);
+
+  static const intakes = Icon(Icons.local_drink_sharp);
+  static const intakesOut = Icon(Icons.local_drink_outlined);
+
   static const loading = SizedBox(
     width: AppSize.icon,
     height: AppSize.icon,
@@ -37,8 +43,10 @@ abstract class AppIcon {
   static const refresh = Icon(Icons.refresh_sharp);
 
   static const settings = Icon(Icons.settings_sharp);
+  static const settingsOut = Icon(Icons.settings_outlined);
 
-  static const stats = Icon(Icons.area_chart_outlined);
+  static const stats = Icon(Icons.area_chart_sharp);
+  static const statsOut = Icon(Icons.area_chart_outlined);
 
   static Icon waterGlass(BuildContext context) {
     return Icon(

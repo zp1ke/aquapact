@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../app/di.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/notification.dart';
@@ -15,6 +16,7 @@ import '../ui/android/app_menu.dart';
 import '../ui/form/add_intake_button.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/app_menu.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/liquid_progress_indicator.dart';
 import '../ui/widget/pull_refresh.dart';
@@ -39,10 +41,18 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   var loadingNotifications = false;
   var processing = false;
 
+  final nextNotificationKey = GlobalKey();
+  final addIntakeKey = GlobalKey();
+  final showAllKey = GlobalKey();
+  final intakeAmountKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     loadData();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => setupTutorial()?.show(context: context),
+    );
   }
 
   void loadData() {
@@ -63,7 +73,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     setState(() {
       loadingSettings = true;
     });
-    final settings = service<SettingsService>().readTargetSettings();
+    final settings = SettingsService.get().readTargetSettings();
     setState(() {
       targetSettings = settings ?? TargetSettings();
       loadingSettings = false;
@@ -78,7 +88,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       loadingNotifications = true;
     });
     final notifications =
-        await service<NotificationService>().nextNotifications();
+        await NotificationService.get().nextNotifications();
     setState(() {
       this.notifications = notifications;
       loadingNotifications = false;
@@ -87,7 +97,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   void fetchIntakeValue() async {
     final today = DateTime.now().atStartOfDay();
-    intakeValue = await service<IntakesService>()
+    intakeValue = await IntakesService.get()
         .sumIntakesAmount(from: today, to: today.add(const Duration(days: 1)));
     if (mounted) {
       setState(() {});
@@ -112,6 +122,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
       ),
       drawer: menu(),
+      bottomNavigationBar: appBottomMenu(page: AppPage.home, enabled: !processing),
     );
   }
 
@@ -196,6 +207,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   Widget addIntakeButton() {
     return AddIntakeButton(
+      key: addIntakeKey,
       enabled: !processing,
       targetSettings: targetSettings,
       onAdding: () {
@@ -211,7 +223,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     return Padding(
       padding: const EdgeInsets.all(AppSize.spacingSmall),
       child: Text(
-        service<IntakesService>().tip(
+        IntakesService.get().tip(
           context,
           intakeValue: intakeValue,
           targetValue: targetSettings.dailyTarget,
@@ -234,6 +246,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           child: Text(
             AppL10n.of(context)
                 .nextNotificationAt(notifications.first.time.format(context)),
+            key: nextNotificationKey,
             textAlign: TextAlign.left,
             textScaler: TextScaler.linear(0.8),
           ),
@@ -257,6 +270,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
             ),
           ),
           OutlinedButton(
+            key: showAllKey,
             child: Text(AppL10n.of(context).showAll),
             onPressed: () async {
               await context.navigateTo(AppPage.intakes);
@@ -289,6 +303,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         .formatValue(targetSettings.dailyTarget);
     return Text(
       '$intake / $target',
+      key: intakeAmountKey,
       textScaler: TextScaler.linear(1.5),
       style: TextStyle(
         fontWeight: FontWeight.bold,
@@ -326,5 +341,113 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       processing = false;
     });
     loadData();
+  }
+
+  TutorialCoachMark? setupTutorial() {
+    if (SettingsService.get().homeWizardCompleted()) {
+      return null;
+    }
+    return TutorialCoachMark(
+      targets: tutorialTargets(),
+      textSkip: AppL10n.of(context).skip,
+      imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+      colorShadow: Theme.of(context).colorScheme.primary,
+      onFinish: () {
+        SettingsService.get().saveHomeWizardCompleted();
+      },
+      onSkip: () {
+        SettingsService.get().saveHomeWizardCompleted();
+        return true;
+      },
+    );
+  }
+
+  List<TargetFocus> tutorialTargets() {
+    final appL10n = AppL10n.of(context);
+    return <TargetFocus>[
+      TargetFocus(
+        identify: 'nextNotificationKey',
+        keyTarget: nextNotificationKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.right,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(appL10n.tutorialNextNotification),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: 'addIntakeKey',
+        keyTarget: addIntakeKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(appL10n.tutorialAddIntake),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: 'showAllKey',
+        keyTarget: showAllKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(appL10n.tutorialShowAll),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: 'intakeAmountKey',
+        keyTarget: intakeAmountKey,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        paddingFocus: AppSize.spacingSmall,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            padding: EdgeInsets.all(AppSize.spacingSmall),
+            builder: (_, __) => tutorialCard(
+              appL10n.tutorialIntakeAmount,
+              isLast: true,
+            ),
+          ),
+        ],
+      ),
+    ];
+  }
+
+  Widget tutorialCard(String text, {bool isLast = false}) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSize.spacingSmall),
+        child: Column(
+          spacing: AppSize.spacingSmall,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(text, textAlign: TextAlign.justify),
+            Text(
+              isLast
+                  ? AppL10n.of(context).lastTip
+                  : AppL10n.of(context).nextTip,
+              textScaler: TextScaler.linear(0.75),
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

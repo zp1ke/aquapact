@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../app/di.dart';
 import '../../model/target_settings.dart';
 import '../notification.dart';
 import '../settings.dart';
 
 const _targetSettingsKey = 'target_settings';
+const _homeWizardKey = 'home_wizard';
 
 class LocalSettingsService implements SettingsService {
   final SharedPreferences _plugin;
@@ -36,7 +36,7 @@ class LocalSettingsService implements SettingsService {
     required bool scheduleNotifications,
   }) async {
     if (scheduleNotifications) {
-      await service<NotificationService>().scheduleNotificationsOf(
+      await NotificationService.get().scheduleNotificationsOf(
         targetSettings,
         title: notificationTitle,
         message: notificationMessage,
@@ -67,5 +67,15 @@ class LocalSettingsService implements SettingsService {
       return _plugin.setString(key, json);
     }
     return Future.value(false);
+  }
+
+  @override
+  bool homeWizardCompleted() {
+    return _plugin.getBool(_homeWizardKey) ?? false;
+  }
+
+  @override
+  Future<bool> saveHomeWizardCompleted() {
+    return _plugin.setBool(_homeWizardKey, true);
   }
 }

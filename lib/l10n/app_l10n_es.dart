@@ -39,6 +39,9 @@ class AppL10nEs extends AppL10n {
   String get healthSync => 'Sincronizar con apps de salud';
 
   @override
+  String get home => 'Inicio';
+
+  @override
   String intakeAverage(String amount) {
     return '$amount promedio';
   }
@@ -97,12 +100,18 @@ class AppL10nEs extends AppL10n {
   String get lastIntakes => 'Últimos consumos';
 
   @override
+  String get lastTip => 'Presiona el elemento para terminar';
+
+  @override
   String get letsStart => '¡Empecemos!';
 
   @override
   String nextNotificationAt(String time) {
     return 'Próxima notificación a las $time';
   }
+
+  @override
+  String get nextTip => 'Presiona el elemento para ver el siguiente consejo';
 
   @override
   String get noIntakesRecorded => 'No se han registrado Consumos :(';
@@ -140,6 +149,9 @@ class AppL10nEs extends AppL10n {
   String get showAll => 'Mostrar todo';
 
   @override
+  String get skip => 'Omitir';
+
+  @override
   String get sleep => 'Dormir';
 
   @override
@@ -163,6 +175,18 @@ class AppL10nEs extends AppL10n {
   String totalIntake(String amount) {
     return 'Consumo total: $amount';
   }
+
+  @override
+  String get tutorialAddIntake => 'Presiona este botón para agregar un consumo. Mantén presionado para mostrar más opciones de consumo.';
+
+  @override
+  String get tutorialIntakeAmount => 'Aquí se muestra la cantidad de agua que has consumido.';
+
+  @override
+  String get tutorialNextNotification => 'Aquí puedes ver cuándo se enviará la próxima notificación. Puedes cambiar la frecuencia en la configuración.';
+
+  @override
+  String get tutorialShowAll => 'Aquí puedes ver todos tus consumos, donde puedes editar y eliminar.';
 
   @override
   String get undo => 'Deshacer';

@@ -2,6 +2,7 @@ package org.zp1ke.aquapact
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
@@ -23,23 +24,34 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import org.zp1ke.aquapact.theme.AppTheme
 
-class PermissionsRationaleActivity : ComponentActivity() {
+class HealthPermissionsActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enableEdgeToEdge()
-
         setContent {
             AppTheme {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        MaterialTheme.colorScheme.surface.toArgb(),
+                        MaterialTheme.colorScheme.surface.toArgb(),
+                    ),
+                    navigationBarStyle = SystemBarStyle.auto(
+                        MaterialTheme.colorScheme.surface.toArgb(),
+                        MaterialTheme.colorScheme.surface.toArgb(),
+                    ),
+                )
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = MaterialTheme.colorScheme.background,
@@ -101,14 +113,6 @@ fun PrivacyPolicyScreen() {
         )
         Spacer(modifier = Modifier.height(32.dp))
         WebButton()
-    }
-}
-
-@Preview
-@Composable
-fun PrivacyPolicyScreenPreview() {
-    AppTheme {
-        PrivacyPolicyScreen()
     }
 }
 

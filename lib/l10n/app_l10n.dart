@@ -155,6 +155,12 @@ abstract class AppL10n {
   /// **'Sync with Health Apps'**
   String get healthSync;
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
   /// No description provided for @intakeAverage.
   ///
   /// In en, this message translates to:
@@ -251,6 +257,12 @@ abstract class AppL10n {
   /// **'Last Intakes'**
   String get lastIntakes;
 
+  /// No description provided for @lastTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the item to finish'**
+  String get lastTip;
+
   /// No description provided for @letsStart.
   ///
   /// In en, this message translates to:
@@ -262,6 +274,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Next Notification at {time}'**
   String nextNotificationAt(String time);
+
+  /// No description provided for @nextTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the item to see the next tip'**
+  String get nextTip;
 
   /// No description provided for @noIntakesRecorded.
   ///
@@ -317,6 +335,12 @@ abstract class AppL10n {
   /// **'Show All'**
   String get showAll;
 
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
   /// No description provided for @sleep.
   ///
   /// In en, this message translates to:
@@ -358,6 +382,30 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Total Intake: {amount}'**
   String totalIntake(String amount);
+
+  /// No description provided for @tutorialAddIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Press this button to add an intake. Long press to show more intake options.'**
+  String get tutorialAddIntake;
+
+  /// No description provided for @tutorialIntakeAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'This shows the amount of water you have consumed.'**
+  String get tutorialIntakeAmount;
+
+  /// No description provided for @tutorialNextNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Here you can see when the next notification will be sent. You can change the frequency in the settings.'**
+  String get tutorialNextNotification;
+
+  /// No description provided for @tutorialShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Here you can navigate to the list of all intakes, where you can edit and delete.'**
+  String get tutorialShowAll;
 
   /// No description provided for @undo.
   ///

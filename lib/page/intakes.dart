@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/config.dart';
-import '../app/di.dart';
+import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/target_settings.dart';
 import '../service/intakes.dart';
@@ -10,6 +10,7 @@ import '../service/settings.dart';
 import '../ui/form/add_intake_button.dart';
 import '../ui/icon.dart';
 import '../ui/size.dart';
+import '../ui/widget/app_menu.dart';
 import '../ui/widget/intakes_list.dart';
 import '../ui/widget/pull_refresh.dart';
 import '../util/date_time.dart';
@@ -46,12 +47,12 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
   }
 
   void readTargetSettings() {
-    final settings = service<SettingsService>().readTargetSettings();
+    final settings = SettingsService.get().readTargetSettings();
     targetSettings = settings ?? TargetSettings();
   }
 
   void fetchIntakeValue() async {
-    intakeValue = await service<IntakesService>()
+    intakeValue = await IntakesService.get()
         .sumIntakesAmount(from: dateTime, to: toDateTime);
     if (mounted) {
       setState(() {});
@@ -73,6 +74,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
           child: content(),
         ),
       ),
+      bottomNavigationBar: appBottomMenu(page: AppPage.intakes, enabled: true),
     );
   }
 

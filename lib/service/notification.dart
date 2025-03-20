@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../app/di.dart';
 import '../model/notification.dart';
 import '../model/target_settings.dart';
 import '../util/date_time.dart';
 
 abstract class NotificationService {
+  static NotificationService get() => service<NotificationService>();
+
   /// returns true if the app was launched by a notification.
   bool get appLaunchedByNotification;
 

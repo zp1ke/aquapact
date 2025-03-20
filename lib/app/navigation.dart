@@ -7,20 +7,20 @@ import '../page/target_settings.dart';
 
 enum AppPage {
   home,
-  targetSettings,
+  stats,
   intakes,
-  stats;
+  targetSettings;
 
   Widget build(Map<String, Object> args) {
     switch (this) {
       case AppPage.home:
         return HomePage();
-      case AppPage.targetSettings:
-        return TargetSettingsPage();
-      case AppPage.intakes:
-        return IntakesPage();
       case AppPage.stats:
         return StatsPage();
+      case AppPage.intakes:
+        return IntakesPage();
+      case AppPage.targetSettings:
+        return TargetSettingsPage();
     }
   }
 }

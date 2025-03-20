@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../app/di.dart';
 import '../../l10n/app_l10n.dart';
 import '../../model/intake.dart';
 import '../../model/target_settings.dart';
@@ -66,8 +65,8 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       });
     }
     targetSettings =
-        service<SettingsService>().readTargetSettings() ?? TargetSettings();
-    intakes = await service<IntakesService>().fetchIntakes(
+        SettingsService.get().readTargetSettings() ?? TargetSettings();
+    intakes = await IntakesService.get().fetchIntakes(
       from: from,
       to: to,
       limit: widget.limit,
@@ -107,13 +106,13 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
         intake: intakes[index],
         targetSettings: targetSettings,
         onEdit: (intake) async {
-          await service<IntakesService>().updateIntake(intake);
+          await IntakesService.get().updateIntake(intake);
           widget.onChanged();
           loadData();
         },
         onDelete: (intake) async {
           intakes.removeWhere((element) => element.code == intake.code);
-          await service<IntakesService>().deleteIntake(intake);
+          await IntakesService.get().deleteIntake(intake);
           widget.onChanged();
           loadData();
         },
