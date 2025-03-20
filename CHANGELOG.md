@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.6] -
+## [0.0.7]
+
+## [0.0.6] - 2025-03-20
 
 ### Added
 - **Upload data to health connect**: Allow users to sync their water intake data with health connect apps for better health monitoring.
