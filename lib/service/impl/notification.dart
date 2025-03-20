@@ -94,8 +94,6 @@ class LocalNotificationService extends NotificationService {
         android: _androidDetails(),
         iOS: _iosDetails(),
       ),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
