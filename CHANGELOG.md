@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.7]
+## [0.0.8]
+
+## [0.0.7] - 2025-03-29
+
+### Fixed
+- **Notifications are no longer removed on app start**: Resolved an issue where all scheduled notifications were being cleared each time the app was launched, preventing them from being delivered.
 
 ## [0.0.6] - 2025-03-20
 
