@@ -51,11 +51,11 @@ class LocalNotificationService extends NotificationService {
     _appLaunchedByNotification =
         launchDetails?.didNotificationLaunchApp ?? false;
 
-    final pendingNotifications = await _plugin.pendingNotificationRequests();
-    for (var notification in pendingNotifications) {
-      'Pending notification: ${notification.title} ${notification.body} removed'
-          .log();
-      await _plugin.cancel(notification.id);
+    final activeNotifications = await _plugin.getActiveNotifications();
+    for (var notification in activeNotifications) {
+      if (notification.id != null) {
+        await _plugin.cancel(notification.id!);
+      }
     }
   }
 

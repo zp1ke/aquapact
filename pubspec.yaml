@@ -27,7 +27,7 @@ dependencies:
   package_info_plus: ^8.3.0
   path: ^1.9.0
   path_provider: ^2.1.5
-  shared_preferences: ^2.5.2
+  shared_preferences: ^2.5.3
   time_range_picker: ^2.3.0
   timezone: ^0.10.0
   tutorial_coach_mark: ^1.2.13

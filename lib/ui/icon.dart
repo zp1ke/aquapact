@@ -35,9 +35,7 @@ abstract class AppIcon {
   static const loading = SizedBox(
     width: AppSize.icon,
     height: AppSize.icon,
-    child: CircularProgressIndicator.adaptive(
-      year2023: false,
-    ),
+    child: CircularProgressIndicator.adaptive(),
   );
 
   static const refresh = Icon(Icons.refresh_sharp);

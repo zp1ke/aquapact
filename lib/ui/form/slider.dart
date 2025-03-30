@@ -88,7 +88,6 @@ class SliderWidget extends StatelessWidget {
                     ),
                   ),
                   child: Slider.adaptive(
-                    year2023: false,
                     min: min,
                     max: max,
                     value: value,
