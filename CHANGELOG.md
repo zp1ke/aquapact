@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.8]
 
+### TODO
+- **Allow users to set custom intake values**: Implement a feature that allows users to input their own custom water intake values instead of being limited to predefined options.
+- **Autofocus on custom intake input**: Ensure that the custom intake input field is automatically focused when the user selects the option to enter a custom value, making it easier for them to input their desired amount.
+- **Update associated health connected records**: When a user updates their water intake records, ensure that any associated records in health connect are also updated to maintain consistency and accuracy in their health data.
+
 ## [0.0.7] - 2025-03-29
 
 ### Fixed
