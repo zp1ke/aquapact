@@ -39,6 +39,7 @@ Future<double?> getCustomIntake(
             children: [
               Text(appL10n.enterCustomIntake),
               TextField(
+                autofocus: true,
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
