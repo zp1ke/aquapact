@@ -25,12 +25,45 @@ class IntakesHandler {
       measureUnit: measureUnit,
       dateTime: now,
     );
+    return _saveHealthSync(
+      intake: intake,
+      healthSync: healthSync,
+      intakesService: intakesServ,
+      healthService: healthService,
+    );
+  }
+
+  Future<Intake> editIntake({
+    required Intake intake,
+    required bool healthSync,
+    IntakesService? intakesService,
+    HealthService? healthService,
+  }) async {
+    final intakesServ = intakesService ?? IntakesService.get();
+    var updated = await intakesServ.updateIntake(intake);
+    return _saveHealthSync(
+      intake: updated,
+      healthSync: healthSync,
+      intakesService: intakesServ,
+      healthService: healthService,
+    );
+  }
+
+  Future<Intake> _saveHealthSync({
+    required Intake intake,
+    required bool healthSync,
+    required IntakesService intakesService,
+    HealthService? healthService,
+  }) async {
     if (healthSync) {
       final healthServ = healthService ?? HealthService.get();
-      final synced = await healthServ.addIntake(intake);
-      if (synced) {
-        intake = intake.copyWith(healthSync: SyncStatus.synced);
-        await intakesServ.updateIntake(intake);
+      final recordId = await healthServ.saveIntake(intake);
+      if (recordId != null) {
+        final updated = intake.copyWith(
+          healthSync: SyncStatus.synced,
+          healthSyncId: recordId,
+        );
+        return intakesService.updateIntake(updated);
       }
     }
     return intake;

@@ -62,8 +62,8 @@ class FakeHealthService extends HealthService {
   bool addIntakeResult = true;
 
   @override
-  Future<bool> addIntake(Intake intake) async {
-    return Future.value(addIntakeResult);
+  Future<String?> saveIntake(Intake intake) async {
+    return Future.value(addIntakeResult ? DateTime.now().toString() : null);
   }
 
   @override

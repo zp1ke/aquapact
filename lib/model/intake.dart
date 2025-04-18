@@ -9,6 +9,7 @@ class Intake {
   final DateTime dateTime;
   final VolumeMeasureUnit measureUnit;
   final SyncStatus healthSync;
+  final String? healthSyncId;
 
   Intake({
     required this.code,
@@ -16,6 +17,7 @@ class Intake {
     required this.dateTime,
     required this.measureUnit,
     required this.healthSync,
+    required this.healthSyncId,
   });
 
   TimeOfDay get timeOfDay => TimeOfDay(
@@ -29,6 +31,7 @@ class Intake {
     double? amount,
     TimeOfDay? timeOfDay,
     SyncStatus? healthSync,
+    String? healthSyncId,
   }) {
     var dateTime = this.dateTime.copyWith();
     if (timeOfDay != null) {
@@ -43,6 +46,7 @@ class Intake {
       dateTime: dateTime,
       measureUnit: measureUnit,
       healthSync: healthSync ?? this.healthSync,
+      healthSyncId: healthSyncId ?? this.healthSyncId,
     );
   }
 }

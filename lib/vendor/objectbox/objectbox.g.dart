@@ -20,40 +20,52 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 5110899916572817885),
-      name: 'IntakeBox',
-      lastPropertyId: const obx_int.IdUid(5, 3416076219431292405),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 5236324230472843057),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 8809484600080255978),
-            name: 'amount',
-            type: 7,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7786151218981209949),
-            name: 'dateTime',
-            type: 10,
-            flags: 8,
-            indexId: const obx_int.IdUid(1, 5115056442028358739)),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 3797069203933768233),
-            name: 'measureUnit',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 3416076219431292405),
-            name: 'healthSync',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[])
+    id: const obx_int.IdUid(1, 5110899916572817885),
+    name: 'IntakeBox',
+    lastPropertyId: const obx_int.IdUid(6, 4004321702994047141),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5236324230472843057),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 8809484600080255978),
+        name: 'amount',
+        type: 7,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 7786151218981209949),
+        name: 'dateTime',
+        type: 10,
+        flags: 8,
+        indexId: const obx_int.IdUid(1, 5115056442028358739),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 3797069203933768233),
+        name: 'measureUnit',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 3416076219431292405),
+        name: 'healthSync',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 4004321702994047141),
+        name: 'healthSyncId',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -67,93 +79,122 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-Future<obx.Store> openStore(
-    {String? directory,
-    int? maxDBSizeInKB,
-    int? maxDataSizeInKB,
-    int? fileMode,
-    int? maxReaders,
-    bool queriesCaseSensitiveDefault = true,
-    String? macosApplicationGroup}) async {
+Future<obx.Store> openStore({
+  String? directory,
+  int? maxDBSizeInKB,
+  int? maxDataSizeInKB,
+  int? fileMode,
+  int? maxReaders,
+  bool queriesCaseSensitiveDefault = true,
+  String? macosApplicationGroup,
+}) async {
   await loadObjectBoxLibraryAndroidCompat();
-  return obx.Store(getObjectBoxModel(),
-      directory: directory ?? (await defaultStoreDirectory()).path,
-      maxDBSizeInKB: maxDBSizeInKB,
-      maxDataSizeInKB: maxDataSizeInKB,
-      fileMode: fileMode,
-      maxReaders: maxReaders,
-      queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
-      macosApplicationGroup: macosApplicationGroup);
+  return obx.Store(
+    getObjectBoxModel(),
+    directory: directory ?? (await defaultStoreDirectory()).path,
+    maxDBSizeInKB: maxDBSizeInKB,
+    maxDataSizeInKB: maxDataSizeInKB,
+    fileMode: fileMode,
+    maxReaders: maxReaders,
+    queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
+    macosApplicationGroup: macosApplicationGroup,
+  );
 }
 
 /// Returns the ObjectBox model definition for this project for use with
 /// [obx.Store.new].
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
-      entities: _entities,
-      lastEntityId: const obx_int.IdUid(1, 5110899916572817885),
-      lastIndexId: const obx_int.IdUid(1, 5115056442028358739),
-      lastRelationId: const obx_int.IdUid(0, 0),
-      lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
-      retiredRelationUids: const [],
-      modelVersion: 5,
-      modelVersionParserMinimum: 5,
-      version: 1);
+    entities: _entities,
+    lastEntityId: const obx_int.IdUid(1, 5110899916572817885),
+    lastIndexId: const obx_int.IdUid(1, 5115056442028358739),
+    lastRelationId: const obx_int.IdUid(0, 0),
+    lastSequenceId: const obx_int.IdUid(0, 0),
+    retiredEntityUids: const [],
+    retiredIndexUids: const [],
+    retiredPropertyUids: const [],
+    retiredRelationUids: const [],
+    modelVersion: 5,
+    modelVersionParserMinimum: 5,
+    version: 1,
+  );
 
   final bindings = <Type, obx_int.EntityDefinition>{
     IntakeBox: obx_int.EntityDefinition<IntakeBox>(
-        model: _entities[0],
-        toOneRelations: (IntakeBox object) => [],
-        toManyRelations: (IntakeBox object) => {},
-        getId: (IntakeBox object) => object.id,
-        setId: (IntakeBox object, int id) {
-          object.id = id;
-        },
-        objectToFB: (IntakeBox object, fb.Builder fbb) {
-          final measureUnitOffset = object.measureUnit == null
-              ? null
-              : fbb.writeString(object.measureUnit!);
-          final healthSyncOffset = object.healthSync == null
-              ? null
-              : fbb.writeString(object.healthSync!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addFloat32(1, object.amount);
-          fbb.addInt64(2, object.dateTime?.millisecondsSinceEpoch);
-          fbb.addOffset(3, measureUnitOffset);
-          fbb.addOffset(4, healthSyncOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final dateTimeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final amountParam =
-              const fb.Float32Reader().vTableGetNullable(buffer, rootOffset, 6);
-          final dateTimeParam = dateTimeValue == null
-              ? null
-              : DateTime.fromMillisecondsSinceEpoch(dateTimeValue);
-          final measureUnitParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10);
-          final healthSyncParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 12);
-          final object = IntakeBox(
-              id: idParam,
-              amount: amountParam,
-              dateTime: dateTimeParam,
-              measureUnit: measureUnitParam,
-              healthSync: healthSyncParam);
+      model: _entities[0],
+      toOneRelations: (IntakeBox object) => [],
+      toManyRelations: (IntakeBox object) => {},
+      getId: (IntakeBox object) => object.id,
+      setId: (IntakeBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (IntakeBox object, fb.Builder fbb) {
+        final measureUnitOffset =
+            object.measureUnit == null
+                ? null
+                : fbb.writeString(object.measureUnit!);
+        final healthSyncOffset =
+            object.healthSync == null
+                ? null
+                : fbb.writeString(object.healthSync!);
+        final healthSyncIdOffset =
+            object.healthSyncId == null
+                ? null
+                : fbb.writeString(object.healthSyncId!);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addFloat32(1, object.amount);
+        fbb.addInt64(2, object.dateTime?.millisecondsSinceEpoch);
+        fbb.addOffset(3, measureUnitOffset);
+        fbb.addOffset(4, healthSyncOffset);
+        fbb.addOffset(5, healthSyncIdOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final dateTimeValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          8,
+        );
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final amountParam = const fb.Float32Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          6,
+        );
+        final dateTimeParam =
+            dateTimeValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(dateTimeValue);
+        final measureUnitParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final healthSyncParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final healthSyncIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final object = IntakeBox(
+          id: idParam,
+          amount: amountParam,
+          dateTime: dateTimeParam,
+          measureUnit: measureUnitParam,
+          healthSync: healthSyncParam,
+          healthSyncId: healthSyncIdParam,
+        );
 
-          return object;
-        })
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -162,22 +203,32 @@ obx_int.ModelDefinition getObjectBoxModel() {
 /// [IntakeBox] entity fields to define ObjectBox queries.
 class IntakeBox_ {
   /// See [IntakeBox.id].
-  static final id =
-      obx.QueryIntegerProperty<IntakeBox>(_entities[0].properties[0]);
+  static final id = obx.QueryIntegerProperty<IntakeBox>(
+    _entities[0].properties[0],
+  );
 
   /// See [IntakeBox.amount].
-  static final amount =
-      obx.QueryDoubleProperty<IntakeBox>(_entities[0].properties[1]);
+  static final amount = obx.QueryDoubleProperty<IntakeBox>(
+    _entities[0].properties[1],
+  );
 
   /// See [IntakeBox.dateTime].
-  static final dateTime =
-      obx.QueryDateProperty<IntakeBox>(_entities[0].properties[2]);
+  static final dateTime = obx.QueryDateProperty<IntakeBox>(
+    _entities[0].properties[2],
+  );
 
   /// See [IntakeBox.measureUnit].
-  static final measureUnit =
-      obx.QueryStringProperty<IntakeBox>(_entities[0].properties[3]);
+  static final measureUnit = obx.QueryStringProperty<IntakeBox>(
+    _entities[0].properties[3],
+  );
 
   /// See [IntakeBox.healthSync].
-  static final healthSync =
-      obx.QueryStringProperty<IntakeBox>(_entities[0].properties[4]);
+  static final healthSync = obx.QueryStringProperty<IntakeBox>(
+    _entities[0].properties[4],
+  );
+
+  /// See [IntakeBox.healthSyncId].
+  static final healthSyncId = obx.QueryStringProperty<IntakeBox>(
+    _entities[0].properties[5],
+  );
 }

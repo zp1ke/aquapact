@@ -14,14 +14,14 @@ class HealthChannelService extends HealthService {
       final granted = await platform.invokeMethod<bool>('checkPermissions');
       return granted ?? false;
     } on PlatformException catch (e, stack) {
-      'Failed to add intake: ${e.message}'
+      'Failed to check permissions: ${e.message}'
           .logError(error: e, stackTrace: stack);
       return false;
     }
   }
 
   @override
-  Future<bool> addIntake(Intake intake) async {
+  Future<String?> saveIntake(Intake intake) async {
     try {
       final amountInLiters = intake.measureUnit
           .convertAmountTo(intake.amount, VolumeMeasureUnit.l);
@@ -30,12 +30,15 @@ class HealthChannelService extends HealthService {
         'valueInLiters': amountInLiters,
         'dateTimeMillis': intake.dateTime.millisecondsSinceEpoch,
       };
-      final added = await platform.invokeMethod<bool>('addIntake', data);
-      return added ?? false;
+      if (intake.healthSyncId != null) {
+        data['recordId'] = intake.healthSyncId!;
+      }
+      final recordId = await platform.invokeMethod<String?>('saveIntake', data);
+      return recordId;
     } on PlatformException catch (e, stack) {
-      'Failed to add intake: ${e.message}'
+      'Failed to save intake: ${e.message}'
           .logError(error: e, stackTrace: stack);
-      return false;
+      return null;
     }
   }
 }

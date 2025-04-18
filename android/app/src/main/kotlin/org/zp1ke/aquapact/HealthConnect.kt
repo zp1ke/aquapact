@@ -14,43 +14,53 @@ import java.time.Instant
 import java.time.ZoneOffset
 
 object HealthConnect {
-    suspend fun addIntake(
+    suspend fun saveIntake(
         activity: ComponentActivity,
+        recordId: String?,
         intakeId: String,
         valueInLiters: Double,
         dateTimeMillis: Long,
-        callback: (Boolean) -> Unit
+        callback: (String?) -> Unit
     ) {
         val healthConnectClient = getHealthConnectClient(activity)
-        var added = false
+        var resultId: String? = null
         if (healthConnectClient != null) {
-            added = addIntake(healthConnectClient, intakeId, valueInLiters, dateTimeMillis)
+            resultId =
+                saveIntake(healthConnectClient, recordId, intakeId, valueInLiters, dateTimeMillis)
         }
-        callback(added)
+        callback(resultId)
     }
 
-    private suspend fun addIntake(
+    private suspend fun saveIntake(
         healthConnectClient: HealthConnectClient,
+        recordId: String?,
         intakeId: String,
         valueInLiters: Double,
         dateTimeMillis: Long
-    ): Boolean {
+    ): String? {
         val instant = Instant.ofEpochMilli(dateTimeMillis)
+        val record = HydrationRecord(
+            volume = Volume.liters(valueInLiters),
+            startTime = instant,
+            endTime = instant.plusMillis(1),
+            startZoneOffset = ZoneOffset.UTC,
+            endZoneOffset = ZoneOffset.UTC,
+            metadata = Metadata.manualEntry(clientRecordId = intakeId),
+        )
         try {
-            val record = HydrationRecord(
-                volume = Volume.liters(valueInLiters),
-                startTime = instant,
-                endTime = instant.plusMillis(1),
-                startZoneOffset = ZoneOffset.UTC,
-                endZoneOffset = ZoneOffset.UTC,
-                metadata = Metadata.manualEntry(clientRecordId = intakeId),
-            )
+            if (recordId != null) {
+                // Update an existing HydrationRecord
+                healthConnectClient.updateRecords(listOf(record))
+                Log.d("HealthConnect", "Record updated: $recordId")
+                return recordId
+            }
+            // Create a new HydrationRecord
             val response = healthConnectClient.insertRecords(listOf(record))
-            Log.d("HealthConnect", "Record inserted: ${response.recordIdsList}")
-            return response.recordIdsList.size == 1
+            Log.d("HealthConnect", "Record added: ${response.recordIdsList}")
+            return response.recordIdsList.first()
         } catch (e: Exception) {
             Log.e("HealthConnect", e.message, e)
-            return false
+            return null
         }
     }
 

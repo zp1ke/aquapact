@@ -6,5 +6,11 @@ abstract class HealthService {
 
   Future<bool> hasPermissionGranted();
 
-  Future<bool> addIntake(Intake intake);
+  /// Saves the given intake to the HealthConnect service and returns the record ID.
+  ///
+  /// The [intake] parameter contains the hydration data to be saved.
+  ///
+  /// Returns a [String] representing the HealthConnect record ID if successful.
+  /// Returns null if the operation fails.
+  Future<String?> saveIntake(Intake intake);
 }

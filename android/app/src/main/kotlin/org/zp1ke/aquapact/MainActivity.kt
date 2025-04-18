@@ -39,26 +39,28 @@ class MainActivity : FlutterFragmentActivity() {
             healthChannel
         ).setMethodCallHandler { call, result ->
             val activity = this as ComponentActivity
-            if (call.method == "addIntake") {
+            if (call.method == "saveIntake") {
+                val recordId = call.argument<String?>("recordId")
                 val intakeId = call.argument<String>("intakeId")
                 val valueInLiters = call.argument<Double>("valueInLiters")
                 val dateTimeMillis = call.argument<Long>("dateTimeMillis")
-                Log.d("MainActivity", "addIntake: $valueInLiters, $dateTimeMillis")
+                Log.d("MainActivity", "saveIntake: $valueInLiters, $dateTimeMillis")
 
                 if (intakeId != null && valueInLiters != null && valueInLiters > 0 && dateTimeMillis != null) {
                     GlobalScope.launch {
-                        HealthConnect.addIntake(
+                        HealthConnect.saveIntake(
                             activity,
+                            recordId,
                             intakeId,
                             valueInLiters,
                             dateTimeMillis
                         ) { added ->
-                            Log.d("MainActivity", "addIntake: $intakeId = $added")
+                            Log.d("MainActivity", "saveIntake: $intakeId = $added")
                             result.success(added)
                         }
                     }
                 } else {
-                    result.success(false)
+                    result.success(null)
                 }
             } else if (call.method == "checkPermissions") {
                 val healthConnectClient = getHealthConnectClient(activity)

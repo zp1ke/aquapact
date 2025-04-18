@@ -96,6 +96,7 @@ class BoxIntakesService extends IntakesService {
       intakeBox.amount = intake.amount;
       intakeBox.dateTime = intake.dateTime;
       intakeBox.healthSync = intake.healthSync.name;
+      intakeBox.healthSyncId = intake.healthSyncId;
       final saved = await box.putAndGetAsync(intakeBox);
       return _toIntake(saved);
     }
@@ -122,6 +123,7 @@ class BoxIntakesService extends IntakesService {
       dateTime: intake.dateTime!,
       measureUnit: measureUnit,
       healthSync: syncStatus,
+      healthSyncId: intake.healthSyncId,
     );
   }
 

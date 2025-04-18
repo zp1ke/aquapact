@@ -6,6 +6,7 @@ import '../../model/target_settings.dart';
 import '../../service/intakes.dart';
 import '../../service/settings.dart';
 import '../../util/date_time.dart';
+import '../../util/intakes.dart';
 import '../icon.dart';
 import 'intake_item.dart';
 
@@ -105,11 +106,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
       itemBuilder: (context, index) => IntakeItem(
         intake: intakes[index],
         targetSettings: targetSettings,
-        onEdit: (intake) async {
-          await IntakesService.get().updateIntake(intake);
-          widget.onChanged();
-          loadData();
-        },
+        onEdit: onEdit,
         onDelete: (intake) async {
           intakes.removeWhere((element) => element.code == intake.code);
           await IntakesService.get().deleteIntake(intake);
@@ -130,6 +127,15 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
   }) {
     this.from = from;
     this.to = to;
+    loadData();
+  }
+
+  void onEdit(intake) async {
+    await IntakesHandler().editIntake(
+      intake: intake,
+      healthSync: targetSettings.healthSync,
+    );
+    widget.onChanged();
     loadData();
   }
 }
