@@ -13,4 +13,11 @@ abstract class HealthService {
   /// Returns a [String] representing the HealthConnect record ID if successful.
   /// Returns null if the operation fails.
   Future<String?> saveIntake(Intake intake);
+
+  /// Deletes the intake record from the HealthConnect service.
+  ///
+  /// The [intake] parameter contains the hydration data to be deleted.
+  ///
+  /// Returns true if the deletion was successful, false otherwise.
+  Future<bool> deleteIntake(Intake intake);
 }

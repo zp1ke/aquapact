@@ -41,4 +41,20 @@ class HealthChannelService extends HealthService {
       return null;
     }
   }
+
+  @override
+  Future<bool> deleteIntake(Intake intake) async {
+    try {
+      final data = {
+        'intakeId': intake.code,
+        'recordId': intake.healthSyncId,
+      };
+      final success = await platform.invokeMethod<bool>('deleteIntake', data);
+      return success ?? false;
+    } on PlatformException catch (e, stack) {
+      'Failed to delete intake: ${e.message}'
+          .logError(error: e, stackTrace: stack);
+      return false;
+    }
+  }
 }

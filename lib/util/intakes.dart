@@ -49,6 +49,20 @@ class IntakesHandler {
     );
   }
 
+  Future<void> deleteIntake({
+    required Intake intake,
+    required bool healthSync,
+    IntakesService? intakesService,
+    HealthService? healthService,
+  }) async {
+    final intakesServ = intakesService ?? IntakesService.get();
+    await intakesServ.deleteIntake(intake);
+    if (healthSync) {
+      final healthServ = healthService ?? HealthService.get();
+      await healthServ.deleteIntake(intake);
+    }
+  }
+
   Future<Intake> _saveHealthSync({
     required Intake intake,
     required bool healthSync,

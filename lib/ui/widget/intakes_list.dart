@@ -107,12 +107,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
         intake: intakes[index],
         targetSettings: targetSettings,
         onEdit: onEdit,
-        onDelete: (intake) async {
-          intakes.removeWhere((element) => element.code == intake.code);
-          await IntakesService.get().deleteIntake(intake);
-          widget.onChanged();
-          loadData();
-        },
+        onDelete: onDelete,
       ),
       separatorBuilder: (context, index) {
         return Divider(height: .0);
@@ -132,6 +127,16 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
 
   void onEdit(intake) async {
     await IntakesHandler().editIntake(
+      intake: intake,
+      healthSync: targetSettings.healthSync,
+    );
+    widget.onChanged();
+    loadData();
+  }
+
+  void onDelete(intake) async {
+    intakes.removeWhere((element) => element.code == intake.code);
+    await IntakesHandler().deleteIntake(
       intake: intake,
       healthSync: targetSettings.healthSync,
     );

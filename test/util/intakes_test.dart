@@ -70,4 +70,9 @@ class FakeHealthService extends HealthService {
   Future<bool> hasPermissionGranted() {
     return Future.value(true);
   }
+
+  @override
+  Future<bool> deleteIntake(Intake intake) {
+    return Future.value(addIntakeResult);
+  }
 }

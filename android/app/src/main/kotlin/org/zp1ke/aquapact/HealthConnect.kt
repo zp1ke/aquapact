@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.deleteRecords
 import androidx.health.connect.client.records.HydrationRecord
 import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.units.Volume
@@ -87,5 +88,22 @@ object HealthConnect {
             return false
         }
         return availabilityStatus == HealthConnectClient.SDK_AVAILABLE
+    }
+
+    suspend fun deleteIntake(
+        activity: ComponentActivity,
+        recordId: String,
+        callback: (Boolean) -> Unit
+    ) {
+        val healthConnectClient = getHealthConnectClient(activity)
+        var result = false
+        if (healthConnectClient != null) {
+            healthConnectClient.deleteRecords<HydrationRecord>(
+                recordIdsList = listOf(recordId),
+                clientRecordIdsList = emptyList()
+            )
+            result = true
+        }
+        callback(result)
     }
 }

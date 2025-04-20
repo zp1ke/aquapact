@@ -62,6 +62,23 @@ class MainActivity : FlutterFragmentActivity() {
                 } else {
                     result.success(null)
                 }
+            } else if (call.method == "deleteIntake") {
+                val recordId = call.argument<String>("recordId")
+                Log.d("MainActivity", "deleteIntake: $recordId")
+
+                if (recordId != null) {
+                    GlobalScope.launch {
+                        HealthConnect.deleteIntake(
+                            activity,
+                            recordId,
+                        ) { deleted ->
+                            Log.d("MainActivity", "deleteIntake: $recordId = $deleted")
+                            result.success(deleted)
+                        }
+                    }
+                } else {
+                    result.success(null)
+                }
             } else if (call.method == "checkPermissions") {
                 val healthConnectClient = getHealthConnectClient(activity)
                 if (healthConnectClient != null) {
