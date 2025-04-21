@@ -92,6 +92,9 @@ class AppL10nEn extends AppL10n {
   String get intakeRecordDeleted => 'Intake record deleted';
 
   @override
+  String get intakeValues => 'Intake Values';
+
+  @override
   String lastNDays(String days) {
     return 'Last $days days (and today)';
   }

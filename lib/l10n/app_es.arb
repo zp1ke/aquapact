@@ -53,6 +53,7 @@
     }
   },
   "intakeRecordDeleted": "Registro de consumo eliminado",
+  "intakeValues": "Valores de consumo",
   "lastNDays": "Últimos {days} días (y hoy)",
   "@lastNDays": {
     "placeholders": {

@@ -92,6 +92,9 @@ class AppL10nEs extends AppL10n {
   String get intakeRecordDeleted => 'Registro de consumo eliminado';
 
   @override
+  String get intakeValues => 'Valores de consumo';
+
+  @override
   String lastNDays(String days) {
     return 'Últimos $days días (y hoy)';
   }

@@ -53,6 +53,7 @@
     }
   },
   "intakeRecordDeleted": "Intake record deleted",
+  "intakeValues": "Intake Values",
   "lastNDays": "Last {days} days (and today)",
   "@lastNDays": {
     "placeholders": {

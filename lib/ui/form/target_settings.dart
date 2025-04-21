@@ -59,6 +59,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           card(dailyTargetCard()),
           card(wakeUpSleepTimesCard()),
           card(notificationIntervalCard()),
+          card(intakeValues()),
           card(healthSync()),
           SizedBox(height: AppSize.spacingLarge),
           toolbar(),
@@ -82,6 +83,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
                 card(dailyTargetCard()),
                 card(wakeUpSleepTimesCard()),
                 card(notificationIntervalCard()),
+                card(intakeValues()),
                 card(healthSync()),
               ],
             ),
@@ -108,12 +110,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
-        Text(
-          '${AppL10n.of(context).dailyWaterIntake} (${measureUnit.symbol})',
-          style: TextTheme.of(context).bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
+        cardTitle(
+            '${AppL10n.of(context).dailyWaterIntake} (${measureUnit.symbol})'),
         SliderWidget(
           value: targetSettings.dailyTarget,
           min: 500.0,
@@ -142,15 +140,10 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Column(
       spacing: AppSize.spacingMedium,
       children: [
-        Text(
-          l10n.wakeUpSleepTimes(
-            targetSettings.wakeUpTime.format(context),
-            targetSettings.sleepTime.format(context),
-          ),
-          style: TextTheme.of(context).bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
+        cardTitle(l10n.wakeUpSleepTimes(
+          targetSettings.wakeUpTime.format(context),
+          targetSettings.sleepTime.format(context),
+        )),
         OutlinedButton(
           onPressed: !widget.saving ? editWakeUpSleepTimes : null,
           child: Text(l10n.edit),
@@ -198,13 +191,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
-        Text(
-          AppL10n.of(context)
-              .notifyEveryHours(targetSettings.notificationInterval.inHours),
-          style: TextTheme.of(context).bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
+        cardTitle(AppL10n.of(context)
+            .notifyEveryHours(targetSettings.notificationInterval.inHours)),
         SliderWidget(
           value: targetSettings.notificationInterval.inHours.toDouble(),
           min: 1.0,
@@ -224,16 +212,56 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
   }
 
+  Widget intakeValues() {
+    return Column(
+      spacing: AppSize.spacingMedium,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            cardTitle(AppL10n.of(context).intakeValues),
+            IconButton(
+              onPressed: !widget.saving ? () {} : null,
+              icon: AppIcon.add,
+            ),
+          ],
+        ),
+        Wrap(
+          spacing: AppSize.spacingSmall,
+          runSpacing: AppSize.spacingSmall,
+          alignment: WrapAlignment.center,
+          runAlignment: WrapAlignment.center,
+          children: targetSettings.intakeValues
+              .map(
+                (value) => Chip(
+                  label: Text(value.toInt().toString()),
+                  deleteIcon: AppIcon.delete(context),
+                  onDeleted: targetSettings.intakeValues.length > 1
+                      ? () {
+                          setState(() {
+                            targetSettings = targetSettings.copyWith(
+                              intakeValues: targetSettings.intakeValues
+                                  .where((v) => v != value)
+                                  .toList(),
+                            );
+                          });
+                        }
+                      : null,
+                ),
+              )
+              .toList(),
+        ),
+      ],
+    );
+  }
+
   Widget healthSync() {
     return Row(
       spacing: AppSize.spacingLarge,
       children: [
-        Text(
-          AppL10n.of(context).healthSync,
-          style: TextTheme.of(context).bodyLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-        ),
+        cardTitle(AppL10n.of(context).healthSync),
         Switch(
           value: targetSettings.healthSync,
           onChanged: (value) async {
@@ -266,6 +294,15 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
         ),
         saveBtn,
       ],
+    );
+  }
+
+  Widget cardTitle(String text) {
+    return Text(
+      text,
+      style: TextTheme.of(context).bodyLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 

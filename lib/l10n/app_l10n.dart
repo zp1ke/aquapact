@@ -245,6 +245,12 @@ abstract class AppL10n {
   /// **'Intake record deleted'**
   String get intakeRecordDeleted;
 
+  /// No description provided for @intakeValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Intake Values'**
+  String get intakeValues;
+
   /// No description provided for @lastNDays.
   ///
   /// In en, this message translates to:
