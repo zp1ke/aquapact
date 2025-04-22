@@ -7,6 +7,7 @@ import '../size.dart';
 
 Future<double?> getCustomIntake(
   BuildContext context, {
+  required String title,
   required TargetSettings targetSettings,
   double? initialValue,
 }) async {
@@ -37,7 +38,7 @@ Future<double?> getCustomIntake(
             mainAxisSize: MainAxisSize.min,
             spacing: AppSize.spacingMedium,
             children: [
-              Text(appL10n.enterCustomIntake),
+              Text(title),
               TextField(
                 autofocus: true,
                 controller: amountController,

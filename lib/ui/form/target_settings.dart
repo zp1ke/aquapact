@@ -8,6 +8,7 @@ import '../../util/number.dart';
 import '../color.dart';
 import '../icon.dart';
 import '../size.dart';
+import '../widget/custom_intake.dart';
 import '../widget/responsive.dart';
 import 'slider.dart';
 
@@ -223,7 +224,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           children: [
             cardTitle(AppL10n.of(context).intakeValues),
             IconButton(
-              onPressed: !widget.saving ? () {} : null,
+              onPressed: !widget.saving ? addCustomIntake : null,
               icon: AppIcon.add,
             ),
           ],
@@ -239,15 +240,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
                   label: Text(value.toInt().toString()),
                   deleteIcon: AppIcon.delete(context),
                   onDeleted: targetSettings.intakeValues.length > 1
-                      ? () {
-                          setState(() {
-                            targetSettings = targetSettings.copyWith(
-                              intakeValues: targetSettings.intakeValues
-                                  .where((v) => v != value)
-                                  .toList(),
-                            );
-                          });
-                        }
+                      ? () => deleteIntake(value)
                       : null,
                 ),
               )
@@ -318,5 +311,29 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
           ? AppL10n.of(context).saving
           : AppL10n.of(context).save),
     );
+  }
+
+  void addCustomIntake() async {
+    final value = await getCustomIntake(
+      context,
+      title: AppL10n.of(context).enterIntakeValue,
+      targetSettings: targetSettings,
+    );
+    if (value != null) {
+      setState(() {
+        targetSettings = targetSettings.copyWith(
+          intakeValues: [...targetSettings.intakeValues, value],
+        );
+      });
+    }
+  }
+
+  void deleteIntake(double value) {
+    setState(() {
+      targetSettings = targetSettings.copyWith(
+        intakeValues:
+            targetSettings.intakeValues.where((v) => v != value).toList(),
+      );
+    });
   }
 }

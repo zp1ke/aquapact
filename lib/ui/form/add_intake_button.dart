@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
 import '../../util/intakes.dart';
 import '../icon.dart';
@@ -39,7 +40,11 @@ class AddIntakeButton extends StatelessWidget {
         ),
         onSelectedTransform: (_, value) {
           if (value <= 0) {
-            return getCustomIntake(context, targetSettings: targetSettings);
+            return getCustomIntake(
+              context,
+              title: AppL10n.of(context).enterCustomIntake,
+              targetSettings: targetSettings,
+            );
           }
           return Future.value(value);
         },

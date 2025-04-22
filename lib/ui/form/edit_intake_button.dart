@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_l10n.dart';
 import '../../model/target_settings.dart';
 import '../size.dart';
 import '../widget/custom_intake.dart';
@@ -40,6 +41,7 @@ class EditIntakeButton extends StatelessWidget {
           if (val <= 0) {
             return getCustomIntake(
               context,
+              title: AppL10n.of(context).enterCustomIntake,
               targetSettings: targetSettings,
               initialValue: value,
             );

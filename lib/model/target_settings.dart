@@ -71,7 +71,7 @@ class TargetSettings extends Equatable {
     return TargetSettings(
       dailyTarget: dailyTarget ?? this.dailyTarget,
       volumeMeasureUnit: volumeMeasureUnit ?? this.volumeMeasureUnit,
-      intakeValues: intakeValues ?? this.intakeValues,
+      intakeValues: _intakeValues(intakeValues ?? this.intakeValues),
       defaultIntakeValue: defaultIntakeValue ?? this.defaultIntakeValue,
       wakeUpTime: wakeUpTime ?? this.wakeUpTime,
       sleepTime: sleepTime ?? this.sleepTime,
@@ -79,5 +79,14 @@ class TargetSettings extends Equatable {
           notificationIntervalInMinutes ?? this.notificationIntervalInMinutes,
       healthSync: healthSync ?? this.healthSync,
     );
+  }
+
+  List<double> _intakeValues(List<double> list) {
+    if (list.isEmpty) {
+      return [defaultIntakeValue];
+    }
+    var values = list.toSet().toList();
+    values.sort();
+    return values;
   }
 }
