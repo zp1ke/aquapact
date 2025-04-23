@@ -44,6 +44,7 @@ class EditIntakeButton extends StatelessWidget {
               title: AppL10n.of(context).enterCustomIntake,
               targetSettings: targetSettings,
               initialValue: value,
+              save: true,
             );
           }
           return Future.value(val);

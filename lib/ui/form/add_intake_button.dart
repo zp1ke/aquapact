@@ -44,6 +44,7 @@ class AddIntakeButton extends StatelessWidget {
               context,
               title: AppL10n.of(context).enterCustomIntake,
               targetSettings: targetSettings,
+              save: true,
             );
           }
           return Future.value(value);
