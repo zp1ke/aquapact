@@ -25,9 +25,8 @@ class PullToRefresh extends StatelessWidget {
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height -
-              kToolbarHeight -
-              bottomHeight,
+          height:
+              MediaQuery.sizeOf(context).height - kToolbarHeight - bottomHeight,
           child: child,
         ),
       ),

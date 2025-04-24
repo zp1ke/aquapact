@@ -87,8 +87,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     setState(() {
       loadingNotifications = true;
     });
-    final notifications =
-        await NotificationService.get().nextNotifications();
+    final notifications = await NotificationService.get().nextNotifications();
     setState(() {
       this.notifications = notifications;
       loadingNotifications = false;
@@ -122,7 +121,8 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
       ),
       drawer: menu(),
-      bottomNavigationBar: appBottomMenu(page: AppPage.home, enabled: !processing),
+      bottomNavigationBar:
+          appBottomMenu(page: AppPage.home, enabled: !processing),
     );
   }
 

@@ -9,4 +9,3 @@ extension AppDouble on double {
     return (this / factor).ceil() * factor.toDouble();
   }
 }
-

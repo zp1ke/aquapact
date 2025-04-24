@@ -78,4 +78,3 @@ class TimeOfDayConverter implements JsonConverter<TimeOfDay, String> {
   @override
   String toJson(TimeOfDay object) => '${object.hour}:${object.minute}';
 }
-

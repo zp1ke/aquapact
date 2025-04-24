@@ -25,6 +25,7 @@ Future<double?> getCustomIntake(
   return showModalBottomSheet<double>(
     context: context,
     showDragHandle: true,
+    useSafeArea: true,
     builder: (context) {
       final appL10n = AppL10n.of(context);
 
@@ -52,6 +53,7 @@ Future<double?> getCustomIntake(
 
       return Container(
         padding: MediaQuery.viewInsetsOf(context),
+        margin: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.all(AppSize.spacingMedium),
           child: Column(
@@ -73,19 +75,23 @@ Future<double?> getCustomIntake(
                 textAlign: TextAlign.right,
               ),
               Row(
-                mainAxisAlignment: saveValue ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                mainAxisAlignment: saveValue
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.center,
                 mainAxisSize: saveValue ? MainAxisSize.max : MainAxisSize.min,
                 children: [
-                  if (saveValue) Checkbox.adaptive(
-                    value: mustSave,
-                    onChanged: (value) {
-                      mustSave = value ?? false;
-                    },
-                  ),
+                  if (saveValue)
+                    Checkbox.adaptive(
+                      value: mustSave,
+                      onChanged: (value) {
+                        mustSave = value ?? false;
+                      },
+                    ),
                   OutlinedButton(
-                onPressed: () => onSubmitted(amountController.text, mustSave),
-                child: Text(appL10n.save),
-              ),
+                    onPressed: () =>
+                        onSubmitted(amountController.text, mustSave),
+                    child: Text(appL10n.save),
+                  ),
                 ],
               ),
             ],
