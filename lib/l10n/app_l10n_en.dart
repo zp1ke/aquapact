@@ -143,6 +143,9 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
+  String get preserveValue => 'Preserve Value';
+
+  @override
   String get save => 'Save';
 
   @override

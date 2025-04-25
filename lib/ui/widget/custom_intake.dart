@@ -6,6 +6,7 @@ import '../../model/target_settings.dart';
 import '../../service/settings.dart';
 import '../icon.dart';
 import '../size.dart';
+import 'controlled_checkbox.dart';
 
 Future<double?> getCustomIntake(
   BuildContext context, {
@@ -15,6 +16,7 @@ Future<double?> getCustomIntake(
   bool? save,
 }) async {
   final amountController = TextEditingController();
+  final saveController = CheckBoxController();
   if (initialValue != null) {
     amountController.text = targetSettings.volumeMeasureUnit.formatValue(
       initialValue,
@@ -49,7 +51,6 @@ Future<double?> getCustomIntake(
       }
 
       final saveValue = save ?? false;
-      var mustSave = false;
 
       return Container(
         padding: MediaQuery.viewInsetsOf(context),
@@ -71,29 +72,30 @@ Future<double?> getCustomIntake(
                   prefixIcon: AppIcon.waterGlass(context),
                 ),
                 textInputAction: TextInputAction.done,
-                onSubmitted: (text) => onSubmitted(text, mustSave),
+                onSubmitted: (text) => onSubmitted(text, saveController.value),
                 textAlign: TextAlign.right,
               ),
               Row(
                 mainAxisAlignment: saveValue
-                    ? MainAxisAlignment.spaceBetween
+                    ? MainAxisAlignment.end
                     : MainAxisAlignment.center,
                 mainAxisSize: saveValue ? MainAxisSize.max : MainAxisSize.min,
                 children: [
-                  if (saveValue)
-                    Checkbox.adaptive(
-                      value: mustSave,
-                      onChanged: (value) {
-                        mustSave = value ?? false;
-                      },
+                  if (saveValue) ...[
+                    ControlledCheckBox(
+                      text: appL10n.preserveValue,
+                      controller: saveController,
                     ),
+                    Spacer(),
+                  ],
                   OutlinedButton(
-                    onPressed: () =>
-                        onSubmitted(amountController.text, mustSave),
+                    onPressed: () => onSubmitted(
+                        amountController.text, saveController.value),
                     child: Text(appL10n.save),
                   ),
                 ],
               ),
+              SizedBox(height: AppSize.spacingSmall / 2),
             ],
           ),
         ),

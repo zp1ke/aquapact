@@ -323,6 +323,12 @@ abstract class AppL10n {
   /// **'{count, plural, =1{Notify hourly} other{Notify every {count} hours}}'**
   String notifyEveryHours(num count);
 
+  /// No description provided for @preserveValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Preserve Value'**
+  String get preserveValue;
+
   /// No description provided for @save.
   ///
   /// In en, this message translates to:

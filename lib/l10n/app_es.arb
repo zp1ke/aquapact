@@ -80,6 +80,7 @@
   "notificationTitle": "Recordatorio de beber agua",
   "notificationMessage": "¡Es hora de hidratarte!",
   "notifyEveryHours": "{count, plural, =1{Notificar cada hora} other{Notificar cada {count} horas}}",
+  "preserveValue": "Preservar Valor",
   "save": "Guardar",
   "saving": "Guardando...",
   "settings": "Configuraciones",
