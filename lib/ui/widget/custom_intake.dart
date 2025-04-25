@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../app/navigation.dart';
 import '../../l10n/app_l10n.dart';
+import '../../model/pair.dart';
 import '../../model/target_settings.dart';
 import '../../service/settings.dart';
 import '../icon.dart';
 import '../size.dart';
 import 'controlled_checkbox.dart';
 
-Future<double?> getCustomIntake(
+Future<Pair<TargetSettings, double>?> getCustomIntake(
   BuildContext context, {
   required String title,
   required TargetSettings targetSettings,
@@ -24,7 +25,7 @@ Future<double?> getCustomIntake(
     );
   }
 
-  return showModalBottomSheet<double>(
+  return showModalBottomSheet<Pair<TargetSettings, double>>(
     context: context,
     showDragHandle: true,
     useSafeArea: true,
@@ -33,20 +34,22 @@ Future<double?> getCustomIntake(
 
       onSubmitted(String? text, bool saveValue) async {
         final value = double.tryParse(text ?? '');
+        var resultSettings = targetSettings;
         if (saveValue && value != null) {
-          final newSettings = targetSettings.copyWith(
+          resultSettings = targetSettings.copyWith(
             intakeValues: [...targetSettings.intakeValues, value],
           );
           final l10n = AppL10n.of(context);
           await SettingsService.get().saveTargetSettings(
-            newSettings,
+            resultSettings,
             notificationTitle: l10n.notificationTitle,
             notificationMessage: l10n.notificationMessage,
             scheduleNotifications: false,
           );
         }
         if (context.mounted) {
-          context.navigateBack(value != null && value > 0 ? value : null);
+          context.navigateBack(
+              value != null && value > 0 ? Pair(resultSettings, value) : null);
         }
       }
 

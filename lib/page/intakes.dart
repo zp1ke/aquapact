@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app/config.dart';
 import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
+import '../model/pair.dart';
 import '../model/target_settings.dart';
 import '../service/intakes.dart';
 import '../service/mixin/target_settings_saver.dart';
@@ -139,9 +140,9 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
     );
   }
 
-  void addedIntake(double value) async {
-    targetSettings = targetSettings.copyWith(
-      defaultIntakeValue: value,
+  void addedIntake(Pair<TargetSettings, double> value) async {
+    targetSettings = value.first.copyWith(
+      defaultIntakeValue: value.second,
     );
     if (mounted) {
       await saveSettings(context, targetSettings, scheduleNotifications: false);

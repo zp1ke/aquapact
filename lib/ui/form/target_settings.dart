@@ -321,8 +321,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     );
     if (value != null) {
       setState(() {
-        targetSettings = targetSettings.copyWith(
-          intakeValues: [...targetSettings.intakeValues, value],
+        targetSettings = value.first.copyWith(
+          intakeValues: [...targetSettings.intakeValues, value.second],
         );
       });
     }

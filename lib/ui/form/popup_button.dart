@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../../model/pair.dart';
 import '../size.dart';
 
-class PopupButton<T> extends StatefulWidget {
+class PopupButton<E, T> extends StatefulWidget {
   final bool enabled;
   final Widget? icon;
+  final E extra;
   final T value;
   final List<T> values;
   final Widget Function(BuildContext, T, bool) itemBuilder;
-  final Function(T) onSelected;
+  final Function(Pair<E, T>) onSelected;
   final bool elevated;
   final bool disableValue;
-  final Future<T?> Function(BuildContext, T)? onSelectedTransform;
+  final Future<Pair<E, T>?> Function(BuildContext, Pair<E, T>)?
+      onSelectedTransform;
 
   const PopupButton({
     super.key,
     this.enabled = true,
     this.icon,
+    required this.extra,
     required this.value,
     required this.values,
     required this.itemBuilder,
@@ -27,10 +31,10 @@ class PopupButton<T> extends StatefulWidget {
   });
 
   @override
-  State<PopupButton<T>> createState() => _PopupButtonState<T>();
+  State<PopupButton<E, T>> createState() => _PopupButtonState<E, T>();
 }
 
-class _PopupButtonState<T> extends State<PopupButton<T>> {
+class _PopupButtonState<E, T> extends State<PopupButton<E, T>> {
   var tapPosition = Offset.zero;
 
   @override
@@ -91,12 +95,13 @@ class _PopupButtonState<T> extends State<PopupButton<T>> {
 
   void selectValue(T value) async {
     if (widget.onSelectedTransform != null) {
-      final newValue = await widget.onSelectedTransform!(context, value);
-      if (newValue != null) {
-        widget.onSelected(newValue);
+      final transformed =
+          await widget.onSelectedTransform!(context, Pair(widget.extra, value));
+      if (transformed != null) {
+        widget.onSelected(transformed);
       }
     } else {
-      widget.onSelected(value);
+      widget.onSelected(Pair(widget.extra, value));
     }
   }
 }

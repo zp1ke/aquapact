@@ -11,8 +11,6 @@ All notable changes to this project will be documented in this file.
 - **Update associated health connected records**: When a user updates their water intake records, ensure that any associated records in health connect are also updated to maintain consistency and accuracy in their health data.
 - **Delete associated health connected records**: When a user deletes their water intake records, ensure that any associated records in health connect are also deleted.
 - **Allow users to set custom intake values**: Implement a feature that allows users to input their own custom water intake values instead of being limited to predefined options.
-
-### TODO
 - **Add option in custom intake input to save the value**: Provide an option for users to save their custom intake value for future use, allowing them to quickly select it without needing to re-enter it each time.
 
 ## [0.0.7] - 2025-03-29

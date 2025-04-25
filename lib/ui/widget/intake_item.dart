@@ -49,8 +49,8 @@ class IntakeItem extends StatelessWidget {
         leading: EditIntakeButton(
           value: intake.amount,
           targetSettings: targetSettings,
-          onChanged: (amount) {
-            onEdit(intake.copyWith(amount: amount));
+          onChanged: (value) {
+            onEdit(intake.copyWith(amount: value.second));
           },
         ),
         title: targetSettings.healthSync

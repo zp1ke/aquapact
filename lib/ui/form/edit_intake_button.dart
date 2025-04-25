@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_l10n.dart';
+import '../../model/pair.dart';
 import '../../model/target_settings.dart';
 import '../size.dart';
 import '../widget/custom_intake.dart';
@@ -10,7 +11,7 @@ import 'popup_button.dart';
 class EditIntakeButton extends StatelessWidget {
   final TargetSettings targetSettings;
   final double value;
-  final Function(double) onChanged;
+  final Function(Pair<TargetSettings, double>) onChanged;
   final bool enabled;
 
   const EditIntakeButton({
@@ -25,8 +26,9 @@ class EditIntakeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: AppSize.spacingSmall),
-      child: PopupButton<double>(
+      child: PopupButton<TargetSettings, double>(
         enabled: enabled,
+        extra: targetSettings,
         value: value,
         elevated: false,
         disableValue: true,
@@ -38,7 +40,7 @@ class EditIntakeButton extends StatelessWidget {
           isButton: false,
         ),
         onSelectedTransform: (_, val) {
-          if (val <= 0) {
+          if (val.second <= 0) {
             return getCustomIntake(
               context,
               title: AppL10n.of(context).enterCustomIntake,
