@@ -125,7 +125,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
     loadData();
   }
 
-  void onEdit(intake) async {
+  void onEdit(Intake intake) async {
     await IntakesHandler().editIntake(
       intake: intake,
       healthSync: targetSettings.healthSync,
@@ -134,7 +134,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
     loadData();
   }
 
-  void onDelete(intake) async {
+  void onDelete(Intake intake) async {
     intakes.removeWhere((element) => element.code == intake.code);
     await IntakesHandler().deleteIntake(
       intake: intake,

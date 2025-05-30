@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [TODO]
+
+- **Sync intakes to Samsung Health**: Enable seamless synchronization of water intake records with Samsung Health, allowing users to maintain their hydration data across Samsung's health ecosystem and integrate with other health tracking features.
+
 ## [0.0.8]
 
 ### Improved

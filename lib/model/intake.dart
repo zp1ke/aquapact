@@ -25,7 +25,7 @@ class Intake {
         minute: dateTime.minute,
       );
 
-  get isHealthSynced => SyncStatus.synced == healthSync;
+  bool get isHealthSynced => SyncStatus.synced == healthSync;
 
   Intake copyWith({
     double? amount,
