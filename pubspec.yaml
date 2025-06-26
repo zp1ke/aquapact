@@ -5,15 +5,15 @@ publish_to: 'none'
 version: 0.0.9+9
 
 environment:
-  sdk: ^3.6.0
-  flutter: 3.32.4
+  sdk: ^3.8.0
+  flutter: 3.32.5
 
 dependencies:
   equatable: ^2.0.7
   fl_chart: ^1.0.0
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^19.2.1
+  flutter_local_notifications: ^19.3.0
   flutter_localizations:
     sdk: flutter
   flutter_timezone: ^4.1.1
@@ -21,7 +21,7 @@ dependencies:
   google_fonts: ^6.2.1
   intl: any
   json_annotation: ^4.9.0
-  logger: ^2.5.0
+  logger: ^2.6.0
   objectbox: ^4.3.0
   objectbox_flutter_libs: ^4.3.0
   package_info_plus: ^8.3.0
