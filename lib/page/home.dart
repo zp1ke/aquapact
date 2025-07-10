@@ -376,7 +376,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           TargetContent(
             align: ContentAlign.right,
             padding: EdgeInsets.all(AppSize.spacingSmall),
-            builder: (_, __) => tutorialCard(appL10n.tutorialNextNotification),
+            builder: (_, _) => tutorialCard(appL10n.tutorialNextNotification),
           ),
         ],
       ),
@@ -390,7 +390,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           TargetContent(
             align: ContentAlign.bottom,
             padding: EdgeInsets.all(AppSize.spacingSmall),
-            builder: (_, __) => tutorialCard(appL10n.tutorialAddIntake),
+            builder: (_, _) => tutorialCard(appL10n.tutorialAddIntake),
           ),
         ],
       ),
@@ -404,7 +404,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           TargetContent(
             align: ContentAlign.bottom,
             padding: EdgeInsets.all(AppSize.spacingSmall),
-            builder: (_, __) => tutorialCard(appL10n.tutorialShowAll),
+            builder: (_, _) => tutorialCard(appL10n.tutorialShowAll),
           ),
         ],
       ),
@@ -418,7 +418,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           TargetContent(
             align: ContentAlign.top,
             padding: EdgeInsets.all(AppSize.spacingSmall),
-            builder: (_, __) => tutorialCard(
+            builder: (_, _) => tutorialCard(
               appL10n.tutorialIntakeAmount,
               isLast: true,
             ),

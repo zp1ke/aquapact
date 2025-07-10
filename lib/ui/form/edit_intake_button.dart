@@ -34,7 +34,7 @@ class EditIntakeButton extends StatelessWidget {
         disableValue: true,
         values: [...targetSettings.intakeValues, -1.0],
         onSelected: onChanged,
-        itemBuilder: (_, value, __) => IntakeOption(
+        itemBuilder: (_, value, _) => IntakeOption(
           targetSettings: targetSettings,
           value: value,
           isButton: false,

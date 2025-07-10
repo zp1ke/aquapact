@@ -221,7 +221,7 @@ class _StatsPageState extends State<StatsPage> {
             topTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: (_, __) => Text(''),
+                getTitlesWidget: (_, _) => Text(''),
                 reservedSize: AppSize.spacingXL,
               ),
             ),
