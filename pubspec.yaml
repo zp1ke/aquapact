@@ -13,7 +13,7 @@ dependencies:
   fl_chart: ^1.1.0
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^19.4.1
+  flutter_local_notifications: ^19.4.2
   flutter_localizations:
     sdk: flutter
   flutter_timezone: ^4.1.1
