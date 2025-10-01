@@ -30,32 +30,34 @@ void main() async {
     expect(intake.healthSync, SyncStatus.synced);
   });
 
-  test('IntakesHandler.addIntake() when HealthService cannot add intake',
-      () async {
-    healthService.addIntakeResult = false;
-    final intake = await IntakesHandler().addIntake(
-      amount: 1.0,
-      measureUnit: VolumeMeasureUnit.ml,
-      healthSync: true,
-      intakesService: intakesService,
-      healthService: healthService,
-    );
-    expect(intake.code, isNotNull);
-    expect(intake.amount, 1.0);
-    expect(intake.healthSync, SyncStatus.notSynced);
+  test(
+    'IntakesHandler.addIntake() when HealthService cannot add intake',
+    () async {
+      healthService.addIntakeResult = false;
+      final intake = await IntakesHandler().addIntake(
+        amount: 1.0,
+        measureUnit: VolumeMeasureUnit.ml,
+        healthSync: true,
+        intakesService: intakesService,
+        healthService: healthService,
+      );
+      expect(intake.code, isNotNull);
+      expect(intake.amount, 1.0);
+      expect(intake.healthSync, SyncStatus.notSynced);
 
-    healthService.addIntakeResult = true;
-    final intake2 = await IntakesHandler().addIntake(
-      amount: 1.0,
-      measureUnit: VolumeMeasureUnit.ml,
-      healthSync: false,
-      intakesService: intakesService,
-      healthService: healthService,
-    );
-    expect(intake2.code, isNotNull);
-    expect(intake2.amount, 1.0);
-    expect(intake2.healthSync, SyncStatus.notSynced);
-  });
+      healthService.addIntakeResult = true;
+      final intake2 = await IntakesHandler().addIntake(
+        amount: 1.0,
+        measureUnit: VolumeMeasureUnit.ml,
+        healthSync: false,
+        intakesService: intakesService,
+        healthService: healthService,
+      );
+      expect(intake2.code, isNotNull);
+      expect(intake2.amount, 1.0);
+      expect(intake2.healthSync, SyncStatus.notSynced);
+    },
+  );
 }
 
 class FakeHealthService extends HealthService {

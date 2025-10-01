@@ -33,10 +33,7 @@ void main() async {
     expect(intake.healthSync, SyncStatus.notSynced);
 
     final updated = await service.updateIntake(
-      intake.copyWith(
-        amount: 2.0,
-        healthSync: SyncStatus.synced,
-      ),
+      intake.copyWith(amount: 2.0, healthSync: SyncStatus.synced),
     );
     expect(updated.code, intake.code);
     expect(updated.amount, 2.0);
