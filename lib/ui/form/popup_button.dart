@@ -14,7 +14,7 @@ class PopupButton<E, T> extends StatefulWidget {
   final bool elevated;
   final bool disableValue;
   final Future<Pair<E, T>?> Function(BuildContext, Pair<E, T>)?
-      onSelectedTransform;
+  onSelectedTransform;
 
   const PopupButton({
     super.key,
@@ -95,8 +95,10 @@ class _PopupButtonState<E, T> extends State<PopupButton<E, T>> {
 
   void selectValue(T value) async {
     if (widget.onSelectedTransform != null) {
-      final transformed =
-          await widget.onSelectedTransform!(context, Pair(widget.extra, value));
+      final transformed = await widget.onSelectedTransform!(
+        context,
+        Pair(widget.extra, value),
+      );
       if (transformed != null) {
         widget.onSelected(transformed);
       }

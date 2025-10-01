@@ -27,7 +27,8 @@ class LiquidProgressIndicatorWidget extends StatefulWidget {
 }
 
 class _LiquidProgressIndicatorWidgetState
-    extends State<LiquidProgressIndicatorWidget> with TickerProviderStateMixin {
+    extends State<LiquidProgressIndicatorWidget>
+    with TickerProviderStateMixin {
   late final AnimationController waveController;
   late final AnimationController loadController;
 
@@ -104,7 +105,7 @@ class _LiquidProgressIndicatorWidgetState
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           );
         },
@@ -157,7 +158,9 @@ class _WavePainter extends CustomPainter {
     if (loadValue != 1) {
       for (var i = 0.0; i <= width; i++) {
         path.lineTo(
-            i, height - baseHeight + sin(pi2 * (i / width + waveValue)) * 8);
+          i,
+          height - baseHeight + sin(pi2 * (i / width + waveValue)) * 8,
+        );
       }
     }
 

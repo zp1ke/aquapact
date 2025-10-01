@@ -37,9 +37,7 @@ class IntakeItem extends StatelessWidget {
       background: Container(),
       secondaryBackground: Container(
         color: theme.colorScheme.errorContainer,
-        child: Center(
-          child: AppIcon.delete(context, hasBackground: true),
-        ),
+        child: Center(child: AppIcon.delete(context, hasBackground: true)),
       ),
       onDismissed: (_) {
         onDelete(intake);

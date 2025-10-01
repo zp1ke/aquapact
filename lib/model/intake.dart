@@ -20,10 +20,8 @@ class Intake {
     required this.healthSyncId,
   });
 
-  TimeOfDay get timeOfDay => TimeOfDay(
-        hour: dateTime.hour,
-        minute: dateTime.minute,
-      );
+  TimeOfDay get timeOfDay =>
+      TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
 
   bool get isHealthSynced => SyncStatus.synced == healthSync;
 

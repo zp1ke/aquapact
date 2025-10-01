@@ -41,9 +41,7 @@ class SliderWidget extends StatelessWidget {
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(height * paddingFactor),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(height * paddingFactor)),
         gradient: LinearGradient(
           colors: [
             fromColor ?? theme.colorScheme.primaryContainer,
@@ -77,8 +75,8 @@ class SliderWidget extends StatelessWidget {
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: theme.tabBarTheme.indicatorColor,
-                    inactiveTrackColor:
-                        theme.tabBarTheme.indicatorColor?.withValues(alpha: .5),
+                    inactiveTrackColor: theme.tabBarTheme.indicatorColor
+                        ?.withValues(alpha: .5),
                     trackHeight: AppSize.spacingXS,
                     thumbShape: _SliderThumbCircle(
                       thumbRadius: height * 0.45,
@@ -163,12 +161,15 @@ class _SliderThumbCircle extends SliderComponentShape {
     );
 
     TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr);
+      text: span,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
     tp.layout();
-    Offset textCenter =
-        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
+    Offset textCenter = Offset(
+      center.dx - (tp.width / 2),
+      center.dy - (tp.height / 2),
+    );
 
     canvas.drawCircle(center, thumbRadius * .9, paint);
     tp.paint(canvas, textCenter);

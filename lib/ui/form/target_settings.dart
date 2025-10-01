@@ -112,7 +112,8 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
       spacing: AppSize.spacingLarge,
       children: [
         cardTitle(
-            '${AppL10n.of(context).dailyWaterIntake} (${measureUnit.symbol})'),
+          '${AppL10n.of(context).dailyWaterIntake} (${measureUnit.symbol})',
+        ),
         SliderWidget(
           value: targetSettings.dailyTarget,
           min: 500.0,
@@ -141,10 +142,12 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Column(
       spacing: AppSize.spacingMedium,
       children: [
-        cardTitle(l10n.wakeUpSleepTimes(
-          targetSettings.wakeUpTime.format(context),
-          targetSettings.sleepTime.format(context),
-        )),
+        cardTitle(
+          l10n.wakeUpSleepTimes(
+            targetSettings.wakeUpTime.format(context),
+            targetSettings.sleepTime.format(context),
+          ),
+        ),
         OutlinedButton(
           onPressed: !widget.saving ? editWakeUpSleepTimes : null,
           child: Text(l10n.edit),
@@ -192,8 +195,11 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
     return Column(
       spacing: AppSize.spacingLarge,
       children: [
-        cardTitle(AppL10n.of(context)
-            .notifyEveryHours(targetSettings.notificationInterval.inHours)),
+        cardTitle(
+          AppL10n.of(
+            context,
+          ).notifyEveryHours(targetSettings.notificationInterval.inHours),
+        ),
         SliderWidget(
           value: targetSettings.notificationInterval.inHours.toDouble(),
           min: 1.0,
@@ -263,9 +269,7 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
               theValue = await HealthService.get().hasPermissionGranted();
             }
             setState(() {
-              targetSettings = targetSettings.copyWith(
-                healthSync: theValue,
-              );
+              targetSettings = targetSettings.copyWith(healthSync: theValue);
             });
           },
         ),
@@ -293,9 +297,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   Widget cardTitle(String text) {
     return Text(
       text,
-      style: TextTheme.of(context).bodyLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+      style: TextTheme.of(
+        context,
+      ).bodyLarge?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 
@@ -307,9 +311,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
             }
           : null,
       icon: widget.saving ? AppIcon.loading : null,
-      label: Text(widget.saving
-          ? AppL10n.of(context).saving
-          : AppL10n.of(context).save),
+      label: Text(
+        widget.saving ? AppL10n.of(context).saving : AppL10n.of(context).save,
+      ),
     );
   }
 
@@ -331,8 +335,9 @@ class _TargetSettingsFormState extends State<TargetSettingsForm> {
   void deleteIntake(double value) {
     setState(() {
       targetSettings = targetSettings.copyWith(
-        intakeValues:
-            targetSettings.intakeValues.where((v) => v != value).toList(),
+        intakeValues: targetSettings.intakeValues
+            .where((v) => v != value)
+            .toList(),
       );
     });
   }

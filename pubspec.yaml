@@ -6,24 +6,24 @@ version: 0.0.9+9
 
 environment:
   sdk: ^3.9.0
-  flutter: 3.35.3
+  flutter: 3.35.5
 
 dependencies:
   equatable: ^2.0.7
-  fl_chart: ^1.1.0
+  fl_chart: ^1.1.1
   flutter:
     sdk: flutter
   flutter_local_notifications: ^19.4.2
   flutter_localizations:
     sdk: flutter
-  flutter_timezone: ^4.1.1
+  flutter_timezone: ^5.0.0
   get_it: ^8.2.0
-  google_fonts: ^6.3.1
+  google_fonts: ^6.3.2
   intl: ^0.20.2
   json_annotation: ^4.9.0
   logger: ^2.6.1
-  objectbox: ^4.3.1
-  objectbox_flutter_libs: ^4.3.1
+  objectbox: ^5.0.0
+  objectbox_flutter_libs: ^5.0.0
   package_info_plus: ^9.0.0
   path: ^1.9.0
   path_provider: ^2.1.5
@@ -38,7 +38,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   json_serializable: ^6.11.1
-  objectbox_generator: ^4.3.1
+  objectbox_generator: ^5.0.0
   test: ^1.26.2
 
 flutter:

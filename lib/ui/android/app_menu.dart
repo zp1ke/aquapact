@@ -12,10 +12,7 @@ import '../widget/responsive.dart';
 class AppMenu extends StatefulWidget {
   final VoidCallback onChanged;
 
-  const AppMenu({
-    super.key,
-    required this.onChanged,
-  });
+  const AppMenu({super.key, required this.onChanged});
 
   @override
   State<AppMenu> createState() => _AppMenuState();
@@ -148,17 +145,18 @@ class _AppMenuState extends State<AppMenu> {
     return ListTile(
       title: Text(appL10n.about),
       leading: AppIcon.about,
-      subtitle:
-          packageInfo != null ? Text('${appL10n.version}: $version') : null,
+      subtitle: packageInfo != null
+          ? Text('${appL10n.version}: $version')
+          : null,
       onTap: packageInfo != null
           ? () => showDialog(
-                context: context,
-                builder: (context) => AboutDialog(
-                  applicationIcon: appImage(AppSize.spacingXL),
-                  applicationName: appL10n.appTitle,
-                  applicationVersion: version,
-                ),
-              )
+              context: context,
+              builder: (context) => AboutDialog(
+                applicationIcon: appImage(AppSize.spacingXL),
+                applicationName: appL10n.appTitle,
+                applicationVersion: version,
+              ),
+            )
           : null,
     );
   }

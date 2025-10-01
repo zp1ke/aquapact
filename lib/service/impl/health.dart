@@ -14,8 +14,10 @@ class HealthChannelService extends HealthService {
       final granted = await platform.invokeMethod<bool>('checkPermissions');
       return granted ?? false;
     } on PlatformException catch (e, stack) {
-      'Failed to check permissions: ${e.message}'
-          .logError(error: e, stackTrace: stack);
+      'Failed to check permissions: ${e.message}'.logError(
+        error: e,
+        stackTrace: stack,
+      );
       return false;
     }
   }
@@ -23,8 +25,10 @@ class HealthChannelService extends HealthService {
   @override
   Future<String?> saveIntake(Intake intake) async {
     try {
-      final amountInLiters = intake.measureUnit
-          .convertAmountTo(intake.amount, VolumeMeasureUnit.l);
+      final amountInLiters = intake.measureUnit.convertAmountTo(
+        intake.amount,
+        VolumeMeasureUnit.l,
+      );
       final data = {
         'intakeId': intake.code,
         'valueInLiters': amountInLiters,
@@ -36,8 +40,10 @@ class HealthChannelService extends HealthService {
       final recordId = await platform.invokeMethod<String?>('saveIntake', data);
       return recordId;
     } on PlatformException catch (e, stack) {
-      'Failed to save intake: ${e.message}'
-          .logError(error: e, stackTrace: stack);
+      'Failed to save intake: ${e.message}'.logError(
+        error: e,
+        stackTrace: stack,
+      );
       return null;
     }
   }
@@ -45,15 +51,14 @@ class HealthChannelService extends HealthService {
   @override
   Future<bool> deleteIntake(Intake intake) async {
     try {
-      final data = {
-        'intakeId': intake.code,
-        'recordId': intake.healthSyncId,
-      };
+      final data = {'intakeId': intake.code, 'recordId': intake.healthSyncId};
       final success = await platform.invokeMethod<bool>('deleteIntake', data);
       return success ?? false;
     } on PlatformException catch (e, stack) {
-      'Failed to delete intake: ${e.message}'
-          .logError(error: e, stackTrace: stack);
+      'Failed to delete intake: ${e.message}'.logError(
+        error: e,
+        stackTrace: stack,
+      );
       return false;
     }
   }

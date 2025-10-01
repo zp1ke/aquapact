@@ -24,11 +24,11 @@ class AppNotification {
   });
 
   DateTime get todayTime => DateTime.now().copyWith(
-        hour: time.hour,
-        minute: time.minute,
-        second: 0,
-        millisecond: 0,
-      );
+    hour: time.hour,
+    minute: time.minute,
+    second: 0,
+    millisecond: 0,
+  );
 
   factory AppNotification.fromMap(Map<String, dynamic> map) =>
       _$AppNotificationFromJson(map);

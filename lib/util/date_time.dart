@@ -68,10 +68,7 @@ class TimeOfDayConverter implements JsonConverter<TimeOfDay, String> {
   @override
   TimeOfDay fromJson(String json) {
     final parts = json.split(':');
-    return TimeOfDay(
-      hour: int.parse(parts[0]),
-      minute: int.parse(parts[1]),
-    );
+    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
   }
 
   /// Converts a [TimeOfDay] instance to a JSON string in the format "HH:mm".

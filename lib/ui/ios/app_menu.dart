@@ -8,11 +8,7 @@ class BottomMenu extends StatelessWidget {
   final AppPage page;
   final bool enabled;
 
-  const BottomMenu({
-    super.key,
-    required this.page,
-    required this.enabled,
-  });
+  const BottomMenu({super.key, required this.page, required this.enabled});
 
   @override
   Widget build(BuildContext context) {

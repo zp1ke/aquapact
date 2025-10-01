@@ -7,10 +7,7 @@ import '../size.dart';
 class ReadyStartWidget extends StatelessWidget {
   final VoidCallback onAction;
 
-  const ReadyStartWidget({
-    super.key,
-    required this.onAction,
-  });
+  const ReadyStartWidget({super.key, required this.onAction});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +27,7 @@ class ReadyStartWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           style: theme.textTheme.titleLarge,
         ),
-        OutlinedButton(
-          onPressed: onAction,
-          child: Text(l10n.letsStart),
-        ),
+        OutlinedButton(onPressed: onAction, child: Text(l10n.letsStart)),
       ],
     );
   }

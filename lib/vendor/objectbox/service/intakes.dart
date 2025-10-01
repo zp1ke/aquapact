@@ -14,7 +14,7 @@ class BoxIntakesService extends IntakesService {
   final Box<IntakeBox> box;
 
   BoxIntakesService(ObjectBox objectBox)
-      : box = objectBox.store.box<IntakeBox>();
+    : box = objectBox.store.box<IntakeBox>();
 
   @override
   Future<Intake> addIntake({
@@ -39,9 +39,9 @@ class BoxIntakesService extends IntakesService {
     required DateTime to,
     int? limit,
   }) async {
-    final query = (box.query(IntakeBox_.dateTime.betweenDate(from, to))
-          ..order(IntakeBox_.dateTime, flags: Order.descending))
-        .build();
+    final query = (box.query(
+      IntakeBox_.dateTime.betweenDate(from, to),
+    )..order(IntakeBox_.dateTime, flags: Order.descending)).build();
     if (limit != null) {
       query.limit = limit;
     }
@@ -72,16 +72,19 @@ class BoxIntakesService extends IntakesService {
     final rangeType = _rangeType(days);
     var dateTime = from.atStartOfDay();
     while (dateTime.isBefore(toDateTime)) {
-      final nextDateTime =
-          rangeType.nextDateTime(dateTime, days).min(toDateTime);
+      final nextDateTime = rangeType
+          .nextDateTime(dateTime, days)
+          .min(toDateTime);
       final amount = await sumIntakesAmount(from: dateTime, to: nextDateTime);
-      intakes.add(IntakeRange(
-        amount: amount,
-        from: dateTime,
-        to: nextDateTime,
-        measureUnit: VolumeMeasureUnit.ml,
-        rangeType: rangeType,
-      ));
+      intakes.add(
+        IntakeRange(
+          amount: amount,
+          from: dateTime,
+          to: nextDateTime,
+          measureUnit: VolumeMeasureUnit.ml,
+          rangeType: rangeType,
+        ),
+      );
       dateTime = nextDateTime;
     }
     return intakes;
@@ -111,8 +114,9 @@ class BoxIntakesService extends IntakesService {
   }
 
   Intake _toIntake(IntakeBox intake) {
-    final measureUnit = VolumeMeasureUnit.values
-        .firstWhere((element) => element.symbol == intake.measureUnit!);
+    final measureUnit = VolumeMeasureUnit.values.firstWhere(
+      (element) => element.symbol == intake.measureUnit!,
+    );
     final syncStatus = SyncStatus.values.firstWhere(
       (element) => element.name == intake.healthSync,
       orElse: () => SyncStatus.notSynced,

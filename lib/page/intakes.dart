@@ -40,10 +40,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
 
   void loadData() {
     readTargetSettings();
-    intakeCtrl.refresh(
-      from: dateTime,
-      to: toDateTime,
-    );
+    intakeCtrl.refresh(from: dateTime, to: toDateTime);
     fetchIntakeValue();
   }
 
@@ -53,8 +50,10 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
   }
 
   void fetchIntakeValue() async {
-    intakeValue = await IntakesService.get()
-        .sumIntakesAmount(from: dateTime, to: toDateTime);
+    intakeValue = await IntakesService.get().sumIntakesAmount(
+      from: dateTime,
+      to: toDateTime,
+    );
     if (mounted) {
       setState(() {});
     }
@@ -65,15 +64,10 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).intakes),
-        actions: [
-          reloadButton(),
-        ],
+        actions: [reloadButton()],
       ),
       body: SafeArea(
-        child: PullToRefresh(
-          onRefresh: loadData,
-          child: content(),
-        ),
+        child: PullToRefresh(onRefresh: loadData, child: content()),
       ),
       bottomNavigationBar: appBottomMenu(page: AppPage.intakes, enabled: true),
     );
@@ -82,19 +76,12 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
   Widget content() {
     return Column(
       spacing: AppSize.spacingSmall,
-      children: [
-        summaryWidget(),
-        Divider(height: .0),
-        intakes(),
-      ],
+      children: [summaryWidget(), Divider(height: .0), intakes()],
     );
   }
 
   Widget reloadButton() {
-    return IconButton(
-      icon: AppIcon.refresh,
-      onPressed: loadData,
-    );
+    return IconButton(icon: AppIcon.refresh, onPressed: loadData);
   }
 
   Widget summaryWidget() {
@@ -141,9 +128,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
   }
 
   void addedIntake(Pair<TargetSettings, double> value) async {
-    targetSettings = value.first.copyWith(
-      defaultIntakeValue: value.second,
-    );
+    targetSettings = value.first.copyWith(defaultIntakeValue: value.second);
     if (mounted) {
       await saveSettings(context, targetSettings, scheduleNotifications: false);
     }

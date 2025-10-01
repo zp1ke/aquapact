@@ -81,9 +81,7 @@ class _StatsPageState extends State<StatsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).stats),
-        actions: [
-          reloadButton(),
-        ],
+        actions: [reloadButton()],
       ),
       body: SafeArea(
         child: PullToRefresh(
@@ -97,8 +95,10 @@ class _StatsPageState extends State<StatsPage> {
           ),
         ),
       ),
-      bottomNavigationBar:
-          appBottomMenu(page: AppPage.stats, enabled: !loadingIntakes),
+      bottomNavigationBar: appBottomMenu(
+        page: AppPage.stats,
+        enabled: !loadingIntakes,
+      ),
     );
   }
 
@@ -108,10 +108,7 @@ class _StatsPageState extends State<StatsPage> {
     }
     return Column(
       spacing: AppSize.spacingXS,
-      children: [
-        chartSummary(),
-        chart(),
-      ],
+      children: [chartSummary(), chart()],
     );
   }
 
@@ -128,12 +125,9 @@ class _StatsPageState extends State<StatsPage> {
             crossAxisSpacing: AppSize.spacingMedium,
             mainAxisSpacing: AppSize.spacingMedium,
             childAspectRatio: 10 / 4,
-            children: [
-              Container(),
-              chart(),
-            ],
+            children: [Container(), chart()],
           ),
-        )
+        ),
       ],
     );
   }
@@ -155,7 +149,8 @@ class _StatsPageState extends State<StatsPage> {
     } else {
       dateRange = '${from.formatDate(context)} - ${to.formatDate(context)}';
     }
-    final avg = intakes
+    final avg =
+        intakes
             .map((e) => e.amount)
             .reduce((value, element) => value + element) /
         intakes.length;
@@ -163,10 +158,13 @@ class _StatsPageState extends State<StatsPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextButton(onPressed: pickDateRange, child: Text(dateRange)),
-        Text(intakes.first.rangeType == RangeType.daily
-            ? appL10n.intakeAverage(
-                targetSettings.volumeMeasureUnit.formatValue(avg))
-            : ''),
+        Text(
+          intakes.first.rangeType == RangeType.daily
+              ? appL10n.intakeAverage(
+                  targetSettings.volumeMeasureUnit.formatValue(avg),
+                )
+              : '',
+        ),
       ],
     );
   }
@@ -183,7 +181,9 @@ class _StatsPageState extends State<StatsPage> {
               getTooltipColor: (data) {
                 if (data.barRods.isNotEmpty) {
                   return backgroundColorOf(
-                      data.barRods.first.toY, intakes.first.rangeType);
+                    data.barRods.first.toY,
+                    intakes.first.rangeType,
+                  );
                 }
                 return Theme.of(context).colorScheme.surface;
               },
@@ -213,7 +213,7 @@ class _StatsPageState extends State<StatsPage> {
                     toY: targetSettings.dailyTarget,
                     color: color.withValues(alpha: 0.5),
                   ),
-                )
+                ),
               ],
             );
           }).toList(),
@@ -247,9 +247,7 @@ class _StatsPageState extends State<StatsPage> {
               ),
             ),
           ),
-          borderData: FlBorderData(
-            show: false,
-          ),
+          borderData: FlBorderData(show: false),
         ),
       ),
     );

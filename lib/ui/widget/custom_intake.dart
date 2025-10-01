@@ -49,7 +49,8 @@ Future<Pair<TargetSettings, double>?> getCustomIntake(
         }
         if (context.mounted) {
           context.navigateBack(
-              value != null && value > 0 ? Pair(resultSettings, value) : null);
+            value != null && value > 0 ? Pair(resultSettings, value) : null,
+          );
         }
       }
 
@@ -70,8 +71,9 @@ Future<Pair<TargetSettings, double>?> getCustomIntake(
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText:
-                      appL10n.intakeIn(targetSettings.volumeMeasureUnit.symbol),
+                  hintText: appL10n.intakeIn(
+                    targetSettings.volumeMeasureUnit.symbol,
+                  ),
                   prefixIcon: AppIcon.waterGlass(context),
                 ),
                 textInputAction: TextInputAction.done,
@@ -93,7 +95,9 @@ Future<Pair<TargetSettings, double>?> getCustomIntake(
                   ],
                   OutlinedButton(
                     onPressed: () => onSubmitted(
-                        amountController.text, saveController.value),
+                      amountController.text,
+                      saveController.value,
+                    ),
                     child: Text(appL10n.save),
                   ),
                 ],

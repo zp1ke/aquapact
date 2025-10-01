@@ -13,10 +13,7 @@ import 'intake_item.dart';
 class IntakesController {
   final _listeners = <_IntakesListener>[];
 
-  void refresh({
-    required DateTime from,
-    required DateTime to,
-  }) {
+  void refresh({required DateTime from, required DateTime to}) {
     for (final listener in _listeners) {
       listener.onRefresh(from: from, to: to);
     }
@@ -93,9 +90,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
           message,
           textScaler: TextScaler.linear(1.2),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       );
     }
@@ -116,10 +111,7 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
   }
 
   @override
-  void onRefresh({
-    required DateTime from,
-    required DateTime to,
-  }) {
+  void onRefresh({required DateTime from, required DateTime to}) {
     this.from = from;
     this.to = to;
     loadData();
@@ -146,8 +138,5 @@ class _IntakesListWidgetState extends State<IntakesListWidget>
 }
 
 abstract class _IntakesListener {
-  void onRefresh({
-    required DateTime from,
-    required DateTime to,
-  });
+  void onRefresh({required DateTime from, required DateTime to});
 }

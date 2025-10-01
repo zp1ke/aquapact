@@ -1,4 +1,1 @@
-enum SyncStatus {
-  notSynced,
-  synced,
-}
+enum SyncStatus { notSynced, synced }

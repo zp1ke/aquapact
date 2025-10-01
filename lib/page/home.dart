@@ -60,10 +60,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     readTargetSettings();
     fetchNotifications();
     final today = DateTime.now().atStartOfDay();
-    intakeCtrl.refresh(
-      from: today,
-      to: today.add(const Duration(days: 1)),
-    );
+    intakeCtrl.refresh(from: today, to: today.add(const Duration(days: 1)));
     fetchIntakeValue();
   }
 
@@ -97,8 +94,10 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
 
   void fetchIntakeValue() async {
     final today = DateTime.now().atStartOfDay();
-    intakeValue = await IntakesService.get()
-        .sumIntakesAmount(from: today, to: today.add(const Duration(days: 1)));
+    intakeValue = await IntakesService.get().sumIntakesAmount(
+      from: today,
+      to: today.add(const Duration(days: 1)),
+    );
     if (mounted) {
       setState(() {});
     }
@@ -109,9 +108,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppL10n.of(context).appTitle),
-        actions: [
-          reloadButton(),
-        ],
+        actions: [reloadButton()],
       ),
       body: PullToRefresh(
         onRefresh: loadData,
@@ -122,17 +119,17 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
       ),
       drawer: menu(),
-      bottomNavigationBar:
-          appBottomMenu(page: AppPage.home, enabled: !processing),
+      bottomNavigationBar: appBottomMenu(
+        page: AppPage.home,
+        enabled: !processing,
+      ),
     );
   }
 
   Widget? menu() {
     if (Platform.isAndroid) {
       return ResponsiveWidget(
-        standard: (_) => Drawer(
-          child: AppMenu(onChanged: loadData),
-        ),
+        standard: (_) => Drawer(child: AppMenu(onChanged: loadData)),
         medium: (_) => Drawer(
           width: AppSize.mediumDrawerWidth,
           child: AppMenu(onChanged: loadData),
@@ -174,21 +171,14 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
               Expanded(
                 child: Column(
                   spacing: AppSize.spacingSmall,
-                  children: [
-                    intakesToolbar(),
-                    lastIntakes(),
-                  ],
+                  children: [intakesToolbar(), lastIntakes()],
                 ),
               ),
               VerticalDivider(),
               Flexible(
                 child: Column(
                   spacing: AppSize.spacingSmall,
-                  children: [
-                    dailyStatusText(),
-                    Spacer(),
-                    dailyStatusWidget(),
-                  ],
+                  children: [dailyStatusText(), Spacer(), dailyStatusWidget()],
                 ),
               ),
             ],
@@ -231,9 +221,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
         textScaler: TextScaler.linear(0.95),
         textAlign: TextAlign.center,
-        style: TextStyle(
-          fontStyle: FontStyle.italic,
-        ),
+        style: TextStyle(fontStyle: FontStyle.italic),
       ),
     );
   }
@@ -245,8 +233,9 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         child: Align(
           alignment: Alignment.topLeft,
           child: Text(
-            AppL10n.of(context)
-                .nextNotificationAt(notifications.first.time.format(context)),
+            AppL10n.of(
+              context,
+            ).nextNotificationAt(notifications.first.time.format(context)),
             key: nextNotificationKey,
             textAlign: TextAlign.left,
             textScaler: TextScaler.linear(0.8),
@@ -266,9 +255,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           Text(
             AppL10n.of(context).lastIntakes,
             textScaler: TextScaler.linear(1.2),
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
           OutlinedButton(
             key: showAllKey,
@@ -298,17 +285,18 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   Widget dailyStatusText() {
-    final intake = targetSettings.volumeMeasureUnit
-        .formatValue(intakeValue, withSymbol: false);
-    final target = targetSettings.volumeMeasureUnit
-        .formatValue(targetSettings.dailyTarget);
+    final intake = targetSettings.volumeMeasureUnit.formatValue(
+      intakeValue,
+      withSymbol: false,
+    );
+    final target = targetSettings.volumeMeasureUnit.formatValue(
+      targetSettings.dailyTarget,
+    );
     return Text(
       '$intake / $target',
       key: intakeAmountKey,
       textScaler: TextScaler.linear(1.5),
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-      ),
+      style: TextStyle(fontWeight: FontWeight.bold),
     );
   }
 
@@ -318,11 +306,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
       width: size.width,
       height: size.height * 0.2,
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Theme.of(context).dividerColor,
-          ),
-        ),
+        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       child: LiquidProgressIndicatorWidget(
         value: intakeValue,
@@ -332,9 +316,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
   }
 
   void addedIntake(Pair<TargetSettings, double> value) async {
-    targetSettings = value.first.copyWith(
-      defaultIntakeValue: value.second,
-    );
+    targetSettings = value.first.copyWith(defaultIntakeValue: value.second);
     if (mounted) {
       await saveSettings(context, targetSettings, scheduleNotifications: false);
     }
@@ -418,10 +400,8 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
           TargetContent(
             align: ContentAlign.top,
             padding: EdgeInsets.all(AppSize.spacingSmall),
-            builder: (_, _) => tutorialCard(
-              appL10n.tutorialIntakeAmount,
-              isLast: true,
-            ),
+            builder: (_, _) =>
+                tutorialCard(appL10n.tutorialIntakeAmount, isLast: true),
           ),
         ],
       ),
@@ -442,9 +422,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
                   ? AppL10n.of(context).lastTip
                   : AppL10n.of(context).nextTip,
               textScaler: TextScaler.linear(0.75),
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-              ),
+              style: TextStyle(fontStyle: FontStyle.italic),
             ),
           ],
         ),

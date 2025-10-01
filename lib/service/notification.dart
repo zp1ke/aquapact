@@ -22,10 +22,7 @@ abstract class NotificationService {
     var dateTime = targetSettings.wakeUpTime.toDateTime();
     final sleepDateTime = targetSettings.sleepTime.toDateTime();
     while (!dateTime.isAfter(sleepDateTime)) {
-      final time = TimeOfDay(
-        hour: dateTime.hour,
-        minute: dateTime.minute,
-      );
+      final time = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
       final notification = AppNotification(
         id: time.hour * 60 + time.minute,
         title: title,

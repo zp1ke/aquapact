@@ -22,12 +22,7 @@ class IntakeOption extends StatelessWidget {
     final label = value > 0
         ? targetSettings.volumeMeasureUnit.formatValue(value)
         : AppL10n.of(context).customIntake;
-    final text = Text(
-      label,
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-      ),
-    );
+    final text = Text(label, style: TextStyle(fontWeight: FontWeight.w500));
     if (isButton) {
       return text;
     }
@@ -35,10 +30,7 @@ class IntakeOption extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       spacing: AppSize.spacingSmall,
-      children: [
-        AppIcon.waterGlass(context),
-        text,
-      ],
+      children: [AppIcon.waterGlass(context), text],
     );
   }
 }

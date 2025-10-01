@@ -24,18 +24,20 @@ class LocalNotificationService extends NotificationService {
     return service;
   }
 
-  AndroidFlutterLocalNotificationsPlugin? get _androidPlugin =>
-      _plugin.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+  AndroidFlutterLocalNotificationsPlugin? get _androidPlugin => _plugin
+      .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin
+      >();
 
-  IOSFlutterLocalNotificationsPlugin? get _iosPlugin =>
-      _plugin.resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>();
+  IOSFlutterLocalNotificationsPlugin? get _iosPlugin => _plugin
+      .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin
+      >();
 
   Future<void> _initialize() async {
     tz.initializeTimeZones();
     final currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
     'Timezone: ${tz.local.name}'.log();
 
     final settings = InitializationSettings(
@@ -67,7 +69,8 @@ class LocalNotificationService extends NotificationService {
     var enabled =
         await _androidPlugin?.requestNotificationsPermission() ?? false;
     if (!enabled) {
-      enabled = await _iosPlugin?.requestPermissions(
+      enabled =
+          await _iosPlugin?.requestPermissions(
             alert: true,
             badge: true,
             sound: true,
@@ -90,10 +93,7 @@ class LocalNotificationService extends NotificationService {
       notification.body,
       dateTime,
       payload: jsonEncode(notification.toMap()),
-      NotificationDetails(
-        android: _androidDetails(),
-        iOS: _iosDetails(),
-      ),
+      NotificationDetails(android: _androidDetails(), iOS: _iosDetails()),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
@@ -115,9 +115,7 @@ class LocalNotificationService extends NotificationService {
   }
 
   DarwinNotificationDetails _iosDetails() {
-    return DarwinNotificationDetails(
-      threadIdentifier: 'aquapact_thread',
-    );
+    return DarwinNotificationDetails(threadIdentifier: 'aquapact_thread');
   }
 
   tz.TZDateTime _convertTime(TimeOfDay time) {
@@ -142,8 +140,10 @@ class LocalNotificationService extends NotificationService {
     final notifications = await _plugin.pendingNotificationRequests();
     final list = notifications
         .where((notification) => notification.payload != null)
-        .map((notification) =>
-            AppNotification.fromMap(jsonDecode(notification.payload!)))
+        .map(
+          (notification) =>
+              AppNotification.fromMap(jsonDecode(notification.payload!)),
+        )
         .toList(growable: false);
     list.sort((n1, n2) {
       final n1IsFuture = n1.todayTime.isAfter(DateTime.now());

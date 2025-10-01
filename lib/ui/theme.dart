@@ -341,34 +341,34 @@ class AppTheme {
   }
 
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
-        useMaterial3: true,
-        brightness: colorScheme.brightness,
-        colorScheme: colorScheme,
-        visualDensity: VisualDensity.comfortable,
-        fontFamily: 'Outfit',
-        textTheme: textTheme.apply(
-          bodyColor: colorScheme.onSurface,
-          displayColor: colorScheme.onSurface,
-          fontSizeFactor: 1.05,
+    useMaterial3: true,
+    brightness: colorScheme.brightness,
+    colorScheme: colorScheme,
+    visualDensity: VisualDensity.comfortable,
+    fontFamily: 'Outfit',
+    textTheme: textTheme.apply(
+      bodyColor: colorScheme.onSurface,
+      displayColor: colorScheme.onSurface,
+      fontSizeFactor: 1.05,
+    ),
+    scaffoldBackgroundColor: colorScheme.surface,
+    canvasColor: colorScheme.surface,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        elevation: AppSize.spacingXS,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.spacingMedium),
         ),
-        scaffoldBackgroundColor: colorScheme.surface,
-        canvasColor: colorScheme.surface,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: AppSize.spacingXS,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSize.spacingMedium),
-            ),
-          ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.spacingMedium),
         ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSize.spacingMedium),
-            ),
-          ),
-        ),
-      );
+      ),
+    ),
+  );
 }
 
 TextTheme _createTextTheme(BuildContext context) {

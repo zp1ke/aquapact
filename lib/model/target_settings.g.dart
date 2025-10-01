@@ -9,10 +9,14 @@ part of 'target_settings.dart';
 TargetSettings _$TargetSettingsFromJson(Map<String, dynamic> json) =>
     TargetSettings(
       dailyTarget: (json['dailyTarget'] as num?)?.toDouble() ?? 2500.0,
-      volumeMeasureUnit: $enumDecodeNullable(
-              _$VolumeMeasureUnitEnumMap, json['volumeMeasureUnit']) ??
+      volumeMeasureUnit:
+          $enumDecodeNullable(
+            _$VolumeMeasureUnitEnumMap,
+            json['volumeMeasureUnit'],
+          ) ??
           VolumeMeasureUnit.ml,
-      intakeValues: (json['intakeValues'] as List<dynamic>?)
+      intakeValues:
+          (json['intakeValues'] as List<dynamic>?)
               ?.map((e) => (e as num).toDouble())
               .toList() ??
           const [100.0, 250.0, 400.0, 500.0],
@@ -29,18 +33,18 @@ TargetSettings _$TargetSettingsFromJson(Map<String, dynamic> json) =>
       healthSync: json['healthSync'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$TargetSettingsToJson(TargetSettings instance) =>
-    <String, dynamic>{
-      'dailyTarget': instance.dailyTarget,
-      'volumeMeasureUnit':
-          _$VolumeMeasureUnitEnumMap[instance.volumeMeasureUnit]!,
-      'intakeValues': instance.intakeValues,
-      'defaultIntakeValue': instance.defaultIntakeValue,
-      'wakeUpTime': const TimeOfDayConverter().toJson(instance.wakeUpTime),
-      'sleepTime': const TimeOfDayConverter().toJson(instance.sleepTime),
-      'notificationIntervalInMinutes': instance.notificationIntervalInMinutes,
-      'healthSync': instance.healthSync,
-    };
+Map<String, dynamic> _$TargetSettingsToJson(
+  TargetSettings instance,
+) => <String, dynamic>{
+  'dailyTarget': instance.dailyTarget,
+  'volumeMeasureUnit': _$VolumeMeasureUnitEnumMap[instance.volumeMeasureUnit]!,
+  'intakeValues': instance.intakeValues,
+  'defaultIntakeValue': instance.defaultIntakeValue,
+  'wakeUpTime': const TimeOfDayConverter().toJson(instance.wakeUpTime),
+  'sleepTime': const TimeOfDayConverter().toJson(instance.sleepTime),
+  'notificationIntervalInMinutes': instance.notificationIntervalInMinutes,
+  'healthSync': instance.healthSync,
+};
 
 const _$VolumeMeasureUnitEnumMap = {
   VolumeMeasureUnit.ml: 'ml',

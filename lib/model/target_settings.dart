@@ -48,15 +48,15 @@ class TargetSettings extends Equatable {
 
   @override
   List<Object?> get props => [
-        dailyTarget,
-        volumeMeasureUnit,
-        intakeValues,
-        defaultIntakeValue,
-        wakeUpTime,
-        sleepTime,
-        notificationIntervalInMinutes,
-        healthSync,
-      ];
+    dailyTarget,
+    volumeMeasureUnit,
+    intakeValues,
+    defaultIntakeValue,
+    wakeUpTime,
+    sleepTime,
+    notificationIntervalInMinutes,
+    healthSync,
+  ];
 
   TargetSettings copyWith({
     double? dailyTarget,

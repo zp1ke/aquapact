@@ -64,22 +64,23 @@ class _StartPageState extends State<StartPage> with TargetSettingsSaver {
     if (hasPermission == false) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: AppSize.spacingMedium),
-        child: RequestPermissionWidget(onGranted: () {
-          setState(() {
-            hasPermission = true;
-          });
-        }),
+        child: RequestPermissionWidget(
+          onGranted: () {
+            setState(() {
+              hasPermission = true;
+            });
+          },
+        ),
       );
     }
     if (settings == null) {
-      return TargetSettingsForm(
-        saving: saving,
-        onSave: saveTargetSettings,
-      );
+      return TargetSettingsForm(saving: saving, onSave: saveTargetSettings);
     }
-    return ReadyStartWidget(onAction: () {
-      navigateToHome(context);
-    });
+    return ReadyStartWidget(
+      onAction: () {
+        navigateToHome(context);
+      },
+    );
   }
 
   void saveTargetSettings(TargetSettings newSettings) async {
@@ -93,9 +94,6 @@ class _StartPageState extends State<StartPage> with TargetSettingsSaver {
   }
 
   Future<void> navigateToHome(BuildContext context) async {
-    await context.navigateTo(
-      AppPage.home,
-      clear: true,
-    );
+    await context.navigateTo(AppPage.home, clear: true);
   }
 }

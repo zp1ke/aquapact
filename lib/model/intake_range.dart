@@ -29,9 +29,10 @@ class IntakeRange {
     }
     return switch (rangeType) {
       RangeType.daily => from.day.toString(),
-      RangeType.weekly || RangeType.twoWeeks => from.isSameMonth(to)
-          ? '${from.day} - ${to.day}'
-          : '${from.day}/${from.month} - ${to.day}/${to.month}',
+      RangeType.weekly || RangeType.twoWeeks =>
+        from.isSameMonth(to)
+            ? '${from.day} - ${to.day}'
+            : '${from.day}/${from.month} - ${to.day}/${to.month}',
       RangeType.monthly => '${from.month}/${from.year}',
       RangeType.yearly => '${from.year}',
     };

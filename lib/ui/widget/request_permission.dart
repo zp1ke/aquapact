@@ -8,10 +8,7 @@ import '../size.dart';
 class RequestPermissionWidget extends StatelessWidget {
   final VoidCallback onGranted;
 
-  const RequestPermissionWidget({
-    super.key,
-    required this.onGranted,
-  });
+  const RequestPermissionWidget({super.key, required this.onGranted});
 
   @override
   Widget build(BuildContext context) {

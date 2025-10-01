@@ -6,11 +6,7 @@ class ResponsiveWidget extends StatelessWidget {
   final WidgetBuilder standard;
   final WidgetBuilder? medium;
 
-  const ResponsiveWidget({
-    super.key,
-    required this.standard,
-    this.medium,
-  });
+  const ResponsiveWidget({super.key, required this.standard, this.medium});
 
   @override
   Widget build(BuildContext context) {

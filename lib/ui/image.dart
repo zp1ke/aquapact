@@ -6,9 +6,7 @@ enum AppImage {
 
   final bool isPng;
 
-  const AppImage({
-    required this.isPng,
-  });
+  const AppImage({required this.isPng});
 
   AssetImage assetImage(BuildContext context) {
     final brightness = Theme.of(context).brightness;

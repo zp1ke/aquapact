@@ -30,14 +30,14 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppL10n.of(context).targetSettings),
-      ),
+      appBar: AppBar(title: Text(AppL10n.of(context).targetSettings)),
       body: settings != null
           ? SafeArea(child: form())
           : Center(child: AppIcon.loading),
-      bottomNavigationBar:
-          appBottomMenu(page: AppPage.targetSettings, enabled: !saving),
+      bottomNavigationBar: appBottomMenu(
+        page: AppPage.targetSettings,
+        enabled: !saving,
+      ),
     );
   }
 
