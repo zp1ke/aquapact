@@ -21,7 +21,7 @@ dependencies:
   google_fonts: ^6.3.2
   intl: ^0.20.2
   json_annotation: ^4.9.0
-  logger: ^2.6.1
+  logger: ^2.6.2
   objectbox: ^5.0.0
   objectbox_flutter_libs: ^5.0.0
   package_info_plus: ^9.0.0

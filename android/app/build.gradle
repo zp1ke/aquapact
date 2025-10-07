@@ -16,10 +16,6 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
-    defaultConfig {
-        multiDexEnabled true
-    }
-
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_11
@@ -36,6 +32,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -68,7 +65,7 @@ dependencies {
 
     implementation "androidx.activity:activity-ktx:1.11.0"
     implementation "androidx.activity:activity-compose"
-    implementation platform("androidx.compose:compose-bom:2025.09.00")
+    implementation platform("androidx.compose:compose-bom:2025.09.01")
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-graphics"
     implementation "androidx.compose.ui:ui-tooling-preview"
@@ -77,9 +74,9 @@ dependencies {
     implementation "androidx.core:core-ktx:1.17.0"
     implementation "androidx.fragment:fragment-ktx:1.8.9"
     implementation 'androidx.health.connect:connect-client:1.1.0-rc03'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.3'
-    implementation 'androidx.window:window:1.4.0'
-    implementation 'androidx.window:window-java:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4'
+    implementation 'androidx.window:window:1.5.0'
+    implementation 'androidx.window:window-java:1.5.0'
 }
 
 flutter {
