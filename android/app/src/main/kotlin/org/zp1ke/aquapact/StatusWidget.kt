@@ -60,8 +60,8 @@ internal fun updateAppWidget(
     }
 
     val views = RemoteViews(context.packageName, R.layout.status_widget).apply {
-        // Set progress bar (using 10000 as max for smoother animation, so multiply by 100)
-        setProgressBar(R.id.intake_progress_bar, 10000, percentage * 100, false)
+        // Set progress bar to fill water drop from bottom (using 10000 as max for smoother animation)
+        setProgressBar(R.id.water_drop_progress, 10000, percentage * 100, false)
 
         // Set percentage text
         setTextViewText(R.id.percentage_text, "$percentage%")

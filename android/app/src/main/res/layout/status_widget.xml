@@ -7,26 +7,36 @@
     android:gravity="center">
 
     <FrameLayout
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_centerInParent="true">
 
-        <!-- Background circle -->
+        <!-- Gradient background -->
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/circular_progress_background" />
+            android:src="@drawable/widget_background_gradient"
+            android:scaleType="fitXY" />
 
-        <!-- Progress circle -->
+        <!-- Background water drop (gray/outline) -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/water_drop_logo"
+            android:alpha="0.3"
+            android:scaleType="fitCenter" />
+
+        <!-- Progress bar that clips the water drop from bottom to top -->
         <ProgressBar
-            android:id="@+id/intake_progress_bar"
+            android:id="@+id/water_drop_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:indeterminate="false"
             android:progress="0"
             android:max="10000"
-            android:progressDrawable="@drawable/circular_progress_foreground"
-            style="?android:attr/progressBarStyleHorizontal" />
+            android:progressDrawable="@drawable/water_drop_fill_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:scaleType="fitCenter" />
 
         <!-- Percentage text in center -->
         <TextView
@@ -35,9 +45,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="0%"
-            android:textSize="24sp"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4" />
 
     </FrameLayout>
 
