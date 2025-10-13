@@ -7,6 +7,7 @@
     android:gravity="center">
 
     <FrameLayout
+        android:id="@+id/water_drop_container"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_centerInParent="true">
@@ -60,7 +61,7 @@
         android:id="@+id/motivation_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/widget_root"
+        android:layout_below="@id/water_drop_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
