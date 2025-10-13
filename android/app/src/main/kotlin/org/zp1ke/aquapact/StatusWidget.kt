@@ -1,8 +1,11 @@
 package org.zp1ke.aquapact
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetPlugin
 
@@ -62,6 +65,22 @@ internal fun updateAppWidget(
 
         // Set percentage text
         setTextViewText(R.id.percentage_text, "$percentage%")
+
+        // Create intent to launch the app
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+        )
+
+        // Set click listener on the entire widget
+        setOnClickPendingIntent(R.id.widget_root, pendingIntent)
     }
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
