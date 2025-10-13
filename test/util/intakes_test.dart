@@ -4,6 +4,7 @@ import 'package:aquapact/model/intake.dart';
 import 'package:aquapact/model/measure_unit.dart';
 import 'package:aquapact/model/sync_status.dart';
 import 'package:aquapact/service/health.dart';
+import 'package:aquapact/service/home.dart';
 import 'package:aquapact/util/intakes.dart';
 import 'package:aquapact/vendor/objectbox/object_box.dart';
 import 'package:aquapact/vendor/objectbox/service/intakes.dart';
@@ -15,6 +16,7 @@ void main() async {
   final objectBox = await ObjectBox.createOn(tempDir);
   final intakesService = BoxIntakesService(objectBox);
   final healthService = FakeHealthService();
+  final homeService = FakeHomeService();
 
   test('IntakesHandler.addIntake() when HealthService add intake', () async {
     healthService.addIntakeResult = true;
@@ -24,6 +26,7 @@ void main() async {
       healthSync: true,
       intakesService: intakesService,
       healthService: healthService,
+      homeService: homeService,
     );
     expect(intake.code, isNotNull);
     expect(intake.amount, 1.0);
@@ -40,6 +43,7 @@ void main() async {
         healthSync: true,
         intakesService: intakesService,
         healthService: healthService,
+        homeService: homeService,
       );
       expect(intake.code, isNotNull);
       expect(intake.amount, 1.0);
@@ -52,6 +56,7 @@ void main() async {
         healthSync: false,
         intakesService: intakesService,
         healthService: healthService,
+        homeService: homeService,
       );
       expect(intake2.code, isNotNull);
       expect(intake2.amount, 1.0);
@@ -76,5 +81,12 @@ class FakeHealthService extends HealthService {
   @override
   Future<bool> deleteIntake(Intake intake) {
     return Future.value(addIntakeResult);
+  }
+}
+
+class FakeHomeService extends HomeService {
+  @override
+  Future<void> updateData() async {
+    return Future.value();
   }
 }

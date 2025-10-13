@@ -20,6 +20,7 @@ class IntakesHandler {
     required bool healthSync,
     IntakesService? intakesService,
     HealthService? healthService,
+    HomeService? homeService,
   }) async {
     final now = DateTime.now();
     final intakesServ = intakesService ?? IntakesService.get();
@@ -29,7 +30,7 @@ class IntakesHandler {
       dateTime: now,
     );
 
-    _updateHomeValues();
+    _updateHomeValues(homeService);
 
     return _saveHealthSync(
       intake: intake,
@@ -44,11 +45,12 @@ class IntakesHandler {
     required bool healthSync,
     IntakesService? intakesService,
     HealthService? healthService,
+    HomeService? homeService,
   }) async {
     final intakesServ = intakesService ?? IntakesService.get();
     var updated = await intakesServ.updateIntake(intake);
 
-    _updateHomeValues();
+    _updateHomeValues(homeService);
 
     return _saveHealthSync(
       intake: updated,
@@ -63,11 +65,12 @@ class IntakesHandler {
     required bool healthSync,
     IntakesService? intakesService,
     HealthService? healthService,
+    HomeService? homeService,
   }) async {
     final intakesServ = intakesService ?? IntakesService.get();
     await intakesServ.deleteIntake(intake);
 
-    _updateHomeValues();
+    _updateHomeValues(homeService);
 
     if (healthSync) {
       final healthServ = healthService ?? HealthService.get();
@@ -75,8 +78,8 @@ class IntakesHandler {
     }
   }
 
-  void _updateHomeValues() async {
-    unawaited(HomeService.get().updateData());
+  void _updateHomeValues(HomeService? homeService) async {
+    unawaited((homeService ?? HomeService.get()).updateData());
   }
 
   Future<Intake> _saveHealthSync({
