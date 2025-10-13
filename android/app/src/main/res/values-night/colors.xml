@@ -1,0 +1,4 @@
+<resources>
+    <!-- Widget text colors -->
+    <color name="widget_text_color">#FFFFFFFF</color>
+</resources>

@@ -59,12 +59,25 @@ internal fun updateAppWidget(
         0
     }
 
+    // Get motivational message based on percentage
+    val motivationMessage = when {
+        percentage == 0 -> "Start your day! 💧"
+        percentage < 25 -> "Time to hydrate! 🚰"
+        percentage < 50 -> "Keep it up! 💪"
+        percentage < 75 -> "You're doing great! ⭐"
+        percentage < 100 -> "Almost there! 🎯"
+        else -> "Goal achieved! 🎉"
+    }
+
     val views = RemoteViews(context.packageName, R.layout.status_widget).apply {
         // Set progress bar to fill water drop from bottom (using 10000 as max for smoother animation)
         setProgressBar(R.id.water_drop_progress, 10000, percentage * 100, false)
 
         // Set percentage text
         setTextViewText(R.id.percentage_text, "$percentage%")
+
+        // Set motivational message
+        setTextViewText(R.id.motivation_text, motivationMessage)
 
         // Create intent to launch the app
         val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
