@@ -5,8 +5,6 @@
     android:initialLayout="@layout/status_widget"
     android:minWidth="180dp"
     android:minHeight="180dp"
-    android:maxWidth="250dp"
-    android:maxHeight="250dp"
     android:minResizeWidth="180dp"
     android:minResizeHeight="180dp"
     android:previewImage="@drawable/example_appwidget_preview"
