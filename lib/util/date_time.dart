@@ -59,6 +59,12 @@ extension AppDateTime on DateTime {
     final dateFormat = DateFormat.yMd(appL10n.localeName);
     return dateFormat.format(this);
   }
+
+  /// Formats the [DateTime] instance according to the specified pattern.
+  String formatDateByPattern(String pattern) {
+    final dateFormat = DateFormat(pattern);
+    return dateFormat.format(this);
+  }
 }
 
 class TimeOfDayConverter implements JsonConverter<TimeOfDay, String> {

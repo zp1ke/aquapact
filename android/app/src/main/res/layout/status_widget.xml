@@ -2,16 +2,42 @@
     style="@style/Widget.Android.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Android.AppWidgetContainer">
+    android:theme="@style/Theme.Android.AppWidgetContainer"
+    android:gravity="center">
 
-    <TextView
-        android:id="@+id/intake_value"
-        style="@style/Widget.Android.AppWidget.InnerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="8dp"
-        android:text="Intake Value"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true">
+
+        <!-- Background circle -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/circular_progress_background" />
+
+        <!-- Progress circle -->
+        <ProgressBar
+            android:id="@+id/intake_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="false"
+            android:progress="0"
+            android:max="10000"
+            android:progressDrawable="@drawable/circular_progress_foreground"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+        <!-- Percentage text in center -->
+        <TextView
+            android:id="@+id/percentage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0%"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+    </FrameLayout>
+
 </RelativeLayout>
