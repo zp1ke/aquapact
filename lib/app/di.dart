@@ -2,7 +2,9 @@ import 'package:get_it/get_it.dart';
 
 import '../service/database.dart';
 import '../service/health.dart';
+import '../service/home.dart';
 import '../service/impl/health.dart';
+import '../service/impl/home.dart';
 import '../service/impl/notification.dart';
 import '../service/impl/settings.dart';
 import '../service/intakes.dart';
@@ -28,6 +30,9 @@ Future<void> setupServices() async {
 
   final healthService = HealthChannelService();
   _getIt.registerSingleton<HealthService>(healthService);
+
+  final homeService = HomeScreenService();
+  _getIt.registerSingleton<HomeService>(homeService);
 }
 
 T service<T extends Object>() => _getIt.get<T>();

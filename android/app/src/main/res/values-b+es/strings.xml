@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AquaPact</string>
+    <string name="app_widget_description">Tu hidratación hoy</string>
+
     <string name="health_connect_logo">Health Connect logo</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="privacy_policy_description">

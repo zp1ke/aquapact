@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import '../model/intake.dart';
 import '../model/measure_unit.dart';
 import '../model/sync_status.dart';
 import '../service/health.dart';
+import '../service/home.dart';
 import '../service/intakes.dart';
 
 class IntakesHandler {
@@ -25,6 +28,9 @@ class IntakesHandler {
       measureUnit: measureUnit,
       dateTime: now,
     );
+
+    _updateHomeValues();
+
     return _saveHealthSync(
       intake: intake,
       healthSync: healthSync,
@@ -41,6 +47,9 @@ class IntakesHandler {
   }) async {
     final intakesServ = intakesService ?? IntakesService.get();
     var updated = await intakesServ.updateIntake(intake);
+
+    _updateHomeValues();
+
     return _saveHealthSync(
       intake: updated,
       healthSync: healthSync,
@@ -57,10 +66,17 @@ class IntakesHandler {
   }) async {
     final intakesServ = intakesService ?? IntakesService.get();
     await intakesServ.deleteIntake(intake);
+
+    _updateHomeValues();
+
     if (healthSync) {
       final healthServ = healthService ?? HealthService.get();
       await healthServ.deleteIntake(intake);
     }
+  }
+
+  void _updateHomeValues() async {
+    unawaited(HomeService.get().updateData());
   }
 
   Future<Intake> _saveHealthSync({

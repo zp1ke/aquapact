@@ -6,7 +6,7 @@ version: 0.1.0+10
 
 environment:
   sdk: ^3.9.0
-  flutter: 3.35.5
+  flutter: 3.35.6
 
 dependencies:
   equatable: ^2.0.7
@@ -19,6 +19,7 @@ dependencies:
   flutter_timezone: ^5.0.0
   get_it: ^8.2.0
   google_fonts: ^6.3.2
+  home_widget: ^0.8.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
   logger: ^2.6.2
