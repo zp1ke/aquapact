@@ -4,20 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Android.AppWidgetContainer"
-    android:gravity="center">
+    android:padding="8dp">
 
+    <!-- Motivational text at the bottom -->
+    <TextView
+        android:id="@+id/motivation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:text="Start your day! 💧"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:textColor="@color/widget_text_color"
+        android:background="@drawable/text_background"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:gravity="center" />
+
+    <!-- Water drop container takes remaining space above text -->
     <FrameLayout
         android:id="@+id/water_drop_container"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_centerInParent="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/motivation_text"
+        android:layout_marginBottom="4dp"
+        android:gravity="center">
 
         <!-- Gradient background -->
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/widget_background_gradient"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
         <!-- Background water drop (gray/outline) -->
         <ImageView
@@ -46,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="0%"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:shadowColor="#000000"
@@ -55,25 +77,5 @@
             android:shadowRadius="4" />
 
     </FrameLayout>
-
-    <!-- Motivational text below the water drop -->
-    <TextView
-        android:id="@+id/motivation_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/water_drop_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:text="Start your day! 💧"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:textColor="@color/widget_text_color"
-        android:background="@drawable/text_background"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:gravity="center" />
 
 </RelativeLayout>
