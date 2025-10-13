@@ -9,6 +9,19 @@ AquaPact is a Flutter-based water reminder and tracking application designed to 
 - 📊 Progress visualization and statistics
 - 🎯 Personalized daily water goals
 - 📱 Clean, intuitive user interface
+- 🏠 Android home screen widget with real-time progress tracking
+
+## Android Home Screen Widget
+
+Stay motivated with AquaPact's beautiful home screen widget! The widget displays:
+
+- 💦 **Visual Progress Indicator**: An animated water drop that fills from bottom to top as you meet your daily hydration goal
+- 📈 **Percentage Display**: Clear percentage showing your current progress
+- 💬 **Motivational Messages**: Dynamic encouraging messages that adapt to your progress
+- 🌓 **Theme Support**: Automatically adapts to your device's light/dark mode
+- 👆 **Quick Access**: Tap the widget to open the app instantly
+
+The widget provides at-a-glance hydration tracking without opening the app, making it easier than ever to stay on top of your water intake goals throughout the day.
 
 ## Download
 
