@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<clip xmlns:android="http://schemas.android.com/apk/res/android"
-    android:clipOrientation="vertical"
-    android:gravity="bottom">
-    <bitmap
-        android:src="@drawable/water_drop_logo"
-        android:gravity="fill"
-        android:tint="#802196F3" />
-</clip>
