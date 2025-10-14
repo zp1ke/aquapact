@@ -6,8 +6,11 @@ All notable changes to this project will be documented in this file.
 
 - **Sync intakes to Samsung Health**: Enable seamless synchronization of water intake records with Samsung Health, allowing users to maintain their hydration data across Samsung's health ecosystem and integrate with other health tracking features.
 
+## [0.1.2]
+- **Fixed Android home screen widget layout**: Improved visibility of motivational text and ensured all elements display correctly on various home screen configurations.
+
 ## [0.1.1]
-- **Fixed Android home screen widget layout**: Refactored the widget to use adaptive layouts that properly scale with different sizes while maintaining a square aspect ratio. Improved visibility of motivational text and ensured all elements display correctly on various home screen configurations.
+- **Fixed Android home screen widget layout**: Refactored the widget to use adaptive layouts that properly scale with different sizes while maintaining a square aspect ratio.
 
 ## [0.1.0]
 - **Added Android home screen widget**: Implement a home screen widget that displays the user's current water intake progress and allows quick logging of water intake without opening the app.

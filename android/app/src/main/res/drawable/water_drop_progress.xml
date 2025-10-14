@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background (empty/unfilled portion) -->
+    <item>
+        <bitmap
+            android:src="@drawable/water_drop_logo"
+            android:gravity="fill"
+            android:tint="#40808080" />
+    </item>
+    <!-- Foreground (filled portion) - clipped from bottom -->
+    <item android:id="@android:id/progress">
+        <clip
+            android:clipOrientation="vertical"
+            android:gravity="bottom">
+            <bitmap
+                android:src="@drawable/water_drop_logo"
+                android:gravity="fill"
+                android:tint="#802196F3" />
+        </clip>
+    </item>
+</layer-list>

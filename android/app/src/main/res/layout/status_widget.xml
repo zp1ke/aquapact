@@ -41,15 +41,7 @@
             android:src="@drawable/widget_background_gradient"
             android:scaleType="fitCenter" />
 
-        <!-- Background water drop (gray/outline) -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/water_drop_logo"
-            android:alpha="0.3"
-            android:scaleType="fitCenter" />
-
-        <!-- Progress bar that clips the water drop from bottom to top -->
+        <!-- Simple fill progress from bottom (behind water drop) -->
         <ProgressBar
             android:id="@+id/water_drop_progress"
             android:layout_width="match_parent"
@@ -57,8 +49,15 @@
             android:indeterminate="false"
             android:progress="0"
             android:max="10000"
-            android:progressDrawable="@drawable/water_drop_fill_progress"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/simple_fill_progress"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+        <!-- Water drop image on top (shows through with transparency) -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/water_drop_logo"
+            android:alpha="0.55"
             android:scaleType="fitCenter" />
 
         <!-- Percentage text in center -->

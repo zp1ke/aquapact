@@ -4,5 +4,6 @@
     android:gravity="bottom">
     <bitmap
         android:src="@drawable/water_drop_logo"
+        android:gravity="fill"
         android:tint="#802196F3" />
 </clip>
