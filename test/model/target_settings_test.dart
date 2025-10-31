@@ -1,6 +1,6 @@
 import 'package:aquapact/model/target_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('TargetSettings.toMap() generates parseable map', () {

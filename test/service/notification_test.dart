@@ -2,7 +2,7 @@ import 'package:aquapact/model/notification.dart';
 import 'package:aquapact/model/target_settings.dart';
 import 'package:aquapact/service/notification.dart';
 import 'package:flutter/material.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('NotificationService.scheduleNotificationsOf()', () async {
