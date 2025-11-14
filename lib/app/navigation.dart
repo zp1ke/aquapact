@@ -13,13 +13,13 @@ enum AppPage {
 
   Widget build(Map<String, Object> args) {
     switch (this) {
-      case AppPage.home:
+      case .home:
         return HomePage();
-      case AppPage.stats:
+      case .stats:
         return StatsPage();
-      case AppPage.intakes:
+      case .intakes:
         return IntakesPage();
-      case AppPage.targetSettings:
+      case .targetSettings:
         return TargetSettingsPage();
     }
   }

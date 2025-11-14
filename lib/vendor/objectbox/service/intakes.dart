@@ -21,7 +21,7 @@ class BoxIntakesService extends IntakesService {
     required double amount,
     required VolumeMeasureUnit measureUnit,
     required DateTime dateTime,
-    SyncStatus healthSync = SyncStatus.notSynced,
+    SyncStatus healthSync = .notSynced,
   }) async {
     final intake = IntakeBox(
       amount: amount,
@@ -81,7 +81,7 @@ class BoxIntakesService extends IntakesService {
           amount: amount,
           from: dateTime,
           to: nextDateTime,
-          measureUnit: VolumeMeasureUnit.ml,
+          measureUnit: .ml,
           rangeType: rangeType,
         ),
       );
@@ -119,7 +119,7 @@ class BoxIntakesService extends IntakesService {
     );
     final syncStatus = SyncStatus.values.firstWhere(
       (element) => element.name == intake.healthSync,
-      orElse: () => SyncStatus.notSynced,
+      orElse: () => .notSynced,
     );
     return Intake(
       code: intake.id.toString(),
@@ -133,11 +133,11 @@ class BoxIntakesService extends IntakesService {
 
   RangeType _rangeType(int days) {
     return switch (days) {
-      > 365 => RangeType.yearly,
-      <= 365 && > 180 => RangeType.monthly,
-      <= 180 && > 30 => RangeType.twoWeeks,
-      <= 30 && > 10 => RangeType.weekly,
-      <= 10 || _ => RangeType.daily,
+      > 365 => .yearly,
+      <= 365 && > 180 => .monthly,
+      <= 180 && > 30 => .twoWeeks,
+      <= 30 && > 10 => .weekly,
+      <= 10 || _ => .daily,
     };
   }
 }

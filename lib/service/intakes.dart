@@ -20,7 +20,7 @@ abstract class IntakesService {
     required double amount,
     required VolumeMeasureUnit measureUnit,
     required DateTime dateTime,
-    SyncStatus healthSync = SyncStatus.notSynced,
+    SyncStatus healthSync = .notSynced,
   });
 
   Future<double> sumIntakesAmount({

@@ -35,7 +35,7 @@ class _TargetSettingsPageState extends State<TargetSettingsPage>
           ? SafeArea(child: form())
           : Center(child: AppIcon.loading),
       bottomNavigationBar: appBottomMenu(
-        page: AppPage.targetSettings,
+        page: .targetSettings,
         enabled: !saving,
       ),
     );

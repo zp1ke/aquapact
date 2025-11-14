@@ -14,7 +14,7 @@ TargetSettings _$TargetSettingsFromJson(Map<String, dynamic> json) =>
             _$VolumeMeasureUnitEnumMap,
             json['volumeMeasureUnit'],
           ) ??
-          VolumeMeasureUnit.ml,
+          .ml,
       intakeValues:
           (json['intakeValues'] as List<dynamic>?)
               ?.map((e) => (e as num).toDouble())

@@ -94,6 +94,6 @@ class _StartPageState extends State<StartPage> with TargetSettingsSaver {
   }
 
   Future<void> navigateToHome(BuildContext context) async {
-    await context.navigateTo(AppPage.home, clear: true);
+    await context.navigateTo(.home, clear: true);
   }
 }

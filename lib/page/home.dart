@@ -119,10 +119,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
         ),
       ),
       drawer: menu(),
-      bottomNavigationBar: appBottomMenu(
-        page: AppPage.home,
-        enabled: !processing,
-      ),
+      bottomNavigationBar: appBottomMenu(page: .home, enabled: !processing),
     );
   }
 
@@ -261,7 +258,7 @@ class _HomePageState extends State<HomePage> with TargetSettingsSaver {
             key: showAllKey,
             child: Text(AppL10n.of(context).showAll),
             onPressed: () async {
-              await context.navigateTo(AppPage.intakes);
+              await context.navigateTo(.intakes);
               loadData();
             },
           ),

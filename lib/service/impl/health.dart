@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 
 import '../../model/intake.dart';
-import '../../model/measure_unit.dart';
 import '../../util/logger.dart';
 import '../health.dart';
 
@@ -27,7 +26,7 @@ class HealthChannelService extends HealthService {
     try {
       final amountInLiters = intake.measureUnit.convertAmountTo(
         intake.amount,
-        VolumeMeasureUnit.l,
+        .l,
       );
       final data = {
         'intakeId': intake.code,

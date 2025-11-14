@@ -29,7 +29,7 @@ class TargetSettings extends Equatable {
 
   const TargetSettings({
     this.dailyTarget = 2500.0,
-    this.volumeMeasureUnit = VolumeMeasureUnit.ml,
+    this.volumeMeasureUnit = .ml,
     this.intakeValues = const [100.0, 250.0, 400.0, 500.0],
     this.defaultIntakeValue = 250.0,
     this.wakeUpTime = const TimeOfDay(hour: 7, minute: 0),

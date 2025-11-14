@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../app/config.dart';
-import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/intake_range.dart';
 import '../model/measure_unit.dart';
@@ -96,7 +95,7 @@ class _StatsPageState extends State<StatsPage> {
         ),
       ),
       bottomNavigationBar: appBottomMenu(
-        page: AppPage.stats,
+        page: .stats,
         enabled: !loadingIntakes,
       ),
     );
@@ -159,7 +158,7 @@ class _StatsPageState extends State<StatsPage> {
       children: [
         TextButton(onPressed: pickDateRange, child: Text(dateRange)),
         Text(
-          intakes.first.rangeType == RangeType.daily
+          intakes.first.rangeType == .daily
               ? appL10n.intakeAverage(
                   targetSettings.volumeMeasureUnit.formatValue(avg),
                 )
@@ -209,7 +208,7 @@ class _StatsPageState extends State<StatsPage> {
                   width: AppSize.chartBarWidth,
                   color: color,
                   backDrawRodData: BackgroundBarChartRodData(
-                    show: intake.rangeType == RangeType.daily,
+                    show: intake.rangeType == .daily,
                     toY: targetSettings.dailyTarget,
                     color: color.withValues(alpha: 0.5),
                   ),
@@ -294,7 +293,7 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Color backgroundColorOf(double amount, RangeType rangeType) {
-    if (rangeType == RangeType.daily) {
+    if (rangeType == .daily) {
       final percent = amount / targetSettings.dailyTarget;
       if (percent < 0.3) {
         return Theme.of(context).colorScheme.warning;
@@ -306,7 +305,7 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Color colorOf(double amount, RangeType rangeType) {
-    if (rangeType != RangeType.daily) {
+    if (rangeType != .daily) {
       final percent = amount / targetSettings.dailyTarget;
       if (percent < 0.3) {
         return Theme.of(context).colorScheme.onWarning;

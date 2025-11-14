@@ -111,7 +111,7 @@ class _AppMenuState extends State<AppMenu> {
       leading: AppIcon.stats,
       onTap: () {
         context.navigateBack();
-        context.navigateTo(AppPage.stats);
+        context.navigateTo(.stats);
       },
     );
   }
@@ -122,7 +122,7 @@ class _AppMenuState extends State<AppMenu> {
       leading: AppIcon.waterGlass(context),
       onTap: () async {
         context.navigateBack();
-        await context.navigateTo(AppPage.intakes);
+        await context.navigateTo(.intakes);
         widget.onChanged();
       },
     );
@@ -134,7 +134,7 @@ class _AppMenuState extends State<AppMenu> {
       leading: AppIcon.settings,
       onTap: () async {
         context.navigateBack();
-        await context.navigateTo(AppPage.targetSettings);
+        await context.navigateTo(.targetSettings);
         widget.onChanged();
       },
     );

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import '../model/intake.dart';
 import '../model/measure_unit.dart';
-import '../model/sync_status.dart';
 import '../service/health.dart';
 import '../service/home.dart';
 import '../service/intakes.dart';
@@ -93,7 +92,7 @@ class IntakesHandler {
       final recordId = await healthServ.saveIntake(intake);
       if (recordId != null) {
         final updated = intake.copyWith(
-          healthSync: SyncStatus.synced,
+          healthSync: .synced,
           healthSyncId: recordId,
         );
         return intakesService.updateIntake(updated);

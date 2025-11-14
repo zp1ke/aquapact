@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../app/config.dart';
-import '../app/navigation.dart';
 import '../l10n/app_l10n.dart';
 import '../model/pair.dart';
 import '../model/target_settings.dart';
@@ -69,7 +68,7 @@ class _IntakesPageState extends State<IntakesPage> with TargetSettingsSaver {
       body: SafeArea(
         child: PullToRefresh(onRefresh: loadData, child: content()),
       ),
-      bottomNavigationBar: appBottomMenu(page: AppPage.intakes, enabled: true),
+      bottomNavigationBar: appBottomMenu(page: .intakes, enabled: true),
     );
   }
 
